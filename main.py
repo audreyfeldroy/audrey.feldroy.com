@@ -2,11 +2,17 @@ from pathlib import Path
 from fasthtml.common import *
 from nb2fasthtml.core import *
 
-app,rt = fast_app()
+hdrs = (
+    MarkdownJS(),
+    HighlightJS(langs=['python', 'javascript', 'html', 'css',]),
+)
+
+app,rt = fast_app(hdrs=hdrs)
 
 @rt
 def index():
-    nbs = L(Path('nbs').glob('*.ipynb'))
+    nb_dir = Path('nbs')
+    nbs = L(nb_dir.glob('*.ipynb'))
     nbs = sorted(nbs)
     return Div(
         H1('My nb2fasthtml-powered blog'), 
