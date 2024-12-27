@@ -15,7 +15,8 @@ def index():
     nbs = L(nb_dir.glob('*.ipynb'))
     nbs = sorted(nbs)
     return Div(
-        H1('My nb2fasthtml-powered blog'), 
+        H1('audrey.feldroy.com'), 
+        P("The notebooks of Audrey M. Roy Greenfeld"),
         Ul(*[Li(A(nb.stem, href=f'/experiments/{nb.stem}')) for nb in nbs]),
         style="padding: 1em"
     )
