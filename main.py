@@ -7,7 +7,7 @@ hdrs = (
     HighlightJS(langs=['python', 'javascript', 'html', 'css',]),
 )
 
-app,rt = fast_app(hdrs=hdrs)
+app,rt = fast_app(hdrs=hdrs, pico=False)
 
 @rt
 def index():
