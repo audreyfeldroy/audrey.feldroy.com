@@ -7,8 +7,8 @@ css = ':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvet
 s = Style(css)
 
 hdrs = (
-    # MarkdownJS(),
-    # HighlightJS(langs=['python', 'javascript', 'html', 'css',]),
+    MarkdownJS(),
+    HighlightJS(langs=['python', 'javascript', 'html', 'css',]),
 )
 
 app,rt = fast_app(hdrs=hdrs, pico=False)
@@ -75,6 +75,7 @@ def index():
 def experiment(name: str):
     nb = Path(f'nbs/{name}.ipynb')
     return Div(
+        # Style(css),
         render_nb(nb, wrapper=Div),
         style="padding: 1em"
     )
