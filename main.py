@@ -75,7 +75,7 @@ def index():
 def experiment(name: str):
     nb = Path(f'nbs/{name}.ipynb')
     return Div(
-        # Style(css),
+        Style(css),
         render_nb(nb, wrapper=Div),
         style="padding: 1em"
     )
