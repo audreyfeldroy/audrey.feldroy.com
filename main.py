@@ -14,7 +14,7 @@ hdrs = (
 app,rt = fast_app(hdrs=hdrs, pico=False)
 
 def get_date_from_fname(fname):
-    year, month, day = L(regex.findall(r"\d+", fname))
+    year, month, day = L(regex.findall(r"\d+", fname))[0:3]
     return f"{year}-{month}-{day}"
 
 # HACK: I changed 11 to 14 to chop off the 'nbs/' part of the path
