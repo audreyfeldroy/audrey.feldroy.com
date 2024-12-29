@@ -14,7 +14,10 @@ hdrs = (
 app,rt = fast_app(hdrs=hdrs, pico=False)
 
 def get_date_from_fname(fname):
-    year, month, day = L(regex.findall(r"\d+", fname))[0:3]
+    try:
+        year, month, day = L(regex.findall(r"\d+", fname))[0:3]
+    except Exception:
+        year, month, day = 0,0,0
     return f"{year}-{month}-{day}"
 
 # HACK: I changed 11 to 14 to chop off the 'nbs/' part of the path
@@ -67,7 +70,6 @@ def index():
         H1('audrey.feldroy.com'), 
         P("The notebooks of Audrey M. Roy Greenfeld"),
         Div(*L(nbs).map(Card), style=container_style),
-        # Ul(*[Li(A(nb.stem, href=f'/experiments/{nb.stem}')) for nb in nbs]),
         style="padding: 1em"
     )
 
