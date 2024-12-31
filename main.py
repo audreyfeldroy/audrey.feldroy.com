@@ -83,6 +83,7 @@ def render_code_output(cell, lang='python', pygments=False, wrapper=Footer):
     try:
         res = render_outputs(cell.outputs, pygments=pygments)
         if res: return wrapper(NotStr(res))    
+        return Footer('Nothing returned.')
     except Exception as e:
         return Footer(str(e))
 
