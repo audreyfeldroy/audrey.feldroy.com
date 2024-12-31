@@ -46,7 +46,7 @@ def Card(fname):
         Header(H2(title, style=header_style)),
         I(date, style=date_style),
         style=style,
-        href=f'/experiments/{fname[4:][:-6]}',
+        href=f'/nbs/{fname[4:][:-6]}',
         onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'",
         onmouseout="this.style.transform='none';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.12)'"
     )
@@ -62,7 +62,7 @@ container_style = """
     max-width: 1200px;
 """
 
-def Note(c): return Div(H3("Note"), c, style="padding:0 10px;border:1px lightblue solid; border-left:6px lightblue solid;")
+def Note(c): return Div(H3("Note"), c, style="padding:10px;border:1px lightblue solid; border-left:6px lightblue solid;")
 
 @rt
 def index():
@@ -86,7 +86,7 @@ def render_code_output(cell, lang='python', pygments=False, wrapper=Footer):
     except Exception as e:
         return Footer(str(e))
 
-@rt('/experiments/{name}')
+@rt('/nbs/{name}')
 def experiment(name: str):
     nb = Path(f'nbs/{name}.ipynb')
     return Div(
