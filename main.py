@@ -82,7 +82,7 @@ def experiment(name: str):
     nb = Path(f'nbs/{name}.ipynb')
     return Div(
         Style(css),
-        render_nb(nb, wrapper=Div),
+        render_nb(nb, wrapper=Div, fm_fn=None),
         style="padding: 1em"
     )
 
