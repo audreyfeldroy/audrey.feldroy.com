@@ -2,6 +2,7 @@ from pathlib import Path
 from fasthtml.common import *
 from nb2fasthtml.core import *
 import regex
+from importlib.metadata import distributions
 
 css = ':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'
 s = Style(css)
@@ -83,6 +84,18 @@ def experiment(name: str):
         Style(css),
         render_nb(nb, wrapper=Div),
         style="padding: 1em"
+    )
+
+@rt
+def versions():
+    dists = L([NS(name=dist.metadata['Name'], version=dist.version) for dist in distributions()]).sorted('name')
+    dists = [Li(f'{d.name}: {d.version}') for d in dists]
+    return (Title('Package Versions'),
+        Style(css),    
+        Div(
+            H1('Package versions'),
+            Ul(*dists)          
+        )       
     )
 
 
