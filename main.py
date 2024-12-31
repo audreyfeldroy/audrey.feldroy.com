@@ -61,6 +61,8 @@ container_style = """
     max-width: 1200px;
 """
 
+def Note(c): return Div(H3("Note"), c, style="padding:0 10px;border:1px lightblue solid; border-left:6px lightblue solid;")
+
 @rt
 def index():
     nb_dir = Path('nbs')
@@ -69,6 +71,7 @@ def index():
         Style(css),
         H1('audrey.feldroy.com'), 
         P("The notebooks of Audrey M. Roy Greenfeld"),
+        Note(P("All notebooks should work as described in their prose if you download them and run them in Jupyter Notebook Classic. If any do not, it is probably due to a bug in Railway caching that I'm trying to find a workaround for.")),
         Div(*L(nbs).map(Card), style=container_style),
         style="padding: 1em"
     )
