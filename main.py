@@ -77,12 +77,21 @@ def index():
         style="padding: 1em"
     )
 
+from execnb.shell import render_outputs
+def render_code_output(cell, lang='python', pygments=False, wrapper=Footer):
+    # if not cell.outputs: return ''
+    try:
+        res = render_outputs(cell.outputs, pygments=pygments)
+        if res: return wrapper(NotStr(res))    
+    except Exception as e:
+        return Footer(str(e))
+
 @rt('/experiments/{name}')
 def experiment(name: str):
     nb = Path(f'nbs/{name}.ipynb')
     return Div(
         Style(css),
-        render_nb(nb, wrapper=Div, fm_fn=None),
+        render_nb(nb, wrapper=Div, out_fn=render_code_output),
         style="padding: 1em"
     )
 
