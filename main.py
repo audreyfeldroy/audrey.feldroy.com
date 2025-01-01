@@ -72,7 +72,7 @@ def index():
         Style(css),
         H1('audrey.feldroy.com'), 
         P("The notebooks of Audrey M. Roy Greenfeld"),
-        Note(P("All notebooks should work as described in their prose if you download them and run them in Jupyter Notebook Classic. If any do not, it is probably due to a bug in Railway caching that I'm trying to find a workaround for.")),
+        Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audreyfeldroy.bsky.social on Bluesky", href="https://bsky.app/profile/audreyfeldroy.bsky.social"))),
         Div(*L(nbs).map(Card), style=container_style),
         style="padding: 1em"
     )
