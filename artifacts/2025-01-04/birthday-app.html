@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 6th Birthday!</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff4081;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        .cake {
+            font-size: 100px;
+            margin: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cake:hover {
+            transform: scale(1.2);
+        }
+
+        .balloons {
+            position: fixed;
+            font-size: 40px;
+            animation: float 6s infinite;
+            opacity: 0;
+        }
+
+        .button {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+        }
+
+        .candle-count {
+            font-size: 1.5em;
+            color: #ff4081;
+            margin: 20px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        .wish-container {
+            margin: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            max-width: 300px;
+            display: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            pointer-events: none;
+            animation: sparkle 1s forwards;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy 6th Birthday! 🎉</h1>
+        <div class="cake" onclick="celebrate()">🎂</div>
+        <div class="candle-count">Blow out the candles: <span id="candleCount">6</span></div>
+        <button class="button" onclick="blowCandle()">Blow a candle! 💨</button>
+        <button class="button" onclick="makeWish()">Make a wish! ⭐</button>
+        <div class="wish-container" id="wishContainer">
+            <p>Your birthday wish has been made! May all your dreams come true! 💫✨</p>
+        </div>
+    </div>
+
+    <script>
+        let candleCount = 6;
+        let isPlaying = false;
+
+        function celebrate() {
+            if (!isPlaying) {
+                isPlaying = true;
+                createBalloons();
+                createSparkles(event);
+            }
+        }
+
+        function createBalloons() {
+            const balloons = ['🎈', '🎈', '🎈', '🎈', '🎈', '🎈'];
+            balloons.forEach((balloon, index) => {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.className = 'balloons';
+                    element.style.left = `${Math.random() * 100}vw`;
+                    element.textContent = balloon;
+                    document.body.appendChild(element);
+
+                    setTimeout(() => {
+                        element.remove();
+                    }, 6000);
+                }, index * 800);
+            });
+
+            setTimeout(() => {
+                isPlaying = false;
+            }, 6000);
+        }
+
+        function blowCandle() {
+            if (candleCount > 0) {
+                candleCount--;
+                document.getElementById('candleCount').textContent = candleCount;
+                createSparkles(event);
+                
+                if (candleCount === 0) {
+                    document.querySelector('.cake').textContent = '🍰';
+                }
+            }
+        }
+
+        function makeWish() {
+            const wishContainer = document.getElementById('wishContainer');
+            wishContainer.style.display = 'block';
+            createSparkles(event);
+        }
+
+        function createSparkles(e) {
+            const sparkles = ['✨', '💫', '⭐'];
+            for (let i = 0; i < 6; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                sparkle.style.left = `${Math.random() * 100}vw`;
+                sparkle.style.top = `${Math.random() * 100}vh`;
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+        }
+
+        // Add click event to create sparkles anywhere on click
+        document.addEventListener('click', createSparkles);
+    </script>
+</body>
+</html>

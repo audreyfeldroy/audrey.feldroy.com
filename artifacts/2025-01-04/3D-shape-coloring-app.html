@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D Shapes Coloring App</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .toolbar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .color-picker {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .canvas-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .shape {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+        }
+        .shape path {
+            transition: fill 0.3s ease;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .reset-btn {
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .reset-btn:hover {
+            background-color: #ff5252;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Color the Shapes! 🎨</h1>
+        <div class="toolbar">
+            <input type="color" class="color-picker" value="#ff0000">
+            <button class="reset-btn">Reset Colors</button>
+        </div>
+        <div class="canvas-container">
+            <!-- Cube -->
+            <svg class="shape" viewBox="0 0 100 100">
+                <path d="M20,30 L50,10 L80,30 L80,70 L50,90 L20,70 Z" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+                <path d="M50,10 L50,50 L80,70 L80,30 Z" fill="#f0f0f0" stroke="#000000" stroke-width="2"/>
+                <path d="M20,30 L50,50 L50,90 L20,70 Z" fill="#e0e0e0" stroke="#000000" stroke-width="2"/>
+            </svg>
+            <!-- Pyramid -->
+            <svg class="shape" viewBox="0 0 100 100">
+                <path d="M50,10 L80,70 L20,70 Z" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+                <path d="M50,10 L80,70 L50,70 Z" fill="#f0f0f0" stroke="#000000" stroke-width="2"/>
+                <path d="M20,70 L80,70 L50,70 Z" fill="#e0e0e0" stroke="#000000" stroke-width="2"/>
+            </svg>
+            <!-- Cylinder -->
+            <svg class="shape" viewBox="0 0 100 100">
+                <path d="M30,20 L70,20 L70,80 L30,80 Z" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+                <ellipse cx="50" cy="20" rx="20" ry="10" fill="#f0f0f0" stroke="#000000" stroke-width="2"/>
+                <ellipse cx="50" cy="80" rx="20" ry="10" fill="#e0e0e0" stroke="#000000" stroke-width="2"/>
+            </svg>
+            <!-- Cone -->
+            <svg class="shape" viewBox="0 0 100 100">
+                <path d="M50,20 L80,80 L20,80 Z" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+                <ellipse cx="50" cy="80" rx="30" ry="10" fill="#e0e0e0" stroke="#000000" stroke-width="2"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const colorPicker = document.querySelector('.color-picker');
+            const shapes = document.querySelectorAll('.shape path');
+            const resetBtn = document.querySelector('.reset-btn');
+
+            // Store original colors
+            const originalColors = {};
+            shapes.forEach((shape, index) => {
+                originalColors[index] = shape.getAttribute('fill');
+            });
+
+            // Color shapes
+            shapes.forEach(shape => {
+                shape.addEventListener('click', () => {
+                    shape.setAttribute('fill', colorPicker.value);
+                });
+            });
+
+            // Reset colors
+            resetBtn.addEventListener('click', () => {
+                shapes.forEach((shape, index) => {
+                    shape.setAttribute('fill', originalColors[index]);
+                });
+            });
+
+            // Add confetti effect when coloring
+            function createConfetti(x, y) {
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+                
+                for (let i = 0; i < 20; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.left = x + 'px';
+                    confetti.style.top = y + 'px';
+                    confetti.style.width = '8px';
+                    confetti.style.height = '8px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.pointerEvents = 'none';
+                    document.body.appendChild(confetti);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 1 + Math.random() * 2;
+                    const dx = Math.cos(angle) * velocity;
+                    const dy = Math.sin(angle) * velocity;
+
+                    let opacity = 1;
+                    function animate() {
+                        confetti.style.left = (parseFloat(confetti.style.left) + dx) + 'px';
+                        confetti.style.top = (parseFloat(confetti.style.top) + dy) + 'px';
+                        opacity -= 0.02;
+                        confetti.style.opacity = opacity;
+
+                        if (opacity > 0) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            confetti.remove();
+                        }
+                    }
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            // Add confetti effect to shape clicks
+            shapes.forEach(shape => {
+                shape.addEventListener('click', (e) => {
+                    const rect = shape.getBoundingClientRect();
+                    createConfetti(e.clientX, e.clientY);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
