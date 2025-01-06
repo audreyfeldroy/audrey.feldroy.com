@@ -98,5 +98,8 @@ def versions():
         )       
     )
 
+@rt('/.well-known/{fname}')
+def wellknown(fname: str):
+    return Path(f'.well-known/{fname}').read_text()
 
 serve()
