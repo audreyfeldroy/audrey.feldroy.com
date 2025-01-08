@@ -68,9 +68,8 @@ def Note(c): return Div(H3("Note"), c, style="padding:10px;border:1px lightblue 
 def index():
     nb_dir = Path('nbs')
     nbs = L(sorted(nb_dir.glob('*.ipynb'), reverse=True)).map(str)
-    return Div(
+    return Titled("audrey.feldroy.com",
         Style(css),
-        H1('audrey.feldroy.com'), 
         P("The notebooks of Audrey M. Roy Greenfeld"),
         Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audreyfeldroy.bsky.social on Bluesky", href="https://bsky.app/profile/audreyfeldroy.bsky.social"))),
         Div(*L(nbs).map(Card), style=container_style),
@@ -78,12 +77,14 @@ def index():
     )
 
 @rt('/nbs/{name}')
-def experiment(name: str):
+def notebook(name: str):
     nb = Path(f'nbs/{name}.ipynb')
-    return Div(
+    # name is like '2021-01-01-foo-bar'
+    # Chop off the date part
+    return (
+        Title(name[11:].replace('-', ' ').replace('_', ' ')),
         Style(css),
         render_nb(nb, wrapper=Div),
-        style="padding: 1em"
     )
 
 @rt
