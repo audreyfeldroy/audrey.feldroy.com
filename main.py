@@ -71,7 +71,7 @@ def index():
     return Titled("audrey.feldroy.com",
         Style(css),
         P("The notebooks of Audrey M. Roy Greenfeld"),
-        Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audreyfeldroy.bsky.social on Bluesky", href="https://bsky.app/profile/audreyfeldroy.bsky.social"))),
+        Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"))),
         Div(*L(nbs).map(Card), style=container_style),
         style="padding: 1em"
     )
