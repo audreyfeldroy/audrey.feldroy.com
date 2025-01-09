@@ -4,9 +4,6 @@ from nb2fasthtml.core import *
 import regex
 from importlib.metadata import distributions
 
-css = ':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'
-s = Style(css)
-
 hdrs = (
     MarkdownJS(),
     HighlightJS(langs=['python', 'javascript', 'html', 'css',]),
@@ -69,7 +66,7 @@ def index():
     nb_dir = Path('nbs')
     nbs = L(sorted(nb_dir.glob('*.ipynb'), reverse=True)).map(str)
     return Titled("audrey.feldroy.com",
-        Style(css),
+        Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'),
         P("The notebooks of Audrey M. Roy Greenfeld"),
         Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"))),
         Div(*L(nbs).map(Card), style=container_style),
@@ -83,9 +80,13 @@ def notebook(name: str):
     # Chop off the date part
     return (
         Title(name[11:].replace('-', ' ').replace('_', ' ')),
-        Style(css),
+        Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'),
         render_nb(nb, wrapper=Div),
     )
+
+@rt('/experiments/{name}')
+def notebook_old(name: str):
+    return Redirect(f"/nbs/{name}")
 
 @rt
 def versions():
