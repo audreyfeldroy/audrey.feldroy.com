@@ -1,7 +1,9 @@
+from datetime import datetime
+from execnb.nbio import read_nb
 from pathlib import Path
 from fasthtml.common import *
+from functools import cache
 from nb2fasthtml.core import *
-import regex
 from importlib.metadata import distributions
 
 hdrs = (
@@ -11,22 +13,34 @@ hdrs = (
 
 app,rt = fast_app(hdrs=hdrs, pico=False)
 
-def get_date_from_fname(fname):
+@cache
+def get_date_from_iso8601_prefix(fname):
+    "Gets date from first 10 chars YYYY-MM-DD of `fname`, where `fname` is like `2025-01-12-Get-Date-From-This.whatever"
     try:
-        year, month, day = L(regex.findall(r"\d+", fname))[0:3]
-    except Exception:
-        year, month, day = 0,0,0
-    return f"{year}-{month}-{day}"
+        return datetime.fromisoformat(str(fname)[:10])
+    except ValueError: return None
 
-# HACK: I changed 11 to 14 to chop off the 'nbs/' part of the path
-def get_title_from_fname(fname): return fname[14:][:-6].replace('-', ' ').replace('_', ' ')
+@cache
+def get_title(fname):
+    "Get title from `fname` notebook's cell 0 source by stripping '# ' prefix"
+    nbc = read_nb(fname)
+    nbc = nbc.cells[0].source.lstrip('# ')
+    if '\n' in nbc:
+        return first(nbc.split('\n'))
+    return nbc
 
+@cache
 def Card(fname):
-    date = get_date_from_fname(fname)
-    title = get_title_from_fname(fname)
-    style = """
-        border: 1px solid #e2e8f0;
-        padding: 1.25rem;
+    date = get_date_from_iso8601_prefix(fname.name)
+    title = get_title(fname)
+    return A(
+        Header(H2(title, style="margin:0 0 0.5rem 0;font-size:1.25rem;font-weight:500;")),
+        Div(f"{date:%a, %b %-d, %Y}", style="font-size: 0.875rem;color:#666;"),
+        href=f'/nbs/{fname.name[:-6]}',
+        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'",
+        onmouseout="this.style.transform='none';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.12)'",
+        style="""border:1px solid #e2e8f0;
+        padding:1rem;
         border-radius: 0.5rem;
         background: white;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12);
@@ -35,19 +49,7 @@ def Card(fname):
         text-decoration: none;
         color: inherit;
         display: block;
-    """
-    header_style = "margin-bottom: 0.5rem; font-weight: 600;"
-    date_style = "color: #666; font-size: 0.875rem;"
-    
-    c = A(
-        Header(H2(title, style=header_style)),
-        I(date, style=date_style),
-        style=style,
-        href=f'/nbs/{fname[4:][:-6]}',
-        onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'",
-        onmouseout="this.style.transform='none';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.12)'"
-    )
-    return c
+    """)
 
 # Card container - TODO refactor into a component maybe
 container_style = """
@@ -64,13 +66,14 @@ def Note(c): return Div(H3("Note"), c, style="padding:10px;border:1px lightblue 
 @rt
 def index():
     nb_dir = Path('nbs')
-    nbs = L(sorted(nb_dir.glob('*.ipynb'), reverse=True)).map(str)
+    nbs = L(sorted(nb_dir.glob('*.ipynb'), reverse=True))
     return Titled("audrey.feldroy.com",
         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'),
         P("The notebooks of Audrey M. Roy Greenfeld"),
-        Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"))),
+        # Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"))),
         Div(*L(nbs).map(Card), style=container_style),
-        style="padding: 1em"
+        A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"),
+        style="padding:1em;"
     )
 
 @rt('/nbs/{name}')
@@ -79,7 +82,7 @@ def notebook(name: str):
     # name is like '2021-01-01-foo-bar'
     # Chop off the date part
     return (
-        Title(name[11:].replace('-', ' ').replace('_', ' ')),
+        Title(get_title(nb)),
         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'),
         render_nb(nb, wrapper=Div),
     )
