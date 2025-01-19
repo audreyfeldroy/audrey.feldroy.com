@@ -42,12 +42,12 @@ def Card(fname):
         style="""border:1px solid #e2e8f0;
         padding:1rem;
         border-radius: 0.5rem;
-        background: white;
+        background: light-dark(#ffffff, #1a1a1a);
+        color: light-dark(#1a1a1a, #ffffff);
         box-shadow: 0 1px 3px rgba(0,0,0,0.12);
         transition: transform 0.2s ease;
         cursor: pointer;
         text-decoration: none;
-        color: inherit;
         display: block;
     """)
 
@@ -60,6 +60,8 @@ container_style = """
     padding: 1rem;
     max-width: 1200px;
 """
+light = "#f8f9fa"
+dark = "#343a40"
 
 def Note(c): return Div(H3("Note"), c, style="padding:10px;border:1px lightblue solid; border-left:6px lightblue solid;")
 
@@ -68,9 +70,8 @@ def index():
     nb_dir = Path('nbs')
     nbs = L(sorted(nb_dir.glob('*.ipynb'), reverse=True))
     return Titled("audrey.feldroy.com",
-        Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'),
+        Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
         P("The notebooks of Audrey M. Roy Greenfeld"),
-        # Note(P("Happy new year! All notebooks should be displaying correctly now. If you find any problems, message me. I'm ", A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"))),
         Div(*L(nbs).map(Card), style=container_style),
         A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"),
         style="padding:1em;"
@@ -83,7 +84,7 @@ def notebook(name: str):
     # Chop off the date part
     return (
         Title(get_title(nb)),
-        Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;} p {line-height: 1.5;}'),
+        Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
         render_nb(nb, wrapper=Div),
     )
 
