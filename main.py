@@ -3,6 +3,7 @@ from execnb.nbio import read_nb
 from pathlib import Path
 from fasthtml.common import *
 from functools import cache
+from monsterui.all import Theme
 from nb2fasthtml.core import *
 from importlib.metadata import distributions
 
@@ -20,19 +21,28 @@ def get_date_from_iso8601_prefix(fname):
         return datetime.fromisoformat(str(fname)[:10])
     except ValueError: return None
 
-@cache
-def get_title(fname):
+def get_title(nb):
     "Get title from `fname` notebook's cell 0 source by stripping '# ' prefix"
-    nbc = read_nb(fname)
-    nbc = nbc.cells[0].source.lstrip('# ')
-    if '\n' in nbc:
-        return first(nbc.split('\n'))
-    return nbc
+#     nbc = read_nb(fname)
+    nb = nb.cells[0].source.lstrip('# ')
+    if '\n' in nb:
+        return first(nb.split('\n'))
+    return nb
+
+# @cache
+# def get_title(fname):
+#     "Get title from `fname` notebook's cell 0 source by stripping '# ' prefix"
+#     nbc = read_nb(fname)
+#     nbc = nbc.cells[0].source.lstrip('# ')
+#     if '\n' in nbc:
+#         return first(nbc.split('\n'))
+#     return nbc
 
 @cache
 def Card(fname):
     date = get_date_from_iso8601_prefix(fname.name)
-    title = get_title(fname)
+    nb = read_nb(fname)
+    title = get_title(nb)
     return A(
         Header(H2(title, style="margin:0 0 0.5rem 0;font-size:1.25rem;font-weight:500;")),
         Div(f"{date:%a, %b %-d, %Y}", style="font-size: 0.875rem;color:#666;"),
@@ -79,14 +89,30 @@ def index():
 
 @rt('/nbs/{name}')
 def notebook(name: str):
-    nb = Path(f'nbs/{name}.ipynb')
-    # name is like '2021-01-01-foo-bar'
-    # Chop off the date part
+    fpath = Path(f'nbs/{name}.ipynb')
+    nb = read_nb(fpath)
+    if "MonsterUI" in nb.cells[3].source:
+        return (
+            *Theme.blue.headers(),
+            Title(get_title(nb)),
+            render_nb(fpath, wrapper=Div)
+        )
+
+    # Otherwise use default style
     return (
         Title(get_title(nb)),
         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
-        render_nb(nb, wrapper=Div),
+        render_nb(fpath, wrapper=Div),
     )
+
+# @rt('/nbs/{name}')
+# def notebook(name: str):
+#     nb = Path(f'nbs/{name}.ipynb')
+#     return (
+#         Title(get_title(nb)),
+#         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
+#         render_nb(nb, wrapper=Div),
+#     )
 
 @rt('/experiments/{name}')
 def notebook_old(name: str):
