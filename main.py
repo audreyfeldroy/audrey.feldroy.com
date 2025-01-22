@@ -23,20 +23,10 @@ def get_date_from_iso8601_prefix(fname):
 
 def get_title(nb):
     "Get title from `fname` notebook's cell 0 source by stripping '# ' prefix"
-#     nbc = read_nb(fname)
     nb = nb.cells[0].source.lstrip('# ')
     if '\n' in nb:
         return first(nb.split('\n'))
     return nb
-
-# @cache
-# def get_title(fname):
-#     "Get title from `fname` notebook's cell 0 source by stripping '# ' prefix"
-#     nbc = read_nb(fname)
-#     nbc = nbc.cells[0].source.lstrip('# ')
-#     if '\n' in nbc:
-#         return first(nbc.split('\n'))
-#     return nbc
 
 @cache
 def Card(fname):
@@ -49,27 +39,8 @@ def Card(fname):
         href=f'/nbs/{fname.name[:-6]}',
         onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 6px rgba(0,0,0,0.1)'",
         onmouseout="this.style.transform='none';this.style.boxShadow='0 1px 3px rgba(0,0,0,0.12)'",
-        style="""border:1px solid #e2e8f0;
-        padding:1rem;
-        border-radius: 0.5rem;
-        background: light-dark(#ffffff, #1a1a1a);
-        color: light-dark(#1a1a1a, #ffffff);
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-        transition: transform 0.2s ease;
-        cursor: pointer;
-        text-decoration: none;
-        display: block;
-    """)
+        style="border:1px solid #e2e8f0;padding:1rem;border-radius:0.5rem;background:light-dark(#ffffff, #1a1a1a);color:light-dark(#1a1a1a, #ffffff);box-shadow:0 1px 3px rgba(0,0,0,0.12);transition:transform 0.2s ease;cursor:pointer;text-decoration:none;display:block;")
 
-# Card container - TODO refactor into a component maybe
-container_style = """
-    margin: 2em auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
-    grid-gap: 1.5rem;
-    padding: 1rem;
-    max-width: 1200px;
-"""
 light = "#f8f9fa"
 dark = "#343a40"
 
@@ -82,7 +53,7 @@ def index():
     return Titled("audrey.feldroy.com",
         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
         P("The notebooks of Audrey M. Roy Greenfeld"),
-        Div(*L(nbs).map(Card), style=container_style),
+        Div(*L(nbs).map(Card), style="margin:2em auto;display:grid;grid-template-columns:repeat(auto-fill, minmax(220px,1fr));grid-gap: 1.5rem;padding:1rem;max-width:1200px;"),
         A("@audrey.feldroy.com on Bluesky", href="https://bsky.app/profile/audrey.feldroy.com"),
         style="padding:1em;"
     )
@@ -93,6 +64,7 @@ def notebook(name: str):
     nb = read_nb(fpath)
     if "MonsterUI" in nb.cells[3].source:
         return (
+            *hdrs,
             *Theme.blue.headers(),
             Title(get_title(nb)),
             render_nb(fpath, wrapper=Div)
@@ -104,15 +76,6 @@ def notebook(name: str):
         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
         render_nb(fpath, wrapper=Div),
     )
-
-# @rt('/nbs/{name}')
-# def notebook(name: str):
-#     nb = Path(f'nbs/{name}.ipynb')
-#     return (
-#         Title(get_title(nb)),
-#         Style(':root {font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif; color-scheme: light dark;} body {background-color: light-dark(#ffffff, #1a1a1a); color: light-dark(#1a1a1a, #ffffff);} p {line-height: 1.5;}'),
-#         render_nb(nb, wrapper=Div),
-#     )
 
 @rt('/experiments/{name}')
 def notebook_old(name: str):
