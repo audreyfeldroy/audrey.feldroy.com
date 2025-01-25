@@ -116,5 +116,21 @@ def notebook(name:str):
         )
     )
 
+@rt
+def versions():
+    dists = L([NS(name=dist.metadata['Name'], version=dist.version) for dist in distributions()]).sorted('name')
+    dists = [Li(f'{d.name}: {d.version}') for d in dists]
+    return (Title('Package Versions'),
+        Style(css),    
+        Div(
+            H1('Package versions'),
+            Ul(*dists)          
+        )       
+    )
+
+@rt('/.well-known/{fname}')
+def wellknown(fname: str):
+    return Path(f'.well-known/{fname}').read_text()
+
 # %% 2025-01-23-Using-My-Blog-to-Rewrite-Itself.ipynb 77
 serve()
