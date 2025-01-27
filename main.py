@@ -25,9 +25,8 @@ app,rt = fast_app(pico=False)
 
 # %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 9
 def get_nb_paths(): 
-    if IN_NOTEBOOK:
-        return L(sorted(Path().glob("*.ipynb"), reverse=True))
-    return L(sorted(Path("nbs/").glob("*.ipynb"), reverse=True))
+    root = Path() if IN_NOTEBOOK else Path("nbs/")
+    return L(root.glob("*.ipynb")).sorted(reverse=True)
 
 # %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 11
 def get_title_and_desc(fpath):
@@ -41,9 +40,9 @@ def get_date_from_iso8601_prefix(fname):
     "Gets date from first 10 chars YYYY-MM-DD of `fname`, where `fname` is like `2025-01-12-Get-Date-From-This.whatever"
     try:
         return datetime.fromisoformat(str(fname)[0:10])
-    except ValueError: return None
+    except ValueError: return datetime.now()
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 16
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 17
 def NBCard(title,desc,href,date):
     return A(
         franken.Card(
@@ -53,12 +52,12 @@ def NBCard(title,desc,href,date):
         body_cls='space-y-2'
     ), href=href)
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 17
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 18
 def mk_nbcard_from_nb_path(nb_path):
     date = get_date_from_iso8601_prefix(nb_path.name) or datetime.now()
     return NBCard(*get_title_and_desc(nb_path), href=f'/nbs/{nb_path.name[:-6]}', date=date)
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 19
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 20
 @rt
 def index():
     nb_paths = get_nb_paths()
@@ -73,32 +72,33 @@ def index():
         )
     )
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 21
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 22
 def StyledCode(c, style='monokai'):
     fm = HtmlFormatter(style=style, cssclass=style, prestyles="padding:10px 0;")
     h = highlight(c, PythonLexer(), fm)
     sd = fm.get_style_defs(f".{style}")
     return Style(sd), NotStr(h)
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 22
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 23
 def StyledMd(m):
     return Safe(mistletoe.markdown(m))
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 23
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 24
 def StyledCell(c):
     if c.cell_type == "markdown": return StyledMd(c.source)
     if c.cell_type == "code": 
         if not c.outputs: return StyledCode(c.source)
         return StyledCode(c.source), render_code_output(c)
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 25
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 26
 @rt("/nbs/{name}")
 def notebook(name:str):
+#     root = Path() if IN_NOTEBOOK else Path("nbs/")
     fname = f"{name}.ipynb" if IN_NOTEBOOK else f"nbs/{name}.ipynb"
     fpath = Path(fname)
     nb = read_nb(fpath)
     title = nb.cells[0].source.lstrip("# ")
-    date = get_date_from_iso8601_prefix(fname)
+    date = get_date_from_iso8601_prefix(fname.lstrip("nbs/"))
     desc = nb.cells[1].source
     if "MonsterUI" in title:
         return (
@@ -125,7 +125,7 @@ def notebook(name:str):
         )
     )
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 27
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 28
 @rt
 def versions():
     dists = L([NS(name=dist.metadata['Name'], version=dist.version) for dist in distributions()]).sorted('name')
@@ -138,11 +138,11 @@ def versions():
         )       
     )
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 29
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 30
 @rt('/.well-known/{fname}')
 def wellknown(fname: str):
     fpath = f"../.well-known/{fname}" if IN_NOTEBOOK else f".well-known/{fname}"
     return Path(fpath).read_text()
 
-# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 31
+# %% nbs/2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.ipynb 32
 serve()
