@@ -7,8 +7,13 @@ requires-python = ">=3.13"
 dependencies = [
     "air",
     "hypercorn>=0.17.3",    
-    "ruff",
     "mistletoe",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
     "fastapi[standard]>=0.116.1",
     "pytest>=8.4.1",
 ]
