@@ -12,7 +12,7 @@ from pygments.formatters import HtmlFormatter
 
 app = air.Air()
 
-style="monokai"
+style = "monokai"
 formatter = HtmlFormatter(style=style, cssclass=style, prestyles="padding:10px 0;")
 style_definition = formatter.get_style_defs(f".{style}")
 
@@ -33,10 +33,10 @@ def get_date_from_iso8601_prefix(fname):
 def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
     """
     Read a Jupyter notebook file and return all cells as a list of dictionaries.
-    
+
     Args:
         notebook_path: Path to the .ipynb file
-        
+
     Returns:
         List of dictionaries, each containing:
         - 'content': The cell's source code/markdown as a string
@@ -44,25 +44,27 @@ def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
         - 'metadata': Any metadata associated with the cell
     """
     try:
-        with open(notebook_path, 'r', encoding='utf-8') as f:
+        with open(notebook_path, "r", encoding="utf-8") as f:
             notebook_data = json.load(f)
-        
+
         cells = []
-        for cell in notebook_data.get('cells', []):
+        for cell in notebook_data.get("cells", []):
             # Join source lines if it's a list, otherwise use as-is
-            source = cell.get('source', '')
+            source = cell.get("source", "")
             if isinstance(source, list):
-                source = ''.join(source)
-            
-            cells.append({
-                'content': source,
-                'cell_type': cell.get('cell_type', 'unknown'),
-                'metadata': cell.get('metadata', {}),
-                'outputs': cell.get('outputs', [])
-            })
-        
+                source = "".join(source)
+
+            cells.append(
+                {
+                    "content": source,
+                    "cell_type": cell.get("cell_type", "unknown"),
+                    "metadata": cell.get("metadata", {}),
+                    "outputs": cell.get("outputs", []),
+                }
+            )
+
         return cells
-    
+
     except (FileNotFoundError, json.JSONDecodeError, KeyError) as e:
         print(f"Error reading notebook {notebook_path}: {e}")
         return []
@@ -71,15 +73,17 @@ def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
 def notebook_card(notebook_path: Path):
     notebook = get_notebook_cells(notebook_path=notebook_path)
     date = get_date_from_iso8601_prefix(notebook_path.name) or datetime.now()
-    return air.A(
-        air.Article(
-            air.Header(
-                air.H3(notebook[0]['content'],),
-                air.P(f"{date:%a, %b %-d, %Y}"),
-                notebook[1]['content'],
-            )
-        ),
-        href=f'/nbs/{notebook_path.stem}',
+    return air.Article(
+        air.Header(
+            air.H3(
+                air.A(
+                    notebook[0]["content"],
+                    href=f"/nbs/{notebook_path.stem}",
+                )
+            ),
+            air.P(f"{date:%a, %b %-d, %Y}"),
+            air.P(notebook[1]["content"]),
+        )
     )
 
 
@@ -104,48 +108,42 @@ def index():
     )
 
 
-
 def StyledCell(cell):
-    if cell['cell_type'] == 'markdown':
-        return air.Raw(markdown(cell['content'], HtmlRenderer))
-    
-    if cell['cell_type'] == 'code':
-        highlighted_text  = highlight(cell['content'], PythonLexer(), formatter)
+    if cell["cell_type"] == "markdown":
+        return air.Raw(markdown(cell["content"], HtmlRenderer))
+
+    if cell["cell_type"] == "code":
+        highlighted_text = highlight(cell["content"], PythonLexer(), formatter)
         outputs = []
-        for output in cell['outputs']:
-            for typ, value in output.get('data', {}).items():
-                if typ == 'text/markdown':
-                    content = '\n'.join(value)
+        for output in cell["outputs"]:
+            for typ, value in output.get("data", {}).items():
+                if typ == "text/markdown":
+                    content = "\n".join(value)
                     outputs.append(markdown(content, HtmlRenderer))
                 else:
-                    content = '\n'.join(value)
-                    outputs.append(content) 
+                    content = "\n".join(value)
+                    outputs.append(content)
 
                 # content = '\n'.join(value)
-                # outputs.append(content)         
-
+                # outputs.append(content)
 
         return air.Article(
-            air.Header(air.Raw(highlighted_text)),
-
-            *L(outputs).map(air.Raw)
+            air.Header(air.Raw(highlighted_text)), *L(outputs).map(air.Raw)
         )
-    return 'blarg'
+    return "blarg"
 
 
 @app.get("/nbs/{name}")
 def notebook(name: str):
-    path = Path(f'nbs/{name}.ipynb')
+    path = Path(f"nbs/{name}.ipynb")
     notebook = get_notebook_cells(path)
     date = get_date_from_iso8601_prefix(name)
     return air.layouts.picocss(
-        air.Title(notebook[0]['content']),
-        air.H1(notebook[0]['content']),
+        air.Title(notebook[0]["content"]),
+        air.H1(notebook[0]["content"]),
         air.Style(style_definition),
         air.P(f"by Audrey M. Roy Greenfeld | {date:%a, %b %-d, %Y}"),
-        air.P(notebook[1]['content']),
+        air.P(notebook[1]["content"]),
         air.Hr(),
-        air.Div(
-            *L(notebook[2:]).map(StyledCell)
-        )
+        air.Div(*L(notebook[2:]).map(StyledCell)),
     )
