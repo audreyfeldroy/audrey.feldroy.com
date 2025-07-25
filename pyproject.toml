@@ -1,0 +1,13 @@
+[project]
+name = "audrey-feldroy-com"
+version = "0.1.0"
+description = "My blog, powered by Air, the awesome new Python web framework"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "air",
+    "ruff",
+    "mistletoe",
+    "fastapi[standard]>=0.116.1",
+    "pytest>=8.4.1",
+]

@@ -1,6 +1,0 @@
-python-fasthtml
-nb2fasthtml @ git+https://github.com/answerdotai/nb2fasthtml
-MonsterUI
-pyyaml
-regex
-mistletoe
