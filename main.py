@@ -105,6 +105,7 @@ def index():
             # *get_nb_paths().map(notebook_card),
             # class_="grid",
         ),
+        air.P(f"© 2024-{datetime.now().year} Audrey M. Roy Greenfeld"),
     )
 
 
