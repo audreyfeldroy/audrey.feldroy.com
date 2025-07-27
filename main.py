@@ -7,7 +7,7 @@ from datetime import datetime
 from mistletoe import markdown
 from mistletoe.html_renderer import HtmlRenderer
 from pygments import highlight
-from pygments.lexers import PythonLexer
+from pygments.lexers import get_lexer_by_name, PythonLexer, JsonLexer, BashLexer
 from pygments.formatters import HtmlFormatter
 
 app = air.Air()
@@ -112,9 +112,17 @@ def index():
 def StyledCell(cell):
     if cell["cell_type"] == "markdown":
         return air.Raw(markdown(cell["content"], HtmlRenderer))
+    elif cell["cell_type"] == "raw":
+        return air.Pre(cell["content"])
+    elif cell["cell_type"] == "code":
+        # Get the language from the cell's metadata, default to python
+        language = cell.get("metadata", {}).get("language_info", {}).get("name", "python")
+        try:
+            lexer = get_lexer_by_name(language)
+        except ValueError:
+            lexer = PythonLexer()
 
-    if cell["cell_type"] == "code":
-        highlighted_text = highlight(cell["content"], PythonLexer(), formatter)
+        highlighted_text = highlight(cell["content"], lexer, formatter)
         outputs = []
         for output in cell["outputs"]:
             for typ, value in output.get("data", {}).items():
@@ -125,12 +133,10 @@ def StyledCell(cell):
                     content = "\n".join(value)
                     outputs.append(content)
 
-                # content = '\n'.join(value)
-                # outputs.append(content)
-
         return air.Article(
             air.Header(air.Raw(highlighted_text)), *L(outputs).map(air.Raw)
         )
+    
     return "blarg"
 
 
