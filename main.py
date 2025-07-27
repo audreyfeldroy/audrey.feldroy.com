@@ -12,7 +12,7 @@ from pygments.formatters import HtmlFormatter
 
 app = air.Air()
 
-style = "colorful"
+style = "monokai"
 formatter = HtmlFormatter(style=style, cssclass=style, prestyles="padding:10px 0;")
 style_definition = formatter.get_style_defs(f".{style}")
 
