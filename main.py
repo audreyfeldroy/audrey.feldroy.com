@@ -147,7 +147,19 @@ def notebook(name: str):
     date = get_date_from_iso8601_prefix(name)
     return air.layouts.picocss(
         air.Title(notebook[0]["content"]),
-        air.H1(notebook[0]["content"]),
+        air.A(
+            air.H1("audrey.feldroy.com"),
+            href="/",
+        ),
+        air.P(
+            "The experimental notebooks of Audrey M. Roy Greenfeld. This website and all its notebooks are open-source at ",
+            air.A(
+                "github.com/audreyfeldroy/audrey.feldroy.com",
+                href="https://github.com/audreyfeldroy/audrey.feldroy.com",
+            ),
+        ),
+        air.Br(),
+        air.H2(notebook[0]["content"]),
         air.Style(style_definition),
         air.P(f"by Audrey M. Roy Greenfeld | {date:%a, %b %-d, %Y}"),
         air.P(notebook[1]["content"]),
