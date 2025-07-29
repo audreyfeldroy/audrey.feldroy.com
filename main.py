@@ -1,4 +1,5 @@
 import air
+import ast
 import json
 from typing import Iterable, Generator, List, Dict, Any
 from listo import listo as L
@@ -116,7 +117,9 @@ def StyledCell(cell):
         return air.Pre(cell["content"])
     elif cell["cell_type"] == "code":
         # Get the language from the cell's metadata, default to python
-        language = cell.get("metadata", {}).get("language_info", {}).get("name", "python")
+        language = (
+            cell.get("metadata", {}).get("language_info", {}).get("name", "python")
+        )
         try:
             lexer = get_lexer_by_name(language)
         except ValueError:
@@ -136,7 +139,7 @@ def StyledCell(cell):
         return air.Article(
             air.Header(air.Raw(highlighted_text)), *L(outputs).map(air.Raw)
         )
-    
+
     return "blarg"
 
 
@@ -165,4 +168,126 @@ def notebook(name: str):
         air.P(notebook[1]["content"]),
         air.Hr(),
         air.Div(*L(notebook[2:]).map(StyledCell)),
+    )
+
+
+def get_marimo_cells(path: Path) -> List[Dict[str, Any]]:
+    """
+    Read a Marimo notebook file and return all cells as a list of dictionaries.
+    """
+    try:
+        source = path.read_text(encoding="utf-8")
+        tree = ast.parse(source, filename=path.name)
+        cells = []
+
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef):
+                is_marimo_cell = False
+                hide_code = False
+                for decorator in node.decorator_list:
+                    decorator_name = ""
+                    if (
+                        isinstance(decorator, ast.Call)
+                        and isinstance(decorator.func, ast.Attribute)
+                        and isinstance(decorator.func.value, ast.Name)
+                    ):
+                        decorator_name = (
+                            f"{decorator.func.value.id}.{decorator.func.attr}"
+                        )
+
+                    if decorator_name == "app.cell":
+                        is_marimo_cell = True
+                        for keyword in decorator.keywords:
+                            if (
+                                keyword.arg == "hide_code"
+                                and isinstance(keyword.value, ast.Constant)
+                                and keyword.value.value is True
+                            ):
+                                hide_code = True
+                        break
+
+                if is_marimo_cell:
+                    cell_type = "code"
+                    content = ""
+
+                    # Simple case: single mo.md("...") call
+                    if (
+                        len(node.body) == 1
+                        and isinstance(node.body[0], ast.Expr)
+                        and isinstance(node.body[0].value, ast.Call)
+                        and isinstance(node.body[0].value.func, ast.Attribute)
+                        and node.body[0].value.func.attr == "md"
+                        and node.body[0].value.args
+                        and isinstance(node.body[0].value.args[0], ast.Constant)
+                    ):
+                        content = node.body[0].value.args[0].s
+                        cell_type = "markdown"
+                    else:
+                        # Otherwise, treat the whole function body as code
+                        content = "\n".join(
+                            ast.get_source_segment(source, n) for n in node.body
+                        )
+
+                    cells.append(
+                        {
+                            "content": content,
+                            "cell_type": cell_type,
+                            "hide_code": hide_code,
+                        }
+                    )
+        return cells
+    except Exception as e:
+        print(f"Error reading marimo notebook {path}: {e}")
+        return []
+
+
+def StyledMarimoCell(cell):
+    if cell["hide_code"] and cell["cell_type"] == "code":
+        return ""
+
+    if cell["cell_type"] == "markdown":
+        return air.Raw(markdown(cell["content"], HtmlRenderer))
+    elif cell["cell_type"] == "code":
+        highlighted_text = highlight(cell["content"], PythonLexer(), formatter)
+        return air.Raw(highlighted_text)
+
+    return ""
+
+
+@app.get("/marimo/{name}")
+def marimo_notebook(name: str):
+    path = Path(f"nbs/{name}.py")
+    cells = get_marimo_cells(path)
+    date = get_date_from_iso8601_prefix(name)
+
+    title = "Marimo Notebook"
+    description = ""
+
+    md_cells = [c["content"] for c in cells if c["cell_type"] == "markdown"]
+    if len(md_cells) > 0:
+        # Remove markdown heading characters from title
+        title = md_cells[0].lstrip("# ").strip()
+    if len(md_cells) > 1:
+        description = md_cells[1]
+
+    return air.layouts.picocss(
+        air.Title(title),
+        air.A(
+            air.H1("audrey.feldroy.com"),
+            href="/",
+        ),
+        air.P(
+            "The experimental notebooks of Audrey M. Roy Greenfeld. This website and all its notebooks are open-source at ",
+            air.A(
+                "github.com/audreyfeldroy/audrey.feldroy.com",
+                href="https://github.com/audreyfeldroy/audrey.feldroy.com",
+            ),
+        ),
+        air.Br(),
+        air.H2(title),
+        air.Style(style_definition),
+        air.P(f"by Audrey M. Roy Greenfeld | {date:%a, %b %-d, %Y}"),
+        air.P(description),
+        air.Hr(),
+        air.Div(*L(cells).map(StyledMarimoCell)),
     )
