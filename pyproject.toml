@@ -18,3 +18,8 @@ dev = [
     "fastapi[standard]>=0.116.1",
     "pytest>=8.4.1",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+]

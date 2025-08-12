@@ -1,5 +1,5 @@
 import pytest
-from main import get_notebook_cells, get_date_from_iso8601_prefix
+from main import get_notebook_cells, get_date_from_filename
 from pathlib import Path
 import tempfile
 import json
@@ -30,16 +30,16 @@ def test_get_notebook_cells_file_not_found():
     assert cells == []
 
 
-def test_get_date_from_iso8601_prefix_valid():
+def test_get_date_from_filename_valid():
     fname = "2025-01-12-Get-Date-From-This.ipynb"
-    dt = get_date_from_iso8601_prefix(fname)
+    dt = get_date_from_filename(fname)
     assert isinstance(dt, datetime)
     assert dt.year == 2025 and dt.month == 1 and dt.day == 12
 
 
-def test_get_date_from_iso8601_prefix_invalid():
+def test_get_date_from_filename_invalid():
     fname = "notadate-at-all.ipynb"
-    dt = get_date_from_iso8601_prefix(fname)
+    dt = get_date_from_filename(fname)
     assert isinstance(dt, datetime)
     # Should return now, so year should be current year
     assert abs((dt - datetime.now()).total_seconds()) < 5
