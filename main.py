@@ -21,7 +21,10 @@ STYLE_DEFINITION = FORMATTER.get_style_defs(f".{STYLE}")
 NBS_DIR = Path("nbs/")
 
 
-def get_notebook_paths():
+def get_notebook_paths() -> List[Path]:
+    """
+    Returns a sorted list of notebook paths in the NBS_DIR directory.
+    """
     return L(NBS_DIR.glob("*.ipynb")).sorted(reverse=True)
 
 
@@ -90,7 +93,10 @@ def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
         return []
 
 
-def page_header(is_index=False):
+def page_header(is_index: bool = False) -> List[Any]:
+    """
+    Returns the page header elements. If not index, wraps the title in a link.
+    """
     h1 = air.H1("audrey.feldroy.com")
     if not is_index:
         h1 = air.A(h1, href="/")
@@ -106,23 +112,32 @@ def page_header(is_index=False):
     ]
 
 
-def page_footer():
+def page_footer() -> Any:
+    """
+    Returns the page footer element.
+    """
     return air.P(f"© 2024-{datetime.now().year} Audrey M. Roy Greenfeld")
 
 
-def notebook_card(notebook_path: Path):
+def notebook_card(notebook_path: Path) -> Any:
+    """
+    Returns a card element for a notebook, showing its title, date, and summary.
+    """
     notebook = get_notebook_cells(notebook_path=notebook_path)
     date = get_date_from_filename(notebook_path.name) or datetime.now()
+    # Defensive: check notebook has at least 2 cells
+    title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
+    summary = notebook[1]["content"] if len(notebook) > 1 else ""
     return air.Article(
         air.Header(
             air.H3(
                 air.A(
-                    notebook[0]["content"],
+                    title,
                     href=f"/nbs/{notebook_path.stem}",
                 )
             ),
             air.P(f"{date:%a, %b %-d, %Y}"),
-            air.P(notebook[1]["content"]),
+            air.P(summary),
         )
     )
 
@@ -130,6 +145,8 @@ def notebook_card(notebook_path: Path):
 @app.page
 def index():
     nb_paths = get_notebook_paths()
+    # Ensure nb_paths is a Listo instance so .map() works
+    nb_paths = L(nb_paths)
     return air.layouts.picocss(
         air.Title("audrey.feldroy.com"),
         *page_header(is_index=True),
@@ -142,7 +159,10 @@ def index():
     )
 
 
-def StyledCell(cell):
+def StyledCell(cell: Dict[str, Any]) -> Any:
+    """
+    Renders a notebook cell as HTML, styled according to its type.
+    """
     if cell["cell_type"] == "markdown":
         return air.Raw(markdown(cell["content"], HtmlRenderer))
     elif cell["cell_type"] == "raw":
@@ -177,18 +197,23 @@ def StyledCell(cell):
 
 
 @app.get("/nbs/{name}")
-def notebook(name: str):
+def notebook(name: str) -> Any:
+    """
+    Renders a notebook page by name, showing its title, summary, and cells.
+    """
     path = NBS_DIR / f"{name}.ipynb"
     notebook = get_notebook_cells(path)
     date = get_date_from_filename(name)
+    title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
+    summary = notebook[1]["content"] if len(notebook) > 1 else ""
     return air.layouts.picocss(
-        air.Title(notebook[0]["content"]),
+        air.Title(title),
         *page_header(),
         air.Br(),
-        air.H2(notebook[0]["content"]),
+        air.H2(title),
         air.Style(STYLE_DEFINITION),
         air.P(f"by Audrey M. Roy Greenfeld | {date:%a, %b %-d, %Y}"),
-        air.P(notebook[1]["content"]),
+        air.P(summary),
         air.Hr(),
         air.Div(*L(notebook[2:]).map(StyledCell)),
         page_footer(),
