@@ -5,7 +5,8 @@ list:
     @just --list
 
 # Run the blog in development mode with reload
-dev:
+dev: 
+    @lsof -ti tcp:8000 | xargs kill -9 || true
     uv run fastapi dev main.py --reload
 
 # Format and fix code with ruff
@@ -28,4 +29,3 @@ install:
 # Clean cache files
 clean:
     rm -rf __pycache__ .pytest_cache .ruff_cache
-
