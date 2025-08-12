@@ -2,14 +2,14 @@ import air
 import json
 import logging
 import re
-from typing import Iterable, Generator, List, Dict, Any
+from typing import List, Dict, Any
 from listo import listo as L
 from pathlib import Path
 from datetime import datetime
 from mistletoe import markdown
 from mistletoe.html_renderer import HtmlRenderer
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name, PythonLexer, JsonLexer, BashLexer
+from pygments.lexers import get_lexer_by_name, PythonLexer
 from pygments.formatters import HtmlFormatter
 
 app = air.Air()

@@ -4,13 +4,10 @@
 dev:
     uv run fastapi dev main.py --reload
 
-# Format code with ruff
-format:
+# Format and fix code with ruff
+fix:
     ruff format main.py
-
-# Lint code with ruff
-lint:
-    ruff check main.py
+    ruff check main.py --fix
 
 # Run tests
 test:
