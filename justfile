@@ -1,5 +1,9 @@
 # Development commands for audrey.feldroy.com
 
+# Show available commands
+list:
+    @just --list
+
 # Run the blog in development mode with reload
 dev:
     uv run fastapi dev main.py --reload
@@ -25,6 +29,3 @@ install:
 clean:
     rm -rf __pycache__ .pytest_cache .ruff_cache
 
-# Show available commands
-list:
-    @just --list
