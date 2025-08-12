@@ -110,6 +110,23 @@ def page_footer():
     return air.P(f"© 2024-{datetime.now().year} Audrey M. Roy Greenfeld")
 
 
+def tailwind_layout(*content):
+    """Custom layout function using Tailwind CSS instead of Pico.css"""
+    return air.Html(
+        air.Head(
+            air.Meta(charset="utf-8"),
+            air.Meta(name="viewport", content="width=device-width, initial-scale=1"),
+            air.Script(src="https://cdn.tailwindcss.com"),
+        ),
+        air.Body(
+            air.Main(
+                *content,
+                class_="container mx-auto px-4 py-8 max-w-4xl"
+            )
+        )
+    )
+
+
 def notebook_card(notebook_path: Path):
     notebook = get_notebook_cells(notebook_path=notebook_path)
     date = get_date_from_filename(notebook_path.name) or datetime.now()
@@ -130,7 +147,7 @@ def notebook_card(notebook_path: Path):
 @app.page
 def index():
     nb_paths = get_notebook_paths()
-    return air.layouts.picocss(
+    return tailwind_layout(
         air.Title("audrey.feldroy.com"),
         *page_header(is_index=True),
         air.Div(
@@ -181,7 +198,7 @@ def notebook(name: str):
     path = NBS_DIR / f"{name}.ipynb"
     notebook = get_notebook_cells(path)
     date = get_date_from_filename(name)
-    return air.layouts.picocss(
+    return tailwind_layout(
         air.Title(notebook[0]["content"]),
         *page_header(),
         air.Br(),
