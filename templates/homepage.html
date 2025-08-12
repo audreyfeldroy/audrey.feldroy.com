@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>audrey.feldroy.com</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Georgia', 'Times New Roman', 'serif'],
+                        'sans': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    },
+                    maxWidth: {
+                        'reading': '65ch'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-gray-900 font-sans antialiased">
+    <!-- Header -->
+    <header class="border-b border-gray-200 bg-white">
+        <div class="max-w-4xl mx-auto px-4 py-6">
+            <h1 class="text-2xl font-bold text-gray-900">
+                audrey.feldroy.com
+            </h1>
+            <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                The experimental notebooks of Audrey M. Roy Greenfeld. This website and all its notebooks are open-source at 
+                <a href="https://github.com/audreyfeldroy/audrey.feldroy.com" class="text-blue-600 hover:text-blue-800 underline">
+                    github.com/audreyfeldroy/audrey.feldroy.com
+                </a>
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Article Cards -->
+        <div class="space-y-8">
+            <!-- Sample Article Card -->
+            <article class="border-b border-gray-100 pb-8 last:border-b-0">
+                <header class="mb-4">
+                    <h2 class="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                        <a href="/nbs/sample-post" class="hover:text-blue-600 transition-colors">
+                            Gemini CLI Settings With MCP
+                        </a>
+                    </h2>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <time datetime="2025-07-27">Sun, Jul 27, 2025</time>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed text-base">
+                        Exploring how to configure the Gemini CLI tool with Model Context Protocol (MCP) for enhanced AI interactions and workflow automation.
+                    </p>
+                </header>
+            </article>
+
+            <!-- Another Sample Card -->
+            <article class="border-b border-gray-100 pb-8 last:border-b-0">
+                <header class="mb-4">
+                    <h2 class="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                        <a href="/nbs/sample-post-2" class="hover:text-blue-600 transition-colors">
+                            FastHTML Piano Part 3
+                        </a>
+                    </h2>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <time datetime="2025-01-02">Thu, Jan 2, 2025</time>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed text-base">
+                        Continuing the FastHTML piano series with advanced features, sound synthesis, and interactive keyboard controls for web-based music creation.
+                    </p>
+                </header>
+            </article>
+
+            <!-- Third Sample Card -->
+            <article class="border-b border-gray-100 pb-8 last:border-b-0">
+                <header class="mb-4">
+                    <h2 class="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                        <a href="/nbs/sample-post-3" class="hover:text-blue-600 transition-colors">
+                            This Site Is Now Powered by This Notebook
+                        </a>
+                    </h2>
+                    <div class="flex items-center text-sm text-gray-500 mb-3">
+                        <time datetime="2025-01-23">Thu, Jan 23, 2025</time>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed text-base">
+                        A meta exploration of using Jupyter notebooks to generate and power the very website you're reading, creating a self-referential blogging system.
+                    </p>
+                </header>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 mt-16">
+        <div class="max-w-4xl mx-auto px-4 py-6">
+            <p class="text-gray-500 text-sm">
+                © 2024-2025 Audrey M. Roy Greenfeld
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
