@@ -18,14 +18,19 @@ STYLE = "monokai"
 FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px 0;")
 STYLE_DEFINITION = FORMATTER.get_style_defs(f".{STYLE}")
 
-NBS_DIR = Path("nbs/")
+POSTS_DIR = Path("posts/")
 
 
 def get_notebook_paths() -> List[Path]:
     """
-    Returns a sorted list of notebook paths in the NBS_DIR directory.
+    Returns a sorted list of post paths in the POSTS_DIR directory.
+    Accepts both .ipynb and .md files so posts can be notebooks or markdown.
     """
-    return L(NBS_DIR.glob("*.ipynb")).sorted(reverse=True)
+    patterns = ["*.ipynb", "*.md"]
+    paths = []
+    for pat in patterns:
+        paths.extend(list(POSTS_DIR.glob(pat)))
+    return L(paths).sorted(reverse=True)
 
 
 def get_date_from_filename(filename: str) -> datetime:
@@ -123,7 +128,18 @@ def notebook_card(notebook_path: Path) -> Any:
     """
     Returns a card element for a notebook, showing its title, date, and summary.
     """
-    notebook = get_notebook_cells(notebook_path=notebook_path)
+    # for listing/summary we only render the first two cells/lines
+    if notebook_path.suffix == ".ipynb":
+        notebook = get_notebook_cells(notebook_path=notebook_path)
+    else:
+        # simple markdown file: read first two lines as title/summary
+        try:
+            text = notebook_path.read_text(encoding="utf-8")
+            lines = text.splitlines()
+        except Exception:
+            lines = ["Untitled", ""]
+        notebook = [{"content": lines[0] if lines else "Untitled", "cell_type": "markdown"},
+                    {"content": lines[1] if len(lines) > 1 else "", "cell_type": "markdown"}]
     date = get_date_from_filename(notebook_path.name) or datetime.now()
     # Defensive: check notebook has at least 2 cells
     title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
@@ -133,7 +149,7 @@ def notebook_card(notebook_path: Path) -> Any:
             air.H3(
                 air.A(
                     title,
-                    href=f"/nbs/{notebook_path.stem}",
+                    href=f"/posts/{notebook_path.stem}",
                 )
             ),
             air.P(f"{date:%a, %b %-d, %Y}"),
@@ -196,16 +212,32 @@ def StyledCell(cell: Dict[str, Any]) -> Any:
     return ""
 
 
-@app.get("/nbs/{name}")
+@app.get("/posts/{name}")
 def notebook(name: str) -> Any:
     """
     Renders a notebook page by name, showing its title, summary, and cells.
     """
-    path = NBS_DIR / f"{name}.ipynb"
-    notebook = get_notebook_cells(path)
-    date = get_date_from_filename(name)
-    title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
-    summary = notebook[1]["content"] if len(notebook) > 1 else ""
+    # prefer .ipynb, fall back to .md
+    ipynb_path = POSTS_DIR / f"{name}.ipynb"
+    md_path = POSTS_DIR / f"{name}.md"
+    if ipynb_path.exists():
+        path = ipynb_path
+        notebook = get_notebook_cells(path)
+        date = get_date_from_filename(name)
+        title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
+        summary = notebook[1]["content"] if len(notebook) > 1 else ""
+        cells = notebook[2:]
+    elif md_path.exists():
+        path = md_path
+        date = get_date_from_filename(name)
+        text = md_path.read_text(encoding="utf-8")
+        lines = text.splitlines()
+        title = lines[0] if lines else "Untitled"
+        summary = lines[1] if len(lines) > 1 else ""
+        # treat remaining lines as a single markdown cell
+        cells = [{"content": "\n".join(lines[2:]), "cell_type": "markdown"}]
+    else:
+        return air.layouts.picocss(air.Title("Not Found"), air.H1("Not Found"), page_footer())
     return air.layouts.picocss(
         air.Title(title),
         *page_header(),
@@ -215,6 +247,6 @@ def notebook(name: str) -> Any:
         air.P(f"by Audrey M. Roy Greenfeld | {date:%a, %b %-d, %Y}"),
         air.P(summary),
         air.Hr(),
-        air.Div(*L(notebook[2:]).map(StyledCell)),
+    air.Div(*L(cells).map(StyledCell)),
         page_footer(),
     )

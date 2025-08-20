@@ -16,7 +16,7 @@ Jupyter notebooks are such a joy to experiment in! My goal here is to make turni
 
 ## About the Blog Posts
 
-This started off with me copying the notebooks from https://github.com/audreyfeldroy/til/tree/main/nbs to nbs/
+This started off with me copying the notebooks from https://github.com/audreyfeldroy/til/tree/main/nbs to posts/
 and then it turned into my real blog.
 
 ## Quickstart
