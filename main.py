@@ -250,3 +250,16 @@ def notebook(name: str) -> Any:
     air.Div(*L(cells).map(StyledCell)),
         page_footer(),
     )
+
+
+@app.get("/nbs/{name}")
+def notebook_compat(name: str) -> Any:
+    """Compatibility redirect from old /nbs/<name> URLs to /posts/<name>."""
+    # air.redirect may not be available; return a small page that navigates to the new URL
+    new_url = f"/posts/{name}"
+    return air.layouts.picocss(
+        air.Title("Moved"),
+        air.Raw(f"<meta http-equiv=\"refresh\" content=\"0; url={new_url}\">"),
+        air.P("This post has moved to ", air.A(new_url, href=new_url)),
+        page_footer(),
+    )
