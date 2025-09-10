@@ -8,6 +8,7 @@ dependencies = [
     "air",
     "hypercorn>=0.17.3",
     "mistletoe",
+    "pygments>=2.19.2",
 ]
 
 
