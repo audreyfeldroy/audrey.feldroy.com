@@ -129,23 +129,6 @@ def get_post_dict(path: Path) -> dict:
     return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/articles/{path.stem}"}
 
 
-def page_header(is_index: bool = False) -> List[Any]:
-    """
-    Returns the page header elements. If not index, wraps the title in a link.
-    """
-    h1 = air.H1("audrey.feldroy.com")
-    if not is_index:
-        h1 = air.A(h1, href="/")
-    return [
-        h1,
-        air.P(
-            "The experimental notebooks of Audrey M. Roy Greenfeld. This website and all its notebooks are open-source at ",
-            air.A(
-                "github.com/audreyfeldroy/audrey.feldroy.com",
-                href="https://github.com/audreyfeldroy/audrey.feldroy.com",
-            ),
-        ),
-    ]
 
 
 def page_footer() -> Any:
@@ -153,40 +136,6 @@ def page_footer() -> Any:
     Returns the page footer element.
     """
     return air.P(f"© 2024-{datetime.now().year} Audrey M. Roy Greenfeld")
-
-
-def notebook_card(notebook_path: Path) -> Any:
-    """
-    Returns a card element for a notebook, showing its title, date, and summary.
-    """
-    # for listing/summary we only render the first two cells/lines
-    if notebook_path.suffix == ".ipynb":
-        notebook = get_notebook_cells(notebook_path=notebook_path)
-    else:
-        # simple markdown file: read first two lines as title/summary
-        try:
-            text = notebook_path.read_text(encoding="utf-8")
-            lines = text.splitlines()
-        except Exception:
-            lines = ["Untitled", ""]
-        notebook = [{"content": lines[0] if lines else "Untitled", "cell_type": "markdown"},
-                    {"content": lines[1] if len(lines) > 1 else "", "cell_type": "markdown"}]
-    date = get_date_from_filename(notebook_path.name) or datetime.now()
-    # Defensive: check notebook has at least 2 cells
-    title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
-    summary = notebook[1]["content"] if len(notebook) > 1 else ""
-    return air.Article(
-        air.Header(
-            air.H3(
-                air.A(
-                    title,
-                    href=f"/articles/{notebook_path.stem}",
-                )
-            ),
-            air.P(f"{date:%a, %b %-d, %Y}"),
-            air.P(summary),
-        )
-    )
 
 
 @app.page
@@ -209,38 +158,7 @@ def index(request: air.Request) -> Any:
     # )
 
 
-def StyledCell(cell: Dict[str, Any]) -> str:
-    """
-    Renders a notebook cell as an HTML string, styled according to its type.
-    """
-    if cell["cell_type"] == "markdown":
-        return markdown(cell["content"], HtmlRenderer)
-    elif cell["cell_type"] == "raw":
-        return f"<pre><code>{cell['content']}</code></pre>"
-    elif cell["cell_type"] == "code":
-        language = (
-            cell.get("metadata", {}).get("language_info", {}).get("name", "python")
-        )
-        try:
-            lexer = get_lexer_by_name(language)
-        except ValueError:
-            lexer = PythonLexer()
-
-        highlighted_text = highlight(cell["content"], lexer, FORMATTER)
-        outputs = []
-        for output in cell["outputs"]:
-            for typ, value in output.get("data", {}).items():
-                if typ == "text/markdown":
-                    content = "\n".join(value)
-                    outputs.append(markdown(content, HtmlRenderer))
-                else:
-                    content = "\n".join(value)
-                    outputs.append(f"<pre><code>{content}</code></pre>")
-
-    return f'<article><header>{highlighted_text}</header>{"".join(outputs)}</article>'
-
-    logging.warning(f"Unknown cell type: {cell['cell_type']}")
-    return ""
+# StyledCell removed — rendering of cells is handled inline where needed.
 
 
 @app.get("/articles/{name}")
@@ -272,8 +190,6 @@ def article(request: air.Request, name: str) -> Any:
         "description": summary,
         "content": content,
     })
-
-
 
 @app.get("/nbs/{name}")
 def notebook_compat(name: str) -> Any:
