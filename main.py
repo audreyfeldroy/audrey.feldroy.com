@@ -29,18 +29,10 @@ def layout(title, *content):
 
 ARTICLES_DIR = Path("articles/")
 
-
-def get_notebook_paths() -> List[Path]:
-    """
-    Returns a sorted list of post paths in the ARTICLES_DIR directory.
-    Accepts both .ipynb and .md files so posts can be notebooks or markdown.
-    """
-    patterns = ["*.ipynb", "*.md"]
-    paths = []
-    for pat in patterns:
-        paths.extend(list(ARTICLES_DIR.glob(pat)))
-    return L(paths).sorted(reverse=True)
-
+def get_article_paths() -> List[Path]:
+    "Returns a sorted list of markdown paths in the ARTICLES_DIR directory."
+    # Directly glob for markdown files and return a sorted Listo
+    return L(list(ARTICLES_DIR.glob("*.md"))).sorted(reverse=True)
 
 def get_date_from_filename(filename: str) -> datetime:
     """
@@ -113,19 +105,18 @@ def get_post_dict(path: Path) -> dict:
     """
     date = get_date_from_filename(path.name)
     formatted_date = f"{date:%a, %b %-d, %Y}"
-    if path.suffix == ".ipynb":
-        notebook = get_notebook_cells(path)
-        title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
-        summary = notebook[1]["content"] if len(notebook) > 1 else ""
-    else:
-        try:
-            text = path.read_text(encoding="utf-8")
-            lines = text.splitlines()
-            title = lines[0] if lines else "Untitled"
-            summary = lines[1] if len(lines) > 1 else ""
-        except:
-            title = "Untitled"
-            summary = ""
+    # Articles are markdown files. Use the first non-empty line as the title
+    # and the second line (if present) as a short tease/summary.
+    try:
+        text = path.read_text(encoding="utf-8")
+        lines = [l for l in text.splitlines()]
+        raw_title = lines[0] if lines else "Untitled"
+        # strip leading markdown heading markers like '# '
+        title = re.sub(r"^\s*#+\s*", "", raw_title).strip() or "Untitled"
+        summary = lines[1] if len(lines) > 1 else ""
+    except Exception:
+        title = "Untitled"
+        summary = ""
     return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/articles/{path.stem}"}
 
 
@@ -140,7 +131,7 @@ def page_footer() -> Any:
 
 @app.page
 def index(request: air.Request) -> Any:
-    post_paths = get_notebook_paths()
+    post_paths = get_article_paths()
     # Ensure nb_paths is a Listo instance so .map() works
     posts = L(post_paths).map(get_post_dict)
     return jinja(request, "index.html", {
