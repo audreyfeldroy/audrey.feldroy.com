@@ -120,12 +120,20 @@
 				<article class="lead" aria-labelledby="lead-headline">
 					<div class="kicker">Featured Notebook</div>
 					<h2 id="lead-headline">Piano Part 2 — small riffs and experiments with sound</h2>
-					<div class="byline">By Audrey Feldroy • Jan 02, 2025</div>
+					<div class="byline">By Audrey Roy Greenfeld • Jan 02, 2025</div>
 					<img class="hero" src="/img/2024-12-30-Images-in-Jupyter-Notebooks-150x85.webp" alt="Hero illustration placeholder" aria-hidden="true">
 					<p class="lede">A short excerpt exploring how small audio experiments and embedded scores fit inside notebooks. This mockup shows the kind of long-form, deeply-linked essays that live alongside reproducible code and figures — material that rewards careful reading and repeated exploration.</p>
 				</article>
 
 				<section class="articles" aria-label="More stories">
+					{% for post in posts %}
+						<article class="article">
+							<div class="meta">{{ post.meta }}</div>
+							<h3>{{ post.title }}</h3>
+							<p class="tease">{{ post.tease }}</p>
+						</article>
+					{% endfor %}
+					
 					<article class="article">
 						<div class="meta">Guide • Dec 30, 2024</div>
 						<h3>Images in Jupyter — many ways</h3>

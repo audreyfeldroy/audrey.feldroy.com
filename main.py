@@ -13,6 +13,7 @@ from pygments.lexers import get_lexer_by_name, PythonLexer
 from pygments.formatters import HtmlFormatter
 
 app = air.Air()
+jinja = air.JinjaRenderer("templates")
 
 STYLE = "monokai"
 FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px 0;")
@@ -106,6 +107,28 @@ def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
         return []
 
 
+def get_post_dict(path: Path) -> dict:
+    """
+    Extracts title, formatted date, and summary from a notebook or markdown path.
+    """
+    date = get_date_from_filename(path.name)
+    formatted_date = f"{date:%a, %b %-d, %Y}"
+    if path.suffix == ".ipynb":
+        notebook = get_notebook_cells(path)
+        title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
+        summary = notebook[1]["content"] if len(notebook) > 1 else ""
+    else:
+        try:
+            text = path.read_text(encoding="utf-8")
+            lines = text.splitlines()
+            title = lines[0] if lines else "Untitled"
+            summary = lines[1] if len(lines) > 1 else ""
+        except:
+            title = "Untitled"
+            summary = ""
+    return {"title": title, "date": date, "meta": formatted_date, "tease": summary}
+
+
 def page_header(is_index: bool = False) -> List[Any]:
     """
     Returns the page header elements. If not index, wraps the title in a link.
@@ -167,20 +190,23 @@ def notebook_card(notebook_path: Path) -> Any:
 
 
 @app.page
-def index():
-    nb_paths = get_notebook_paths()
+def index(request: air.Request) -> Any:
+    post_paths = get_notebook_paths()
     # Ensure nb_paths is a Listo instance so .map() works
-    nb_paths = L(nb_paths)
-    return layout(
-        air.Title("audrey.feldroy.com"),
-        *page_header(is_index=True),
-        air.Div(
-            *nb_paths.map(notebook_card),
-            # *get_nb_paths().map(notebook_card),
-            # class_="grid",
-        ),
-        page_footer(),
-    )
+    posts = L(post_paths).map(get_post_dict)
+    return jinja(request, "index.html", {
+        "posts": posts
+    })
+    # return layout(
+    #     air.Title("audrey.feldroy.com"),
+    #     *page_header(is_index=True),
+    #     air.Div(
+    #         *nb_paths.map(notebook_card),
+    #         # *get_nb_paths().map(notebook_card),
+    #         # class_="grid",
+    #     ),
+    #     page_footer(),
+    # )
 
 
 def StyledCell(cell: Dict[str, Any]) -> Any:
