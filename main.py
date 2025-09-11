@@ -18,6 +18,14 @@ STYLE = "monokai"
 FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px 0;")
 STYLE_DEFINITION = FORMATTER.get_style_defs(f".{STYLE}")
 
+def layout(title, *content):
+    return air.Html(
+        air.Head(
+            title,
+        ),
+        air.Body(*content)
+    )
+
 POSTS_DIR = Path("posts/")
 
 
@@ -163,7 +171,7 @@ def index():
     nb_paths = get_notebook_paths()
     # Ensure nb_paths is a Listo instance so .map() works
     nb_paths = L(nb_paths)
-    return air.layouts.picocss(
+    return layout(
         air.Title("audrey.feldroy.com"),
         *page_header(is_index=True),
         air.Div(
@@ -237,8 +245,8 @@ def notebook(name: str) -> Any:
         # treat remaining lines as a single markdown cell
         cells = [{"content": "\n".join(lines[2:]), "cell_type": "markdown"}]
     else:
-        return air.layouts.picocss(air.Title("Not Found"), air.H1("Not Found"), page_footer())
-    return air.layouts.picocss(
+        return layout(air.Title("Not Found"), air.H1("Not Found"), page_footer())
+    return layout(
         air.Title(title),
         *page_header(),
         air.Br(),
@@ -257,7 +265,7 @@ def notebook_compat(name: str) -> Any:
     """Compatibility redirect from old /nbs/<name> URLs to /posts/<name>."""
     # air.redirect may not be available; return a small page that navigates to the new URL
     new_url = f"/posts/{name}"
-    return air.layouts.picocss(
+    return layout(
         air.Title("Moved"),
         air.Raw(f"<meta http-equiv=\"refresh\" content=\"0; url={new_url}\">"),
         air.P("This post has moved to ", air.A(new_url, href=new_url)),
