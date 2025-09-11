@@ -119,14 +119,18 @@
 			<main>
 				<article class="lead" aria-labelledby="lead-headline">
 					<div class="kicker">Featured Notebook</div>
-					<h2 id="lead-headline">Piano Part 2 — small riffs and experiments with sound</h2>
-					<div class="byline">By Audrey Roy Greenfeld • Jan 02, 2025</div>
-					<img class="hero" src="/img/2024-12-30-Images-in-Jupyter-Notebooks-150x85.webp" alt="Hero illustration placeholder" aria-hidden="true">
-					<p class="lede">A short excerpt exploring how small audio experiments and embedded scores fit inside notebooks. This mockup shows the kind of long-form, deeply-linked essays that live alongside reproducible code and figures — material that rewards careful reading and repeated exploration.</p>
+					{% if posts and posts|length > 0 %}
+						{% set featured = posts[0] %}
+						<h2 id="lead-headline"><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
+						<div class="byline">By Audrey Roy Greenfeld • {{ featured.meta }}</div>
+						<p class="lede">{{ featured.tease }}</p>
+					{% else %}
+						<h2 id="lead-headline">No posts yet</h2>
+					{% endif %}
 				</article>
 
 				<section class="articles" aria-label="More stories">
-					{% for post in posts %}
+					{% for post in posts[1:] %}
 						<article class="article">
 							<div class="meta">{{ post.meta }}</div>
 							<h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
