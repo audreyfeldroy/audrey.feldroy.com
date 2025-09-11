@@ -126,7 +126,7 @@ def get_post_dict(path: Path) -> dict:
         except:
             title = "Untitled"
             summary = ""
-    return {"title": title, "date": date, "meta": formatted_date, "tease": summary}
+    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/posts/{path.stem}"}
 
 
 def page_header(is_index: bool = False) -> List[Any]:
@@ -271,8 +271,8 @@ def notebook(name: str) -> Any:
         # treat remaining lines as a single markdown cell
         cells = [{"content": "\n".join(lines[2:]), "cell_type": "markdown"}]
     else:
-        return layout(air.Title("Not Found"), air.H1("Not Found"), page_footer())
-    return layout(
+        return air.AirResponse(layout(air.Title("Not Found"), air.H1("Not Found"), page_footer()))
+    return air.AirResponse(layout(
         air.Title(title),
         *page_header(),
         air.Br(),
@@ -283,7 +283,7 @@ def notebook(name: str) -> Any:
         air.Hr(),
     air.Div(*L(cells).map(StyledCell)),
         page_footer(),
-    )
+    ))
 
 
 @app.get("/nbs/{name}")
