@@ -27,18 +27,18 @@ def layout(title, *content):
         air.Body(*content)
     )
 
-POSTS_DIR = Path("posts/")
+ARTICLES_DIR = Path("articles/")
 
 
 def get_notebook_paths() -> List[Path]:
     """
-    Returns a sorted list of post paths in the POSTS_DIR directory.
+    Returns a sorted list of post paths in the ARTICLES_DIR directory.
     Accepts both .ipynb and .md files so posts can be notebooks or markdown.
     """
     patterns = ["*.ipynb", "*.md"]
     paths = []
     for pat in patterns:
-        paths.extend(list(POSTS_DIR.glob(pat)))
+        paths.extend(list(ARTICLES_DIR.glob(pat)))
     return L(paths).sorted(reverse=True)
 
 
@@ -126,7 +126,7 @@ def get_post_dict(path: Path) -> dict:
         except:
             title = "Untitled"
             summary = ""
-    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/posts/{path.stem}"}
+    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/articles/{path.stem}"}
 
 
 def page_header(is_index: bool = False) -> List[Any]:
@@ -180,7 +180,7 @@ def notebook_card(notebook_path: Path) -> Any:
             air.H3(
                 air.A(
                     title,
-                    href=f"/posts/{notebook_path.stem}",
+                    href=f"/articles/{notebook_path.stem}",
                 )
             ),
             air.P(f"{date:%a, %b %-d, %Y}"),
@@ -209,16 +209,15 @@ def index(request: air.Request) -> Any:
     # )
 
 
-def StyledCell(cell: Dict[str, Any]) -> Any:
+def StyledCell(cell: Dict[str, Any]) -> str:
     """
-    Renders a notebook cell as HTML, styled according to its type.
+    Renders a notebook cell as an HTML string, styled according to its type.
     """
     if cell["cell_type"] == "markdown":
-        return air.Raw(markdown(cell["content"], HtmlRenderer))
+        return markdown(cell["content"], HtmlRenderer)
     elif cell["cell_type"] == "raw":
-        return air.Pre(cell["content"])
+        return f"<pre><code>{cell['content']}</code></pre>"
     elif cell["cell_type"] == "code":
-        # Get the language from the cell's metadata, default to python
         language = (
             cell.get("metadata", {}).get("language_info", {}).get("name", "python")
         )
@@ -236,61 +235,51 @@ def StyledCell(cell: Dict[str, Any]) -> Any:
                     outputs.append(markdown(content, HtmlRenderer))
                 else:
                     content = "\n".join(value)
-                    outputs.append(content)
+                    outputs.append(f"<pre><code>{content}</code></pre>")
 
-        return air.Article(
-            air.Header(air.Raw(highlighted_text)), *L(outputs).map(air.Raw)
-        )
+    return f'<article><header>{highlighted_text}</header>{"".join(outputs)}</article>'
 
     logging.warning(f"Unknown cell type: {cell['cell_type']}")
     return ""
 
 
-@app.get("/posts/{name}")
-def notebook(name: str) -> Any:
+@app.get("/articles/{name}")
+def article(request: air.Request, name: str) -> Any:
     """
-    Renders a notebook page by name, showing its title, summary, and cells.
+    Renders an article page by name, showing its title, summary, and cells.
     """
-    # prefer .ipynb, fall back to .md
-    ipynb_path = POSTS_DIR / f"{name}.ipynb"
-    md_path = POSTS_DIR / f"{name}.md"
-    if ipynb_path.exists():
-        path = ipynb_path
-        notebook = get_notebook_cells(path)
-        date = get_date_from_filename(name)
-        title = notebook[0]["content"] if len(notebook) > 0 else "Untitled"
-        summary = notebook[1]["content"] if len(notebook) > 1 else ""
-        cells = notebook[2:]
-    elif md_path.exists():
+    md_path = ARTICLES_DIR / f"{name}.md"
+    if md_path.exists():
         path = md_path
         date = get_date_from_filename(name)
-        text = md_path.read_text(encoding="utf-8")
+        with open(md_path, "r", encoding="utf-8") as f:
+            text = f.read()
+        # Render full content
+        content = markdown(text, HtmlRenderer)
+        # Extract the first line as the title and strip leading '#' (markdown heading)
         lines = text.splitlines()
-        title = lines[0] if lines else "Untitled"
+        raw_title = lines[0] if lines else "Untitled"
+        # Remove leading hashes and surrounding whitespace, then trim
+        title = re.sub(r"^\s*#+\s*", "", raw_title).strip()
+        # Summary/description: second line if present (common pattern)
         summary = lines[1] if len(lines) > 1 else ""
-        # treat remaining lines as a single markdown cell
-        cells = [{"content": "\n".join(lines[2:]), "cell_type": "markdown"}]
     else:
-        return air.AirResponse(layout(air.Title("Not Found"), air.H1("Not Found"), page_footer()))
-    return air.AirResponse(layout(
-        air.Title(title),
-        *page_header(),
-        air.Br(),
-        air.H2(title),
-        air.Style(STYLE_DEFINITION),
-        air.P(f"by Audrey M. Roy Greenfeld | {date:%a, %b %-d, %Y}"),
-        air.P(summary),
-        air.Hr(),
-    air.Div(*L(cells).map(StyledCell)),
-        page_footer(),
-    ))
+        return air.Response("Not Found", status_code=404)
+    
+    return jinja(request, "article.html", {
+        "title": title,
+        "meta": f"{date:%a, %b %-d, %Y}",
+        "description": summary,
+        "content": content,
+    })
+
 
 
 @app.get("/nbs/{name}")
 def notebook_compat(name: str) -> Any:
-    """Compatibility redirect from old /nbs/<name> URLs to /posts/<name>."""
+    """Compatibility redirect from old /nbs/<name> URLs to /articles/<name>."""
     # air.redirect may not be available; return a small page that navigates to the new URL
-    new_url = f"/posts/{name}"
+    new_url = f"/articles/{name}"
     return layout(
         air.Title("Moved"),
         air.Raw(f"<meta http-equiv=\"refresh\" content=\"0; url={new_url}\">"),
