@@ -78,7 +78,7 @@ hits[:10]
 
 
 
-
+```python
     [{'corpus_id': 37, 'score': np.float32(-4.74905)},
      {'corpus_id': 70, 'score': np.float32(-5.289769)},
      {'corpus_id': 1, 'score': np.float32(-5.520778)},
@@ -89,7 +89,7 @@ hits[:10]
      {'corpus_id': 20, 'score': np.float32(-6.501535)},
      {'corpus_id': 54, 'score': np.float32(-6.5156918)},
      {'corpus_id': 43, 'score': np.float32(-6.5381203)}]
-
+```
 
 
 

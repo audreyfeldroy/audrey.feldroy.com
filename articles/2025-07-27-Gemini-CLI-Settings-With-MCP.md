@@ -3,6 +3,8 @@
 Here is a sample settings.json file for the Gemini CLI, configured with the Git and GitHub MCP servers.
 
 Put this into `~/.gemini/settings.json`:
+
+```json
 {
   "selectedAuthType": "gemini-api-key",
   "theme": "Dracula",
@@ -23,6 +25,8 @@ Put this into `~/.gemini/settings.json`:
     }
   }
 }
+```
+
 ## Getting a GitHub Personal Access Token
 
 Go to https://github.com/settings/tokens and generate a token with the scopes you need. 
@@ -36,10 +40,11 @@ Note: I had hoped to get the token from an environment variable, but the Gemini 
 In Gemini CLI, run `/mcp`. You should see a list of all the tools Gemini CLI now has access to, from each MCP server.
 
 If you have your settings.json in the right location and your GitHub PAT set correctly, you should see something like:
+
+```
 ╭──────────╮
 │  > /mcp  │
 ╰──────────╯
-
 
 ℹ Configured MCP servers:
 
@@ -133,6 +138,8 @@ If you have your settings.json in the right location and your GitHub PAT set cor
     - update_issue
     - update_pull_request
     - update_pull_request_branch
+```
+
 ## Using the Git and GitHub MCP Tools from Gemini CLI
 
 Just those two MCP servers give you a lot of useful things you can do.
