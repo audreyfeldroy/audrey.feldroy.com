@@ -30,3 +30,9 @@ source .venv/bin/activate
 uv sync
 just dev
 ```
+
+Run the test suite using the project's `uv` task runner (don't run `pytest` directly):
+
+```sh
+uv run pytest
+```
