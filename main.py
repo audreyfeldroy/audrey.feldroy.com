@@ -27,7 +27,9 @@ def layout(title, *content):
         air.Body(*content)
     )
 
-ARTICLES_DIR = Path("articles/")
+# Use a path relative to this file so the app finds the articles regardless
+# of the current working directory (important in production deployments).
+ARTICLES_DIR = Path(__file__).parent / "articles"
 
 def get_article_paths() -> List[Path]:
     "Returns a sorted list of markdown paths in the ARTICLES_DIR directory."
