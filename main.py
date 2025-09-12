@@ -27,13 +27,10 @@ def layout(title, *content):
         air.Body(*content)
     )
 
-# Use a path relative to this file so the app finds the articles regardless
-# of the current working directory (important in production deployments).
 ARTICLES_DIR = Path(__file__).parent / "articles"
 
 def get_article_paths() -> List[Path]:
     "Returns a sorted list of markdown paths in the ARTICLES_DIR directory."
-    # Directly glob for markdown files and return a sorted Listo
     return L(list(ARTICLES_DIR.glob("*.md"))).sorted(reverse=True)
 
 def get_date_from_filename(filename: str) -> datetime:
@@ -134,25 +131,10 @@ def page_footer() -> Any:
 @app.page
 def index(request: air.Request) -> Any:
     post_paths = get_article_paths()
-    # Ensure nb_paths is a Listo instance so .map() works
     posts = L(post_paths).map(get_post_dict)
     return jinja(request, "index.html", {
         "posts": posts
     })
-    # return layout(
-    #     air.Title("audrey.feldroy.com"),
-    #     *page_header(is_index=True),
-    #     air.Div(
-    #         *nb_paths.map(notebook_card),
-    #         # *get_nb_paths().map(notebook_card),
-    #         # class_="grid",
-    #     ),
-    #     page_footer(),
-    # )
-
-
-# StyledCell removed — rendering of cells is handled inline where needed.
-
 
 @app.get("/articles/{name}")
 def article(request: air.Request, name: str) -> Any:
