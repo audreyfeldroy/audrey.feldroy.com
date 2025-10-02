@@ -147,8 +147,8 @@ def article(request: air.Request, name: str) -> Any:
         date = get_date_from_filename(name)
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
-        # Render full content
-        content = markdown(text, HtmlRenderer)
+        # Render full content minus first line (title)
+        content = markdown("\n".join(text.splitlines()[1:]), HtmlRenderer)
         # Extract the first line as the title and strip leading '#' (markdown heading)
         lines = text.splitlines()
         raw_title = lines[0] if lines else "Untitled"
