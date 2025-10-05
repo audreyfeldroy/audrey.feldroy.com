@@ -16,8 +16,22 @@ app = air.Air()
 jinja = air.JinjaRenderer("templates")
 
 STYLE = "monokai"
-FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px 0;")
+FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px;")
 STYLE_DEFINITION = FORMATTER.get_style_defs(f".{STYLE}")
+
+
+class CustomHTMLRenderer(HtmlRenderer):
+    def render_block_code(self, token):
+        code = token.children[0].content
+        language = token.language
+        if language:
+            try:
+                lexer = get_lexer_by_name(language)
+            except:
+                lexer = get_lexer_by_name('python')  # fallback to Python
+        else:
+            lexer = get_lexer_by_name('python')  # default to Python
+        return highlight(code, lexer, FORMATTER)
 
 def layout(title, *content):
     return air.Html(
@@ -148,7 +162,7 @@ def article(request: air.Request, name: str) -> Any:
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
         # Render full content minus first line (title)
-        content = markdown("\n".join(text.splitlines()[1:]), HtmlRenderer)
+        content = markdown("\n".join(text.splitlines()[1:]), CustomHTMLRenderer)
         # Extract the first line as the title and strip leading '#' (markdown heading)
         lines = text.splitlines()
         raw_title = lines[0] if lines else "Untitled"
@@ -164,6 +178,7 @@ def article(request: air.Request, name: str) -> Any:
         "meta": f"{date:%a, %b %-d, %Y}",
         "description": summary,
         "content": content,
+        "pygments_css": STYLE_DEFINITION,
     })
 
 @app.get("/nbs/{name}")
