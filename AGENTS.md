@@ -2,13 +2,13 @@
 
 ## 1. Project Overview
 
-This folder contains my blog. Each post is a Jupyter notebook that gets rendered as a web page. The `main.py` uses Air, the new Python web framework that Daniel Roy Greenfeld and I are writing.
+This folder contains my blog. Each post is a Markdown file that gets rendered as a web page. The `main.py` uses Air, the Python web framework that Daniel Roy Greenfeld and I are writing.
 
 ## 2. Tech Stack
 
 - Language: Python
 - Web Framework: Air (built on Starlette, FastAPI, Pydantic, Jinja2)
-- Frontend: Pico.css is being replaced with Tailwind CSS with only Tailwind classes, no custom CSS.
+- Frontend: No framework, just custom CSS inline in the Jinja templates
 - Syntax Highlighting: Pygments
 
 ## 3. Project Structure
