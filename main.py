@@ -16,7 +16,7 @@ app = air.Air()
 jinja = air.JinjaRenderer("templates")
 
 STYLE = "monokai"
-FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px;")
+FORMATTER = HtmlFormatter(style=STYLE, cssclass=STYLE, prestyles="padding:10px; white-space: pre-wrap; word-break: break-word; overflow-x: auto;")
 STYLE_DEFINITION = FORMATTER.get_style_defs(f".{STYLE}")
 
 
@@ -31,7 +31,9 @@ class CustomHTMLRenderer(HtmlRenderer):
                 lexer = get_lexer_by_name('python')  # fallback to Python
         else:
             lexer = get_lexer_by_name('python')  # default to Python
-        return highlight(code, lexer, FORMATTER)
+        highlighted = highlight(code, lexer, FORMATTER)
+        # Ensure long lines are wrapped properly
+        return highlighted
 
 def layout(title, *content):
     return air.Html(
