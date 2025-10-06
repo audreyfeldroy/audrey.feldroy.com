@@ -81,6 +81,11 @@
             opacity: 0.7;
         }
 
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
         nav.sections a {
             text-decoration: none;
             color: var(--text);
@@ -256,16 +261,15 @@
                 <div class="title">audrey.feldroy.com</div>
                 <div class="strap">Notes, notebooks & small experiments</div>
             </div>
-            <nav class="sections">
-                <a href="#">Home</a>
-                <a href="#">About</a>
+            <div class="nav-container">
+
                 <div class="theme-switch-wrapper">
                     <label class="theme-switch" for="checkbox">
                         <input type="checkbox" id="checkbox" />
                         <div class="slider round"></div>
                     </label>
                 </div>
-            </nav>
+            </div>
         </header>
 
         <div class="layout">
