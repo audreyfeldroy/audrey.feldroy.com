@@ -11,8 +11,10 @@ from mistletoe.html_renderer import HtmlRenderer
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name, PythonLexer
 from pygments.formatters import HtmlFormatter
+from starlette.staticfiles import StaticFiles
 
 app = air.Air()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 jinja = air.JinjaRenderer("templates")
 
 STYLE = "monokai"
@@ -180,7 +182,6 @@ def article(request: air.Request, name: str) -> Any:
         "meta": f"{date:%a, %b %-d, %Y}",
         "description": summary,
         "content": content,
-        "pygments_css": STYLE_DEFINITION,
     })
 
 @app.get("/nbs/{name}")
