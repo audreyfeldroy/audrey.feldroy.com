@@ -66,11 +66,11 @@ A card in AirDragon is structured with a `Header`, `Section`, and an optional `F
 
 ```
 # ... inside air.layout()
-AD.Card(
-    AD.Header(
-        AD.H2("Card Title")
+ad.Card(
+    ad.Header(
+        ad.H2("Card Title")
     ),
-    AD.Section(
+    ad.Section(
         # Card content goes here...
     )
 )
@@ -88,10 +88,10 @@ Now, let's add some actions to our card. AirDragon includes a `ButtonGroup` comp
 Here, we'll add a standard button and a "destructive" variant, which is styled in red to indicate a potentially dangerous action.
 
 ```
-# ... inside the AD.Section()
-AD.ButtonGroup(
-    AD.Button("Save Changes"),
-    AD.Button("Delete", class_="destructive")
+# ... inside the ad.Section()
+ad.ButtonGroup(
+    ad.Button("Save Changes"),
+    ad.Button("Delete", class_="destructive")
 )
 
 ```
