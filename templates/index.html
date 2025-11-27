@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>audrey.feldroy.com — Audrey M. Roy Greenfeld: Researching the frontier of web development + AI</title>
-    <meta name="description" content="A statically-rendered, typographic homepage for notes and notebooks by Audrey M. Roy Greenfeld." />
+    <meta name="description" content="Audrey M. Roy Greenfeld’s blog on Python, Jupyter notebooks, Air, FastHTML, and Django—clear, pragmatic tutorials and experiments in modern web engineering." />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
@@ -32,7 +32,7 @@
                     {% if posts and posts|length > 0 %}
                         {% set featured = posts[0] %}
                         <h2><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
-                        <div class="byline">By Audrey Roy Greenfeld • {{ featured.meta }}</div>
+                        <div class="byline">By Audrey M. Roy Greenfeld • {{ featured.meta }}</div>
                         <p class="lede">{{ featured.tease }}</p>
                     {% else %}
                         <h2>No posts yet</h2>
