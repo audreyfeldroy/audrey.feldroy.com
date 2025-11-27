@@ -13,6 +13,8 @@ from pygments.lexers import get_lexer_by_name, PythonLexer
 from pygments.formatters import HtmlFormatter
 
 app = air.Air()
+app.mount("/static", air.StaticFiles(directory="static"), name="static")
+
 jinja = air.JinjaRenderer("templates")
 
 STYLE = "monokai"
