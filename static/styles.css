@@ -219,6 +219,11 @@ nav.sections a {
     color: var(--accent);
 }
 
+.article-content img {
+    max-width: 100%;
+    height: auto;
+}
+
 .article-content h2 {
     font-family: var(--font-serif);
     font-size: 2rem;
