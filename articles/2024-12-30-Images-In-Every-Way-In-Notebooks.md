@@ -98,9 +98,9 @@ The Markdown for the cell above looks like:
 
 Here I use Markdown to show an image from the img directory of this repo, like this:
 
-`![My test image for use in Jupyter Notebooks](../img/2024-12-30-Images-in-Jupyter-Notebooks-150x85.webp)`
+`![My test image for use in Jupyter Notebooks](https://audreyfeldroy.github.io/arg-static/img/2024-12-30-Images-in-Jupyter-Notebooks-150x85.webp)`
 
-![My test image for use in Jupyter Notebooks](../img/2024-12-30-Images-in-Jupyter-Notebooks-150x85.webp)
+![My test image for use in Jupyter Notebooks](https://audreyfeldroy.github.io/arg-static/img/2024-12-30-Images-in-Jupyter-Notebooks-150x85.webp)
 
 ## No Markdown Remote URL to Image
 
