@@ -1,5 +1,8 @@
 # Deck the Halls
 
+Having fun with fastcore's L (list) class and holiday lyrics.
+
+## Setup
 
 ```python
 from fastcore.all import *

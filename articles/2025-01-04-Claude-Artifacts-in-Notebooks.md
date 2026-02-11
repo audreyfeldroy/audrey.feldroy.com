@@ -1,5 +1,8 @@
 # Showing Claude Artifacts in Jupyter Notebooks
 
+I prompted Claude 3.5 Sonnet to make an HTML and vanilla JS birthday app for my daughter who just turned six. Then I figured out how to show the artifact inline in a Jupyter notebook.
+
+## Setup
 
 ```python
 from fastcore.all import *

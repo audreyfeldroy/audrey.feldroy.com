@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>audrey.feldroy.com — Audrey M. Roy Greenfeld</title>
+    <meta name="description" content="Audrey M. Roy Greenfeld's blog on Python, Jupyter notebooks, Air, FastHTML, and Django." />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+/* ==========================================================================
+   audrey.feldroy.com — Substack-Inspired Redesign Mockup
+   ==========================================================================
+   Design philosophy: Content-first, generous whitespace, beautiful serif
+   typography, a calm reading environment that makes browsing feel like
+   settling into a good book.
+   ========================================================================== */
+
+/* --- Design Tokens --- */
+:root {
+    --bg: #ffffff;
+    --bg-subtle: #fafafa;
+    --text: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-tertiary: #999999;
+    --accent: #c85d3b;
+    --accent-hover: #a84b2e;
+    --accent-subtle: rgba(200, 93, 59, 0.08);
+    --border: #eeeeee;
+    --border-strong: #dddddd;
+    --card-bg: #ffffff;
+    --image-overlay: rgba(0, 0, 0, 0.03);
+    --shadow-soft: 0 1px 4px rgba(0, 0, 0, 0.04);
+    --shadow-image: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --toggle-bg: #d4d4d4;
+    --toggle-knob: #ffffff;
+
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --content-width: 680px;
+    --page-width: 1080px;
+    --radius: 6px;
+    --radius-lg: 10px;
+    --transition: 0.2s ease;
+}
+
+[data-theme="dark"] {
+    --bg: #121212;
+    --bg-subtle: #1a1a1a;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #707070;
+    --accent: #e8845e;
+    --accent-hover: #f09a78;
+    --accent-subtle: rgba(232, 132, 94, 0.1);
+    --border: #2a2a2a;
+    --border-strong: #3a3a3a;
+    --card-bg: #1a1a1a;
+    --image-overlay: rgba(255, 255, 255, 0.02);
+    --shadow-soft: 0 1px 4px rgba(0, 0, 0, 0.2);
+    --shadow-image: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --toggle-bg: #444444;
+    --toggle-knob: #e0e0e0;
+}
+
+
+/* --- Reset & Base --- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background var(--transition), color var(--transition);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+a:hover { color: var(--accent-hover); }
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+}
+
+p { margin: 0; }
+
+
+/* --- Page Shell --- */
+.page-container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+
+/* --- Header --- */
+.site-header {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.site-name {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+}
+
+.site-name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.site-name a:hover {
+    color: var(--accent);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.tagline {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.01em;
+}
+
+
+/* --- Theme Toggle --- */
+.theme-toggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.theme-toggle input { display: none; }
+
+.toggle-track {
+    width: 40px;
+    height: 22px;
+    background: var(--toggle-bg);
+    border-radius: 11px;
+    position: relative;
+    transition: background var(--transition);
+}
+
+.toggle-track::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: var(--toggle-knob);
+    border-radius: 50%;
+    transition: transform var(--transition);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle input:checked + .toggle-track {
+    background: var(--accent);
+}
+
+.theme-toggle input:checked + .toggle-track::before {
+    transform: translateX(18px);
+}
+
+.toggle-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    pointer-events: none;
+}
+
+.toggle-icons svg {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+}
+
+.icon-sun { color: #f59e0b; opacity: 1; transition: opacity var(--transition); }
+.icon-moon { color: #e0e0e0; opacity: 0.4; transition: opacity var(--transition); }
+[data-theme="dark"] .icon-sun { opacity: 0.4; }
+[data-theme="dark"] .icon-moon { opacity: 1; }
+
+
+/* --- Two-Column Layout --- */
+.site-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 64px;
+    padding: 48px 0 32px;
+    align-items: start;
+}
+
+
+/* --- Feed: The Main Column --- */
+.feed {
+    max-width: var(--content-width);
+}
+
+
+/* --- Post Card (the core repeating element) --- */
+.post {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.post:first-child {
+    padding-top: 0;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post-date {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.post-title {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: -0.015em;
+}
+
+.post-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.post-title a:hover {
+    color: var(--accent);
+}
+
+.post-tease {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 58ch;
+    margin-bottom: 0;
+}
+
+.post-tease.has-image-below {
+    margin-bottom: 20px;
+}
+
+.post-image {
+    margin-top: 20px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-image);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.post-image:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+[data-theme="dark"] .post-image:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.post-image img {
+    width: 100%;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.post-image:hover img {
+    transform: scale(1.01);
+}
+
+.post-continue {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    transition: color var(--transition);
+}
+
+.post-continue:hover {
+    color: var(--accent-hover);
+}
+
+.post-continue span {
+    display: inline-block;
+    transition: transform var(--transition);
+    margin-left: 2px;
+}
+
+.post-continue:hover span {
+    transform: translateX(3px);
+}
+
+
+/* --- Featured Post (first post, slightly larger) --- */
+.post.featured .post-title {
+    font-size: 2rem;
+    line-height: 1.25;
+}
+
+.post.featured .post-tease {
+    font-size: 1.125rem;
+    line-height: 1.7;
+}
+
+.post.featured .post-image {
+    margin-top: 24px;
+}
+
+
+/* --- Sidebar --- */
+.sidebar {
+    position: sticky;
+    top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 0;
+}
+
+.sidebar-section {
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.sidebar-heading {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    margin-bottom: 14px;
+}
+
+.sidebar-note {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.sidebar-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.sidebar-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.sidebar-author-name {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition);
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-link:last-child {
+    border-bottom: none;
+}
+
+.sidebar-link:hover {
+    color: var(--accent);
+}
+
+.sidebar-link-arrow {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    transition: transform var(--transition), color var(--transition);
+}
+
+.sidebar-link:hover .sidebar-link-arrow {
+    transform: translateX(3px);
+    color: var(--accent);
+}
+
+
+/* --- Footer --- */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 0;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.site-footer p {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+}
+
+.site-footer a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: var(--accent);
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 960px) {
+    .site-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .feed {
+        max-width: 100%;
+    }
+
+    .sidebar {
+        position: static;
+        max-width: var(--content-width);
+        border-top: 1px solid var(--border);
+        padding-top: 32px;
+    }
+
+    .tagline {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-container {
+        padding: 0 20px;
+    }
+
+    .header-inner {
+        padding: 0 20px;
+    }
+
+    .site-header {
+        padding: 24px 0;
+    }
+
+    .site-name {
+        font-size: 1.125rem;
+    }
+
+    .site-layout {
+        padding: 32px 0 24px;
+        gap: 36px;
+    }
+
+    .post {
+        padding: 28px 0;
+    }
+
+    .post.featured .post-title {
+        font-size: 1.5rem;
+    }
+
+    .post-title {
+        font-size: 1.3125rem;
+    }
+
+    .post-tease {
+        font-size: 1rem;
+    }
+
+    .post-image {
+        border-radius: var(--radius);
+        margin-left: -20px;
+        margin-right: -20px;
+        border-radius: 0;
+    }
+
+    .post.featured .post-image {
+        margin-left: -20px;
+        margin-right: -20px;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 420px) {
+    body {
+        font-size: 17px;
+    }
+
+    .post.featured .post-title {
+        font-size: 1.375rem;
+    }
+
+    .post-title {
+        font-size: 1.1875rem;
+    }
+
+    .post-tease {
+        font-size: 0.9375rem;
+    }
+}
+
+
+/* --- Print --- */
+@media print {
+    .theme-toggle, .sidebar { display: none; }
+    .site-layout { grid-template-columns: 1fr; }
+    .post-image { box-shadow: none; }
+    a { color: inherit; }
+}
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="site-name"><a href="/">audrey.feldroy.com</a></div>
+            <div class="header-right">
+                <span class="tagline">Researching the frontier of web development + AI</span>
+                <label class="theme-toggle" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" />
+                    <div class="toggle-track"></div>
+                    <div class="toggle-icons">
+                        <svg class="icon-sun" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                        <svg class="icon-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN LAYOUT ==================== -->
+    <div class="page-container">
+        <div class="site-layout">
+            <main class="feed">
+
+                <!-- ===== Featured Post (with image) ===== -->
+                <article class="post featured">
+                    <span class="post-date">Dec 16, 2025</span>
+                    <h2 class="post-title"><a href="/articles/2025-12-16-Adopting-Idiomatic-PyTest-Code-Review">Adopting Idiomatic PyTest: A Code Review</a></h2>
+                    <p class="post-tease has-image-below">We recently reviewed a pull request from contributor Martin Saizar that refactored our Python tests. The goal was to enable the PyTest linter rule in Ruff, our code formatter and linter.</p>
+                    <a href="/articles/2025-12-16-Adopting-Idiomatic-PyTest-Code-Review" class="post-image">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/2025-12-16-pytest-review/01-pr-overview.jpg" alt="GitHub Pull Request for PyTest style refactoring" loading="eager" />
+                    </a>
+                    <a href="/articles/2025-12-16-Adopting-Idiomatic-PyTest-Code-Review" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+                <!-- ===== Post with image (Android Studio) ===== -->
+                <article class="post">
+                    <span class="post-date">Dec 15, 2023</span>
+                    <h2 class="post-title"><a href="/articles/2023-12-15-Hello-World-And-Composable-Previews-In-Android-Studio">Hello World and Composable Previews in Android Studio</a></h2>
+                    <p class="post-tease has-image-below">I've been using Android phones for several years now, and it has always been on my bucket list to write myself some productivity apps. This morning I thought I'd get reacquainted with Android app development.</p>
+                    <a href="/articles/2023-12-15-Hello-World-And-Composable-Previews-In-Android-Studio" class="post-image">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/2023-12-15-at-11.24.52.png" alt="Android Studio showing a Hello World app with Composable previews" loading="lazy" />
+                    </a>
+                    <a href="/articles/2023-12-15-Hello-World-And-Composable-Previews-In-Android-Studio" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+                <!-- ===== Post with image (3D Printer) ===== -->
+                <article class="post">
+                    <span class="post-date">Jun 21, 2020</span>
+                    <h2 class="post-title"><a href="/articles/2020-06-21-Hacking-3d-Printer-Infill-Patterns">Hacking 3D Printer Infill Patterns</a></h2>
+                    <p class="post-tease has-image-below">I 3D-printed these earrings using a cool little hack of setting top and bottom wall thickness to 0. The pattern is the Tri-Hexagon infill that comes built-in with Ultimaker Cura.</p>
+                    <a href="/articles/2020-06-21-Hacking-3d-Printer-Infill-Patterns" class="post-image">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/audreyfeldroy_104297671_270972654012505_2390685167189733738_n.jpg" alt="3D-printed earrings with Tri-Hexagon infill pattern" loading="lazy" />
+                    </a>
+                    <a href="/articles/2020-06-21-Hacking-3d-Printer-Infill-Patterns" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+                <!-- ===== Post with image (Butterflies) ===== -->
+                <article class="post">
+                    <span class="post-date">Jan 10, 2020</span>
+                    <h2 class="post-title"><a href="/articles/2020-01-10-Butterflies">Butterflies</a></h2>
+                    <p class="post-tease has-image-below">Daniel and I painted these butterflies with gouache, pastels, and a brush pen. Originally my intent was to experiment with butterfly shapes for republishing my butterfly book, but then I decided to play around with brush shapes and mark-making.</p>
+                    <a href="/articles/2020-01-10-Butterflies" class="post-image">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/2020_01_09_17_22_55.jpg" alt="Watercolor butterflies painted with gouache, pastels, and brush pen" loading="lazy" />
+                    </a>
+                    <a href="/articles/2020-01-10-Butterflies" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+                <!-- ===== Post without image (DjangoGirls) ===== -->
+                <article class="post">
+                    <span class="post-date">May 26, 2015</span>
+                    <h2 class="post-title"><a href="/articles/2015-05-26-Our-Trip-To-Djangogirls-Ensenada-Mexico">Our Trip to DjangoGirls Ensenada, Mexico</a></h2>
+                    <p class="post-tease">This weekend, Daniel and I drove down to Ensenada, Mexico to speak and coach at DjangoGirls Ensenada. It was a 2-day workshop for women of any level of experience to get a taste of web application development.</p>
+                    <a href="/articles/2015-05-26-Our-Trip-To-Djangogirls-Ensenada-Mexico" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+                <!-- ===== Post with image (Exploding Flower) ===== -->
+                <article class="post">
+                    <span class="post-date">Apr 19, 2015</span>
+                    <h2 class="post-title"><a href="/articles/2015-04-19-Exploding-Flower">Exploding Flower</a></h2>
+                    <p class="post-tease has-image-below">For Day 12 of my "100 Days of Watercolor" project.</p>
+                    <a href="/articles/2015-04-19-Exploding-Flower" class="post-image">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/012-flower-edited-X2.jpg" alt="Watercolor painting of an exploding flower" loading="lazy" />
+                    </a>
+                    <a href="/articles/2015-04-19-Exploding-Flower" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+                <!-- ===== Post with image (Into the Brambles) ===== -->
+                <article class="post">
+                    <span class="post-date">Apr 4, 2015</span>
+                    <h2 class="post-title"><a href="/articles/2015-04-04-Cover-Design-For-Into-The-Brambles">Cover Design for Into the Brambles</a></h2>
+                    <p class="post-tease has-image-below">I did the cover design for Into the Brambles, the first book of Daniel's forthcoming epic fantasy series The Brambles.</p>
+                    <a href="/articles/2015-04-04-Cover-Design-For-Into-The-Brambles" class="post-image">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/itb-1563x2500-X2.png" alt="Book cover illustration for Into the Brambles" loading="lazy" />
+                    </a>
+                    <a href="/articles/2015-04-04-Cover-Design-For-Into-The-Brambles" class="post-continue">Continue reading <span>&rarr;</span></a>
+                </article>
+
+            </main>
+
+            <!-- ==================== SIDEBAR ==================== -->
+            <aside class="sidebar">
+                <!-- About -->
+                <div class="sidebar-section">
+                    <div class="sidebar-author">
+                        <div class="sidebar-avatar">A</div>
+                        <div class="sidebar-author-name">Audrey M. Roy Greenfeld</div>
+                    </div>
+                    <p class="sidebar-note">This is my web dev and AI research playground. It contains highly-experimental code.</p>
+                </div>
+
+                <!-- Friends & Family -->
+                <div class="sidebar-section">
+                    <div class="sidebar-heading">Friends and Family</div>
+                    <div class="sidebar-links">
+                        <a href="https://daniel.feldroy.com" class="sidebar-link">
+                            Daniel Roy Greenfeld
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://umasgames.fastapicloud.dev/" class="sidebar-link">
+                            Uma Roy Greenfeld
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://jeffhuang.com/" class="sidebar-link">
+                            Jeff Huang
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://www.instagram.com/1tinyydancer/" class="sidebar-link">
+                            Jennifer Cheu
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://www.wilderhuang.com/" class="sidebar-link">
+                            Wilder Huang
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=AUDREY" class="sidebar-link">
+                            Isaac Flath
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=FELDROY" class="sidebar-link">
+                            Eleanor Berger
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://maven.com/parlance-labs/evals?promoCode=FELDROY" class="sidebar-link">
+                            Hamel Husain
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="site-footer">
+        <div class="page-container">
+            <p>Thanks for visiting my playground &middot; &copy; 2024&ndash;2026 <a href="https://audrey.feldroy.com/">audrey.feldroy.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const checkbox = document.getElementById('theme-checkbox');
+        const html = document.documentElement;
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Restore saved preference, or respect system preference
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            html.setAttribute('data-theme', saved);
+            if (saved === 'dark') checkbox.checked = true;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.setAttribute('data-theme', 'dark');
+            checkbox.checked = true;
+        }
+    </script>
+</body>
+</html>

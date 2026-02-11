@@ -15,7 +15,18 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    { include-group = "lint" },
+    { include-group = "test" },
+    { include-group = "browser-test" },
+]
+lint = [
     "ruff",
+]
+test = [
     "fastapi[standard]>=0.116.1",
     "pytest>=8.4.1",
+]
+browser-test = [
+    { include-group = "test" },
+    "pytest-playwright",
 ]

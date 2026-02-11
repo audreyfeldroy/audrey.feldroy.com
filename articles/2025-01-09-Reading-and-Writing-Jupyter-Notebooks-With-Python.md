@@ -1,5 +1,8 @@
 # Reading and Writing Jupyter Notebooks With Python
 
+I'm starting with a snippet of code from the bottom of execnb's 01_nbio.ipynb, breaking it down into pieces and seeing each part.
+
+## Setup
 
 ```python
 from execnb.nbio import new_nb, mk_cell, read_nb, write_nb
@@ -9,7 +12,7 @@ from pathlib import Path
 
 ## Exploring This Snippet
 
-I'm starting with a snippet of code from the bottom of execnb's 01_nbio.ipynb, breaking it down into pieces and seeing each part:
+Breaking down the snippet piece by piece:
 
 ```python
 nb = new_nb([mk_cell('print(1)')])

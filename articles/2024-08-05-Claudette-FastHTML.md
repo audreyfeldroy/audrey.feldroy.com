@@ -1,5 +1,8 @@
 # Using Claudette with FastHTML
 
+I'm here to learn the new web framework FastHTML by Jeremy Howard, and I'm using Claudette to help me explore it.
+
+## Setup
 
 ```python
 import os

@@ -116,6 +116,19 @@ def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
         return []
 
 
+def extract_first_image(text: str) -> str:
+    """Extracts the first markdown image URL from text, or returns empty string."""
+    match = re.search(r'!\[[^\]]*\]\(([^)]+)\)', text)
+    return match.group(1) if match else ""
+
+
+def strip_markdown(text: str) -> str:
+    """Strips markdown syntax for plain-text display (links, bold, italic, code)."""
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)  # [text](url) -> text
+    text = re.sub(r'`([^`]+)`', r'\1', text)  # `code` -> code
+    return text
+
+
 def get_post_dict(path: Path) -> dict:
     """
     Extracts title, formatted date, and summary from a notebook or markdown path.
@@ -130,11 +143,13 @@ def get_post_dict(path: Path) -> dict:
         raw_title = lines[0] if lines else "Untitled"
         # strip leading markdown heading markers like '# '
         title = re.sub(r"^\s*#+\s*", "", raw_title).strip() or "Untitled"
-        summary = lines[1] if len(lines) > 1 else ""
+        summary = next((l for l in lines[1:] if l.strip()), "")
+        image = extract_first_image(text)
     except Exception:
         title = "Untitled"
         summary = ""
-    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/articles/{path.stem}"}
+        image = ""
+    return {"title": title, "date": date, "meta": formatted_date, "tease": strip_markdown(summary), "image": image, "url": f"/articles/{path.stem}"}
 
 
 
@@ -172,8 +187,8 @@ def article(request: air.Request, name: str) -> Any:
         raw_title = lines[0] if lines else "Untitled"
         # Remove leading hashes and surrounding whitespace, then trim
         title = re.sub(r"^\s*#+\s*", "", raw_title).strip()
-        # Summary/description: second line if present (common pattern)
-        summary = lines[1] if len(lines) > 1 else ""
+        # Summary/description: first non-empty line after title
+        summary = next((l for l in lines[1:] if l.strip()), "")
     else:
         return air.Response("Not Found", status_code=404)
     

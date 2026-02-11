@@ -1,5 +1,8 @@
 # Printing FastHTML Components
 
+Reading through fastcore's xml.py source to figure out how FastHTML components print and render, and what `to_xml` and `highlight` do.
+
+## Setup
 
 ```
 from fasthtml.common import *

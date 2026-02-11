@@ -3,85 +3,156 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>audrey.feldroy.com — Audrey M. Roy Greenfeld: Researching the frontier of web development + AI</title>
-    <meta name="description" content="Audrey M. Roy Greenfeld’s blog on Python, Jupyter notebooks, Air, FastHTML, and Django—clear, pragmatic tutorials and experiments in modern web engineering." />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>audrey.feldroy.com — Audrey M. Roy Greenfeld</title>
+    <meta name="description" content="Audrey M. Roy Greenfeld's blog on Python, Jupyter notebooks, Air, FastHTML, and Django — clear, pragmatic tutorials and experiments in modern web engineering." />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <div class="container">
-        <header class="masthead">
-            <div class="mastbrand">
-                <div class="title">audrey.feldroy.com</div>
-                <div class="strap">Researching the frontier of web development + AI</div>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="site-name"><a href="/">audrey.feldroy.com</a></div>
+            <div class="header-right">
+                <span class="tagline">Researching the frontier of web development + AI</span>
+                <label class="theme-toggle" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" class="visually-hidden" />
+                    <span class="visually-hidden">Toggle dark mode</span>
+                    <div class="toggle-track"></div>
+                    <div class="toggle-icons">
+                        <svg class="icon-sun" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                        <svg class="icon-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                    </div>
+                </label>
             </div>
-            <div class="nav-container">
+        </div>
+    </header>
 
-                <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
+    <div class="page-container">
+        <div class="site-layout">
+            <main class="feed">
+                <div class="feed-header">
+                    <div class="feed-title">Latest writing</div>
+                    <div class="feed-meta">
+                        {% if posts and posts|length > 0 %}
+                        <span>{{ posts|length }} total posts</span>
+                        {% else %}
+                        <span>0 total posts</span>
+                        {% endif %}
+                        <span>Topics: Python, Jupyter, Air, FastHTML, Django, AI, web engineering</span>
+                    </div>
                 </div>
-            </div>
-        </header>
+                {% if posts and posts|length > 0 %}
+                    {% set featured = posts[0] %}
+                    <article class="post featured">
+                        <span class="post-kicker">Featured</span>
+                        <span class="post-date">{{ featured.meta }}</span>
+                        <h2 class="post-title"><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
+                        <p class="post-tease{% if featured.image %} has-image-below{% endif %}">{{ featured.tease }}</p>
+                        {% if featured.image %}
+                        <a href="{{ featured.url }}" class="post-image">
+                            <img src="{{ featured.image }}" alt="{{ featured.title }}" loading="eager" />
+                        </a>
+                        {% endif %}
+                        <a href="{{ featured.url }}" class="post-continue">Continue reading <span>&rarr;</span></a>
+                    </article>
 
-        <div class="layout">
-            <main>
-                <article class="lead">
-                    {% if posts and posts|length > 0 %}
-                        {% set featured = posts[0] %}
-                        <h2><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
-                        <div class="byline">By Audrey M. Roy Greenfeld • {{ featured.meta }}</div>
-                        <p class="lede">{{ featured.tease }}</p>
-                    {% else %}
-                        <h2>No posts yet</h2>
-                    {% endif %}
-                </article>
-
-                <section class="articles">
                     {% for post in posts[1:] %}
-                        <article class="article">
-                            <div class="meta">{{ post.meta }}</div>
-                            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
-                            <p class="tease">{{ post.tease }}</p>
-                        </article>
+                    <article class="post">
+                        <span class="post-kicker">Post {{ loop.index + 1 }} of {{ posts|length }}</span>
+                        <span class="post-date">{{ post.meta }}</span>
+                        <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                        <p class="post-tease{% if post.image %} has-image-below{% endif %}">{{ post.tease }}</p>
+                        {% if post.image %}
+                        <a href="{{ post.url }}" class="post-image">
+                            <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy" />
+                        </a>
+                        {% endif %}
+                        <a href="{{ post.url }}" class="post-continue">Continue reading <span>&rarr;</span></a>
+                    </article>
                     {% endfor %}
-                </section>
+                {% else %}
+                    <article class="post">
+                        <h2 class="post-title">No posts yet</h2>
+                    </article>
+                {% endif %}
             </main>
 
             <aside class="sidebar">
-                <div class="card">
-                    <h4>Audrey's Note</h4>
-                    <p>This is my web dev and AI research playground. It contains highly-experimental code.</p>
+                <div class="sidebar-section">
+                    <div class="sidebar-author">
+                        <div class="sidebar-avatar">A</div>
+                        <div class="sidebar-author-name">Audrey M. Roy Greenfeld</div>
+                    </div>
+                    <p class="sidebar-note">Hey there! This is my little corner for tinkering with web dev and AI. Expect rough edges and half-baked ideas.</p>
+                    <div class="sidebar-facts">
+                        <div class="sidebar-fact"><span class="label">Focus</span> I'm obsessed with modern web engineering, Python tooling, and figuring out how AI fits into real workflows.</div>
+                        <div class="sidebar-fact"><span class="label">Format</span> You'll find short writeups, messy notebooks, wild experiments, and notes from the field.</div>
+                        <div class="sidebar-fact"><span class="label">Stack</span> Built with Air, FastAPI, Starlette, Jinja2, and Pydantic.</div>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <h4>Friends and Family</h4>
-                    <div class="mini-list">
-                        <a href="https://daniel.feldroy.com">— Daniel Roy Greenfeld</a>
-                        <a href="https://umasgames.fastapicloud.dev/">— Uma Roy Greenfeld</a>
-                        <a href="https://jeffhuang.com/">— Jeff Huang</a>
-                        <a href="https://www.instagram.com/1tinyydancer/">— Jennifer Cheu</a>
-                        <a href="https://www.wilderhuang.com/">— Wilder Huang</a>
-                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=AUDREY">— Isaac Flath</a>
-                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=FELDROY">— Eleanor Berger</a>
-                        <a href="https://maven.com/parlance-labs/evals?promoCode=FELDROY">— Hamel Husain</a>
+                <div class="sidebar-section">
+                    <div class="sidebar-heading">What you'll find here</div>
+                    <div class="sidebar-list">
+                        <div class="sidebar-item">Web dev + AI stuff with Air and FastHTML</div>
+                        <div class="sidebar-item">Random little and big projects</div>
+                        <div class="sidebar-item">My watercolors and other art</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-heading">Friends and Family</div>
+                    <div class="sidebar-links">
+                        <a href="https://daniel.feldroy.com" class="sidebar-link">
+                            Daniel Roy Greenfeld
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://umasgames.fastapicloud.dev/" class="sidebar-link">
+                            Uma Roy Greenfeld
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://jeffhuang.com/" class="sidebar-link">
+                            Jeff Huang
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://www.instagram.com/1tinyydancer/" class="sidebar-link">
+                            Jennifer Cheu
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://www.wilderhuang.com/" class="sidebar-link">
+                            Wilder Huang
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=AUDREY" class="sidebar-link">
+                            Isaac Flath
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=FELDROY" class="sidebar-link">
+                            Eleanor Berger
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
+                        <a href="https://maven.com/parlance-labs/evals?promoCode=FELDROY" class="sidebar-link">
+                            Hamel Husain
+                            <span class="sidebar-link-arrow">&rarr;</span>
+                        </a>
                     </div>
                 </div>
             </aside>
         </div>
-
-        <footer>
-            Thanks for visiting my playground • © <a href="https://audrey.feldroy.com/">audrey.feldroy.com</a>
-        </footer>
     </div>
+
+    <footer class="site-footer">
+        <div class="page-container">
+            <p>Thanks for visiting my playground &middot; &copy; 2024&ndash;2026 <a href="https://audrey.feldroy.com/">audrey.feldroy.com</a></p>
+        </div>
+    </footer>
+
     <script>
-        const checkbox = document.getElementById('checkbox');
+        const checkbox = document.getElementById('theme-checkbox');
         const html = document.documentElement;
 
         checkbox.addEventListener('change', function() {
-            if(this.checked) {
+            if (this.checked) {
                 html.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
             } else {
@@ -90,12 +161,13 @@
             }
         });
 
-        const currentTheme = localStorage.getItem('theme');
-        if(currentTheme) {
-            html.setAttribute('data-theme', currentTheme);
-            if(currentTheme === 'dark') {
-                checkbox.checked = true;
-            }
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            html.setAttribute('data-theme', saved);
+            if (saved === 'dark') checkbox.checked = true;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            html.setAttribute('data-theme', 'dark');
+            checkbox.checked = true;
         }
     </script>
 </body>
