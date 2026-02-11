@@ -116,6 +116,12 @@ def get_notebook_cells(notebook_path: Path) -> List[Dict[str, Any]]:
         return []
 
 
+def extract_first_image(text: str) -> str:
+    """Extracts the first markdown image URL from text, or returns empty string."""
+    match = re.search(r'!\[[^\]]*\]\(([^)]+)\)', text)
+    return match.group(1) if match else ""
+
+
 def get_post_dict(path: Path) -> dict:
     """
     Extracts title, formatted date, and summary from a notebook or markdown path.
@@ -131,10 +137,12 @@ def get_post_dict(path: Path) -> dict:
         # strip leading markdown heading markers like '# '
         title = re.sub(r"^\s*#+\s*", "", raw_title).strip() or "Untitled"
         summary = lines[1] if len(lines) > 1 else ""
+        image = extract_first_image(text)
     except Exception:
         title = "Untitled"
         summary = ""
-    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "url": f"/articles/{path.stem}"}
+        image = ""
+    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "image": image, "url": f"/articles/{path.stem}"}
 
 
 
