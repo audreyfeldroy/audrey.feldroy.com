@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>audrey.feldroy.com — Audrey M. Roy Greenfeld</title>
+    <meta name="description" content="Audrey M. Roy Greenfeld's blog on Python, Jupyter notebooks, Air, FastHTML, and Django — clear, pragmatic tutorials and experiments in modern web engineering." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+/* ============================================
+   audrey.feldroy.com — Redesign Mockup
+   ============================================ */
+
+/* --- Design Tokens --- */
+:root {
+    /* Light theme */
+    --bg: #ffffff;
+    --bg-surface: #f7f7f8;
+    --text: #1a1a2e;
+    --text-secondary: #5c5c70;
+    --text-tertiary: #8b8b9e;
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --accent-subtle: #eef2ff;
+    --border: #e8e8ed;
+    --border-subtle: #f0f0f4;
+    --card-bg: #ffffff;
+    --card-hover: #fafafb;
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    --shadow-image: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --toggle-bg: #dcdce4;
+    --toggle-knob: #ffffff;
+    --tag-bg: #f0f0f5;
+    --tag-text: #5c5c70;
+
+    /* Shared */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+    --max-width: 1160px;
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --transition-fast: 0.15s ease;
+    --transition: 0.25s ease;
+}
+
+[data-theme="dark"] {
+    --bg: #0f0f14;
+    --bg-surface: #18181f;
+    --text: #e4e4ed;
+    --text-secondary: #9898ab;
+    --text-tertiary: #6b6b7e;
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-subtle: rgba(129, 140, 248, 0.1);
+    --border: #2a2a35;
+    --border-subtle: #1f1f28;
+    --card-bg: #18181f;
+    --card-hover: #1e1e27;
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.2);
+    --shadow-image: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --toggle-bg: #3a3a48;
+    --toggle-knob: #e4e4ed;
+    --tag-bg: #22222d;
+    --tag-text: #9898ab;
+}
+
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background var(--transition), color var(--transition);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--accent-hover);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    line-height: 1.3;
+}
+
+p {
+    margin: 0;
+}
+
+
+/* --- Container --- */
+.site-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+
+/* --- Header --- */
+.site-header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.site-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.site-title a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.site-tagline {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.01em;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+
+/* --- Theme Toggle --- */
+.theme-toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle input {
+    display: none;
+}
+
+.toggle-track {
+    width: 44px;
+    height: 24px;
+    background: var(--toggle-bg);
+    border-radius: 12px;
+    position: relative;
+    transition: background var(--transition);
+}
+
+.toggle-track::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: var(--toggle-knob);
+    border-radius: 50%;
+    transition: transform var(--transition);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle input:checked + .toggle-track {
+    background: var(--accent);
+}
+
+.theme-toggle input:checked + .toggle-track::before {
+    transform: translateX(20px);
+}
+
+.toggle-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 24px;
+    padding: 0 6px;
+    pointer-events: none;
+}
+
+.toggle-labels svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+}
+
+.sun-icon {
+    color: #f59e0b;
+    opacity: 1;
+    transition: opacity var(--transition);
+}
+
+.moon-icon {
+    color: #e4e4ed;
+    opacity: 0.5;
+    transition: opacity var(--transition);
+}
+
+[data-theme="dark"] .sun-icon {
+    opacity: 0.5;
+}
+
+[data-theme="dark"] .moon-icon {
+    opacity: 1;
+}
+
+
+/* --- Main Layout --- */
+.site-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+    padding: 40px 0;
+    align-items: start;
+}
+
+
+/* --- Hero / Featured Post --- */
+.hero-post {
+    margin-bottom: 48px;
+}
+
+.hero-post a.hero-image-link {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.hero-post a.hero-image-link:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.hero-post .hero-image {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.hero-post a.hero-image-link:hover .hero-image {
+    transform: scale(1.015);
+}
+
+.hero-content {
+    max-width: 640px;
+}
+
+.hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.post-date {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.post-tag {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+}
+
+.post-tag.tag-tech {
+    background: var(--accent-subtle);
+    color: var(--accent);
+}
+
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+}
+
+.hero-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.hero-title a:hover {
+    color: var(--accent);
+}
+
+.hero-byline {
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+}
+
+.hero-tease {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 56ch;
+}
+
+
+/* --- Post List --- */
+.posts-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.posts-section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 0;
+}
+
+.post-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background var(--transition-fast);
+}
+
+.post-item.has-thumb {
+    grid-template-columns: 1fr 140px;
+    gap: 20px;
+    align-items: center;
+}
+
+.post-item-body {
+    min-width: 0;
+}
+
+.post-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.post-item-title {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 6px;
+}
+
+.post-item-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.post-item-title a:hover {
+    color: var(--accent);
+}
+
+.post-item-tease {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-item-thumb {
+    display: block;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.post-item-thumb:hover {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+.post-item-thumb img {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.post-item-thumb:hover img {
+    transform: scale(1.04);
+}
+
+
+/* --- Sidebar --- */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 32px;
+}
+
+.sidebar-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow-xs);
+}
+
+.sidebar-card-title {
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+
+.sidebar-card p {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.sidebar-about {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.sidebar-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-subtle);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--accent);
+}
+
+.sidebar-about-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-about-name {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.sidebar-about-bio {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 0;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.sidebar-link:last-child {
+    border-bottom: none;
+}
+
+.sidebar-link:hover {
+    color: var(--accent);
+}
+
+.sidebar-link-arrow {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    transition: transform var(--transition-fast), color var(--transition-fast);
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.sidebar-link:hover .sidebar-link-arrow {
+    transform: translateX(2px);
+    color: var(--accent);
+}
+
+
+/* --- Footer --- */
+.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    margin-top: 24px;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+}
+
+.footer-inner a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+}
+
+.footer-inner a:hover {
+    color: var(--accent);
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 960px) {
+    .site-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .sidebar {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sidebar-card {
+        flex: 1;
+        min-width: 260px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .site-container {
+        padding: 0 16px;
+    }
+
+    .site-header {
+        padding: 20px 0;
+    }
+
+    .header-inner {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .site-title {
+        font-size: 1.25rem;
+    }
+
+    .site-tagline {
+        font-size: 0.75rem;
+    }
+
+    .site-layout {
+        padding: 24px 0;
+        gap: 32px;
+    }
+
+    .hero-post {
+        margin-bottom: 32px;
+    }
+
+    .hero-post .hero-image {
+        aspect-ratio: 16 / 10;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-tease {
+        font-size: 1rem;
+    }
+
+    .post-item.has-thumb {
+        grid-template-columns: 1fr 100px;
+        gap: 14px;
+    }
+
+    .post-item-thumb img {
+        width: 100px;
+        height: 72px;
+    }
+
+    .post-item-title {
+        font-size: 1rem;
+    }
+
+    .post-item-tease {
+        font-size: 0.8125rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .sidebar {
+        flex-direction: column;
+    }
+
+    .sidebar-card {
+        min-width: auto;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <!-- ==================== HEADER ==================== -->
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="site-brand">
+                    <div class="site-title"><a href="/">audrey.feldroy.com</a></div>
+                    <div class="site-tagline">Researching the frontier of web development + AI</div>
+                </div>
+                <div class="header-actions">
+                    <label class="theme-toggle" for="theme-checkbox">
+                        <input type="checkbox" id="theme-checkbox" />
+                        <div class="toggle-track"></div>
+                        <div class="toggle-labels">
+                            <svg class="sun-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                            <svg class="moon-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <!-- ==================== MAIN LAYOUT ==================== -->
+        <div class="site-layout">
+            <main>
+                <!-- Featured / Hero Post -->
+                <article class="hero-post">
+                    <a href="/articles/2025-12-16-Adopting-Idiomatic-PyTest-Code-Review" class="hero-image-link">
+                        <img src="https://audreyfeldroy.github.io/arg-static/img/2025-12-16-pytest-review/01-pr-overview.jpg" alt="" class="hero-image" loading="eager" />
+                    </a>
+                    <div class="hero-content">
+                        <div class="hero-meta">
+                            <span class="post-tag tag-tech">Python</span>
+                            <span class="post-date">Tue, Dec 16, 2025</span>
+                        </div>
+                        <h2 class="hero-title"><a href="/articles/2025-12-16-Adopting-Idiomatic-PyTest-Code-Review">Adopting Idiomatic PyTest: A Code Review</a></h2>
+                        <p class="hero-tease">We recently reviewed a pull request from contributor Martin Saizar that refactored our Python tests. The goal was to enable the PyTest linter rule in Ruff, our code formatter and linter.</p>
+                    </div>
+                </article>
+
+                <!-- Post List -->
+                <section class="posts-section">
+                    <h3 class="posts-section-title">Recent Posts</h3>
+
+                    <!-- Post with image -->
+                    <article class="post-item has-thumb">
+                        <div class="post-item-body">
+                            <div class="post-item-meta">
+                                <span class="post-tag">Android</span>
+                                <span class="post-date">Fri, Dec 15, 2023</span>
+                            </div>
+                            <h3 class="post-item-title"><a href="/articles/2023-12-15-Hello-World-And-Composable-Previews-In-Android-Studio">Hello World and Composable Previews in Android Studio</a></h3>
+                            <p class="post-item-tease">I've been using Android phones for several years now, and it has always been on my bucket list to write myself some productivity apps.</p>
+                        </div>
+                        <a href="/articles/2023-12-15-Hello-World-And-Composable-Previews-In-Android-Studio" class="post-item-thumb">
+                            <img src="https://audreyfeldroy.github.io/arg-static/img/2023-12-15-at-11.24.52.png" alt="" loading="lazy" />
+                        </a>
+                    </article>
+
+                    <!-- Post with image -->
+                    <article class="post-item has-thumb">
+                        <div class="post-item-body">
+                            <div class="post-item-meta">
+                                <span class="post-tag">Making</span>
+                                <span class="post-date">Sun, Jun 21, 2020</span>
+                            </div>
+                            <h3 class="post-item-title"><a href="/articles/2020-06-21-Hacking-3d-Printer-Infill-Patterns">Hacking 3D Printer Infill Patterns</a></h3>
+                            <p class="post-item-tease">I 3D-printed these earrings using a cool little hack of setting top and bottom wall thickness to 0. The pattern is the Tri-Hexagon infill that comes built-in with Ultimaker Cura.</p>
+                        </div>
+                        <a href="/articles/2020-06-21-Hacking-3d-Printer-Infill-Patterns" class="post-item-thumb">
+                            <img src="https://audreyfeldroy.github.io/arg-static/img/audreyfeldroy_104297671_270972654012505_2390685167189733738_n.jpg" alt="" loading="lazy" />
+                        </a>
+                    </article>
+
+                    <!-- Post without image -->
+                    <article class="post-item">
+                        <div class="post-item-body">
+                            <div class="post-item-meta">
+                                <span class="post-tag tag-tech">Django</span>
+                                <span class="post-date">Tue, May 26, 2015</span>
+                            </div>
+                            <h3 class="post-item-title"><a href="/articles/2015-05-26-Our-Trip-To-Djangogirls-Ensenada-Mexico">Our Trip to DjangoGirls Ensenada, Mexico</a></h3>
+                            <p class="post-item-tease">This weekend, Daniel and I drove down to Ensenada, Mexico to speak and coach at DjangoGirls Ensenada. It was a 2-day workshop for women of any level of experience to get a taste of web application development.</p>
+                        </div>
+                    </article>
+
+                    <!-- Post with image -->
+                    <article class="post-item has-thumb">
+                        <div class="post-item-body">
+                            <div class="post-item-meta">
+                                <span class="post-tag">Art</span>
+                                <span class="post-date">Sun, Apr 19, 2015</span>
+                            </div>
+                            <h3 class="post-item-title"><a href="/articles/2015-04-19-Exploding-Flower">Exploding Flower</a></h3>
+                            <p class="post-item-tease">For Day 12 of my "100 Days of Watercolor" project.</p>
+                        </div>
+                        <a href="/articles/2015-04-19-Exploding-Flower" class="post-item-thumb">
+                            <img src="https://audreyfeldroy.github.io/arg-static/img/012-flower-edited-X2.jpg" alt="" loading="lazy" />
+                        </a>
+                    </article>
+
+                    <!-- Post with image -->
+                    <article class="post-item has-thumb">
+                        <div class="post-item-body">
+                            <div class="post-item-meta">
+                                <span class="post-tag">Art</span>
+                                <span class="post-date">Sat, Apr 4, 2015</span>
+                            </div>
+                            <h3 class="post-item-title"><a href="/articles/2015-04-04-Cover-Design-For-Into-The-Brambles">Cover Design for Into the Brambles</a></h3>
+                            <p class="post-item-tease">I did the cover design for Into the Brambles, the first book of Daniel's forthcoming epic fantasy series The Brambles.</p>
+                        </div>
+                        <a href="/articles/2015-04-04-Cover-Design-For-Into-The-Brambles" class="post-item-thumb">
+                            <img src="https://audreyfeldroy.github.io/arg-static/img/itb-1563x2500-X2.png" alt="" loading="lazy" />
+                        </a>
+                    </article>
+                </section>
+            </main>
+
+            <!-- ==================== SIDEBAR ==================== -->
+            <aside class="sidebar">
+                <!-- About Card -->
+                <div class="sidebar-card">
+                    <div class="sidebar-about">
+                        <div class="sidebar-avatar">A</div>
+                        <div class="sidebar-about-text">
+                            <div class="sidebar-about-name">Audrey M. Roy Greenfeld</div>
+                            <p class="sidebar-about-bio">This is my web dev and AI research playground. It contains highly-experimental code.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Friends & Family Card -->
+                <div class="sidebar-card">
+                    <div class="sidebar-card-title">Friends and Family</div>
+                    <div class="sidebar-links">
+                        <a href="https://daniel.feldroy.com" class="sidebar-link">
+                            Daniel Roy Greenfeld
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://umasgames.fastapicloud.dev/" class="sidebar-link">
+                            Uma Roy Greenfeld
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://jeffhuang.com/" class="sidebar-link">
+                            Jeff Huang
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://www.instagram.com/1tinyydancer/" class="sidebar-link">
+                            Jennifer Cheu
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://www.wilderhuang.com/" class="sidebar-link">
+                            Wilder Huang
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=AUDREY" class="sidebar-link">
+                            Isaac Flath
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://maven.com/kentro/context-engineering-for-coding?promoCode=FELDROY" class="sidebar-link">
+                            Eleanor Berger
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                        <a href="https://maven.com/parlance-labs/evals?promoCode=FELDROY" class="sidebar-link">
+                            Hamel Husain
+                            <span class="sidebar-link-arrow">&#8594;</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- ==================== FOOTER ==================== -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <span>Thanks for visiting my playground</span>
+                <span>&copy; 2024-2026 <a href="https://audrey.feldroy.com/">audrey.feldroy.com</a></span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const checkbox = document.getElementById('theme-checkbox');
+        const html = document.documentElement;
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Restore saved theme preference
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            html.setAttribute('data-theme', saved);
+            if (saved === 'dark') {
+                checkbox.checked = true;
+            }
+        }
+    </script>
+</body>
+</html>
