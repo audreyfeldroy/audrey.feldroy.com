@@ -90,6 +90,18 @@ h1, h2, h3, h4, h5, h6 {
 
 p { margin: 0; }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 
 /* --- Page Shell --- */
 .page-container {
@@ -156,7 +168,7 @@ p { margin: 0; }
     flex-shrink: 0;
 }
 
-.theme-toggle input { display: none; }
+.theme-toggle input.visually-hidden { }
 
 .toggle-track {
     width: 40px;
@@ -180,12 +192,17 @@ p { margin: 0; }
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-.theme-toggle input:checked + .toggle-track {
+.theme-toggle input:checked ~ .toggle-track {
     background: var(--accent);
 }
 
-.theme-toggle input:checked + .toggle-track::before {
+.theme-toggle input:checked ~ .toggle-track::before {
     transform: translateX(18px);
+}
+
+.theme-toggle input:focus-visible ~ .toggle-track {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 .toggle-icons {
@@ -586,7 +603,7 @@ p { margin: 0; }
     width: 40px;
 }
 
-.theme-switch input { display: none; }
+.theme-switch input.visually-hidden { }
 
 .slider {
     background-color: var(--toggle-bg);
@@ -610,12 +627,17 @@ p { margin: 0; }
     width: 16px;
 }
 
-input:checked + .slider {
+input:checked ~ .slider {
     background-color: var(--accent);
 }
 
-input:checked + .slider:before {
+input:checked ~ .slider:before {
     transform: translateX(18px);
+}
+
+.theme-switch input:focus-visible ~ .slider {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 .slider.round {
