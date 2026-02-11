@@ -122,6 +122,13 @@ def extract_first_image(text: str) -> str:
     return match.group(1) if match else ""
 
 
+def strip_markdown(text: str) -> str:
+    """Strips markdown syntax for plain-text display (links, bold, italic, code)."""
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)  # [text](url) -> text
+    text = re.sub(r'`([^`]+)`', r'\1', text)  # `code` -> code
+    return text
+
+
 def get_post_dict(path: Path) -> dict:
     """
     Extracts title, formatted date, and summary from a notebook or markdown path.
@@ -142,7 +149,7 @@ def get_post_dict(path: Path) -> dict:
         title = "Untitled"
         summary = ""
         image = ""
-    return {"title": title, "date": date, "meta": formatted_date, "tease": summary, "image": image, "url": f"/articles/{path.stem}"}
+    return {"title": title, "date": date, "meta": formatted_date, "tease": strip_markdown(summary), "image": image, "url": f"/articles/{path.stem}"}
 
 
 
