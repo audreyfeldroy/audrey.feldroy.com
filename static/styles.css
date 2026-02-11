@@ -63,6 +63,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background var(--transition), color var(--transition);
+    overflow-x: clip;
+    overflow-wrap: break-word;
 }
 
 a {
@@ -224,6 +226,7 @@ p { margin: 0; }
 /* --- Feed: The Main Column --- */
 .feed {
     max-width: var(--content-width);
+    min-width: 0;
 }
 
 
@@ -359,6 +362,7 @@ p { margin: 0; }
     flex-direction: column;
     gap: 28px;
     padding-top: 0;
+    min-width: 0;
 }
 
 .sidebar-section {
@@ -648,15 +652,15 @@ input:checked + .slider:before {
 
 @media (max-width: 640px) {
     .page-container {
-        padding: 0 20px;
+        padding: 0 16px;
     }
 
     .header-inner {
-        padding: 0 20px;
+        padding: 0 16px;
     }
 
     .site-header {
-        padding: 24px 0;
+        padding: 20px 0;
     }
 
     .site-name {
@@ -664,12 +668,12 @@ input:checked + .slider:before {
     }
 
     .site-layout {
-        padding: 32px 0 24px;
-        gap: 36px;
+        padding: 28px 0 24px;
+        gap: 32px;
     }
 
     .post {
-        padding: 28px 0;
+        padding: 24px 0;
     }
 
     .post.featured .post-title {
@@ -682,32 +686,70 @@ input:checked + .slider:before {
 
     .post-tease {
         font-size: 1rem;
+        max-width: 100%;
     }
 
     .post-image {
-        margin-left: -20px;
-        margin-right: -20px;
+        margin-left: -16px;
+        margin-right: -16px;
         border-radius: 0;
     }
 
     .post.featured .post-image {
-        margin-left: -20px;
-        margin-right: -20px;
+        margin-left: -16px;
+        margin-right: -16px;
         border-radius: 0;
     }
 
+    .sidebar {
+        max-width: 100%;
+    }
+
     .container.article-container {
-        padding: 0 20px;
+        padding: 0 16px;
     }
 
     .article-header h1 {
         font-size: 1.75rem;
+    }
+
+    .article-content {
+        max-width: 100%;
+    }
+
+    .site-footer {
+        padding: 24px 0;
     }
 }
 
 @media (max-width: 420px) {
     body {
         font-size: 17px;
+    }
+
+    .page-container {
+        padding: 0 12px;
+    }
+
+    .header-inner {
+        padding: 0 12px;
+    }
+
+    .site-header {
+        padding: 16px 0;
+    }
+
+    .site-name {
+        font-size: 1rem;
+    }
+
+    .site-layout {
+        padding: 24px 0 20px;
+        gap: 28px;
+    }
+
+    .post {
+        padding: 20px 0;
     }
 
     .post.featured .post-title {
@@ -720,6 +762,28 @@ input:checked + .slider:before {
 
     .post-tease {
         font-size: 0.9375rem;
+    }
+
+    .post-image {
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+
+    .post.featured .post-image {
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+
+    .container.article-container {
+        padding: 0 12px;
+    }
+
+    .article-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .site-footer {
+        padding: 20px 0;
     }
 }
 
