@@ -1,10 +1,8 @@
 # Ceramic Bird
 
-[![](https://audreyfeldroy.github.io/arg-static/img/2015-02-03-ceramic-bird.jpg)](https://audreyfeldroy.github.io/arg-static/img/2015-02-03-ceramic-bird.jpg)
+This bird was half of a pair of two, an engagement gift from Aunt Lois in October of 2011.
 
-  
-  
-This bird was half of a pair of two, an engagement gift from Aunt Lois in October of 2011. She gave them to us when we visited her in Florida.  
+[![](https://audreyfeldroy.github.io/arg-static/img/2015-02-03-ceramic-bird.jpg)](https://audreyfeldroy.github.io/arg-static/img/2015-02-03-ceramic-bird.jpg) She gave them to us when we visited her in Florida.  
   
 They now sit on the ledge in our dining room. One bird kisses the other on the cheek. This one is the kisser, with its beak pointed straight out.  
   

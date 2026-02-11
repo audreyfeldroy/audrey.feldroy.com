@@ -1,9 +1,8 @@
 # Solving UnicodeDecodeErrors Due to Opening Binary Files
 
-[![](https://audreyfeldroy.github.io/arg-static/img/python-tip-600x314.png)](https://audreyfeldroy.github.io/arg-static/img/python-tip-600x314.png)
+A common thing to do in Python is to go through a directory tree, opening each file and doing something with the file's text. Here's what to do when you hit a UnicodeDecodeError from accidentally opening a binary file.
 
-  
-  
+[![](https://audreyfeldroy.github.io/arg-static/img/python-tip-600x314.png)](https://audreyfeldroy.github.io/arg-static/img/python-tip-600x314.png)
 
 ## Common Scenario: Walking Directory Tree and Opening Files
 

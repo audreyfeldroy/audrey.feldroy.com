@@ -1,5 +1,8 @@
 # execnb's read_nb and nb2fasthtml's render_nb
 
+Exploring how execnb reads notebooks and nb2fasthtml renders them, to understand the tools I'm building on.
+
+## Setup
 
 ```python
 import glob

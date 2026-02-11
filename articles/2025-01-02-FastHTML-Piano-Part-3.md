@@ -1,5 +1,8 @@
 # FastHTML Piano, Part 3
 
+Adding a settings bar with a volume slider and waveform selector to the piano.
+
+## Setup
 
 ```python
 from fastcore.all import *

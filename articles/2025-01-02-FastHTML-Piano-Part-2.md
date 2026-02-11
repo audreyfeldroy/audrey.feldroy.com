@@ -1,5 +1,8 @@
 # FastHTML Piano, Part 2
 
+In Part 1 we defined piano keys. Now let's improve them with hover effects, mouse events, and JavaScript audio.
+
+## Setup
 
 ```python
 from fastcore.all import *
