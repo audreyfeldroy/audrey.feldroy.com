@@ -30,9 +30,21 @@
     <div class="page-container">
         <div class="site-layout">
             <main class="feed">
+                <div class="feed-header">
+                    <div class="feed-title">Latest writing</div>
+                    <div class="feed-meta">
+                        {% if posts and posts|length > 0 %}
+                        <span>{{ posts|length }} total posts</span>
+                        {% else %}
+                        <span>0 total posts</span>
+                        {% endif %}
+                        <span>Topics: Python, Jupyter, Air, FastHTML, Django, AI, web engineering</span>
+                    </div>
+                </div>
                 {% if posts and posts|length > 0 %}
                     {% set featured = posts[0] %}
                     <article class="post featured">
+                        <span class="post-kicker">Featured</span>
                         <span class="post-date">{{ featured.meta }}</span>
                         <h2 class="post-title"><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
                         <p class="post-tease{% if featured.image %} has-image-below{% endif %}">{{ featured.tease }}</p>
@@ -46,6 +58,7 @@
 
                     {% for post in posts[1:] %}
                     <article class="post">
+                        <span class="post-kicker">Post {{ loop.index + 1 }} of {{ posts|length }}</span>
                         <span class="post-date">{{ post.meta }}</span>
                         <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
                         <p class="post-tease{% if post.image %} has-image-below{% endif %}">{{ post.tease }}</p>
@@ -70,7 +83,21 @@
                         <div class="sidebar-avatar">A</div>
                         <div class="sidebar-author-name">Audrey M. Roy Greenfeld</div>
                     </div>
-                    <p class="sidebar-note">This is my web dev and AI research playground. It contains highly-experimental code.</p>
+                    <p class="sidebar-note">Hey there! This is my little corner for tinkering with web dev and AI. Expect rough edges and half-baked ideas.</p>
+                    <div class="sidebar-facts">
+                        <div class="sidebar-fact"><span class="label">Focus</span> I'm obsessed with modern web engineering, Python tooling, and figuring out how AI fits into real workflows.</div>
+                        <div class="sidebar-fact"><span class="label">Format</span> You'll find short writeups, messy notebooks, wild experiments, and notes from the field.</div>
+                        <div class="sidebar-fact"><span class="label">Stack</span> Built with Air, FastAPI, Starlette, Jinja2, and Pydantic.</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-heading">What you'll find here</div>
+                    <div class="sidebar-list">
+                        <div class="sidebar-item">Web dev + AI stuff with Air and FastHTML</div>
+                        <div class="sidebar-item">Random little and big projects</div>
+                        <div class="sidebar-item">My watercolors and other art</div>
+                    </div>
                 </div>
 
                 <div class="sidebar-section">
