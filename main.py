@@ -200,6 +200,20 @@ def article(request: air.Request, name: str) -> Any:
         "pygments_css": STYLE_DEFINITION,
     })
 
+@app.get("/og/{name}")
+def og_image(request: air.Request, name: str) -> Any:
+    """Renders an OG image page for a given article, designed to be screenshotted at 1200x630."""
+    md_path = ARTICLES_DIR / f"{name}.md"
+    if not md_path.exists():
+        return air.Response("Not Found", status_code=404)
+    post = get_post_dict(md_path)
+    return jinja(request, "og-image.html", {
+        "title": post["title"],
+        "meta": post["meta"],
+        "description": post["tease"],
+    })
+
+
 @app.get("/nbs/{name}")
 def notebook_compat(name: str) -> Any:
     """Compatibility redirect from old /nbs/<name> URLs to /articles/<name>."""
