@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OG Image Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 1200px;
+            height: 630px;
+            background: #fdfaf6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Warm background glow --- */
+        .bg-glow {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 600px 450px at 92% 75%, rgba(200, 93, 59, 0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 350px 250px at 8% 20%, rgba(200, 93, 59, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* --- Left accent stripe --- */
+        .accent-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(180deg, #c85d3b 0%, #e8845e 50%, #c85d3b 100%);
+        }
+
+        /* --- Decorative arc in bottom-right --- */
+        .arc {
+            position: absolute;
+            right: -120px;
+            bottom: -120px;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            border: 1px solid rgba(200, 93, 59, 0.08);
+        }
+        .arc::after {
+            content: '';
+            position: absolute;
+            inset: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(200, 93, 59, 0.05);
+        }
+
+        /* --- Content area --- */
+        .content {
+            position: absolute;
+            top: 56px;
+            left: 72px;
+            right: 80px;
+            bottom: 68px;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* --- Date --- */
+        .date {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #c85d3b;
+            margin-bottom: 20px;
+        }
+
+        /* --- Title --- */
+        h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #1a1a1a;
+            letter-spacing: -0.02em;
+            max-width: 900px;
+            margin-bottom: 20px;
+        }
+
+        /* --- Subtitle --- */
+        .subtitle {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 1.55;
+            color: #6b6b6b;
+            max-width: 740px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* --- Bottom bar --- */
+        .bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0 80px 0 72px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(200, 93, 59, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #c85d3b;
+        }
+
+        .author-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .url {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: #999999;
+            letter-spacing: 0.01em;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="accent-bar"></div>
+    <div class="arc"></div>
+
+    <div class="content">
+        <p class="date">Feb 11, 2026</p>
+        <h1>Healing and Survival Come First</h1>
+        <p class="subtitle">Danny's healing well. All the projects we planned will continue, just not at the pace everyone wants.</p>
+    </div>
+
+    <div class="bottom">
+        <div class="author">
+            <div class="author-avatar">A</div>
+            <span class="author-name">Audrey M. Roy Greenfeld</span>
+        </div>
+        <span class="url">audrey.feldroy.com</span>
+    </div>
+</body>
+</html>
