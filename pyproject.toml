@@ -9,6 +9,7 @@ dependencies = [
     "hypercorn>=0.17.3",
     "listo>=0.8.0",
     "mistletoe",
+    "pillow>=12.1.1",
     "pygments>=2.19.2",
 ]
 
