@@ -156,3 +156,6 @@ Untitled*
 
 # AI chat history
 .specstory/**
+
+# Claude Code local instructions
+CLAUDE.local.md
