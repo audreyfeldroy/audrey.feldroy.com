@@ -9,7 +9,7 @@ We've gotten a ton of questions about how it compares to other Python web framew
 For more answers:
 
 * Watch this blog and [daniel.feldroy.com](https://daniel.feldroy.com)
-* Join the [Air Discord](https://discord.gg/KqmMpHSVWw) and read through the chat history
+* Join the [Air Discord](https://airwebframework.org/discord/) and read through the chat history
 * Follow us on Twitter [@AirWebFramework](https://x.com/AirWebFramework)
 
 ## Why I Haven't Blogged About Air Yet
@@ -148,7 +148,7 @@ First, go star [Air on GitHub](https://github.com/feldroy/air).
 
 Then when you have 30 minutes to spare, read the official docs, and try building a little web app. 
 
-If you give it a chance, we know you'll see Air's potential and want to help. Join the [Air Discord](https://discord.gg/KqmMpHSVWw) community to get involved.
+If you give it a chance, we know you'll see Air's potential and want to help. Join the [Air Discord](https://airwebframework.org/discord/) community to get involved.
 
 Air is free software and we invite everyone to contribute, starting with pull requests to make the newcomer's experience better.
 
