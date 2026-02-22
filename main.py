@@ -33,7 +33,10 @@ SCALE = OG_BASE.width / 1200  # 2x for retina screenshots
 FONT_TITLE = ImageFont.truetype(str(FONTS_DIR / "SourceSerif4-Bold.ttf"), int(48 * SCALE))
 FONT_DATE = ImageFont.truetype(str(FONTS_DIR / "Inter-SemiBold.ttf"), int(13 * SCALE))
 FONT_SUBTITLE = ImageFont.truetype(str(FONTS_DIR / "SourceSerif4-Regular.ttf"), int(20 * SCALE))
-FONT_EMOJI = ImageFont.truetype(str(FONTS_DIR / "NotoColorEmoji.ttf"), 109)  # only valid size
+try:
+    FONT_EMOJI = ImageFont.truetype(str(FONTS_DIR / "NotoColorEmoji.ttf"), 109)  # only valid size
+except OSError:
+    FONT_EMOJI = None
 
 # Regex matching emoji characters (including variation selectors and ZWJ sequences)
 _EMOJI_RE = re.compile(
@@ -95,6 +98,10 @@ def draw_text_with_emoji(
     # Target emoji height matches the text cap height
     text_bbox = font.getbbox("A")
     text_h = text_bbox[3] - text_bbox[1]
+    if FONT_EMOJI is None:
+        # No emoji font available, draw everything with the text font
+        draw.text((x, y), text, fill=fill, font=font)
+        return
     segments = _EMOJI_RE.split(text)
     for seg in segments:
         if not seg:
