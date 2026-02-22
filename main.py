@@ -33,8 +33,7 @@ SCALE = OG_BASE.width / 1200  # 2x for retina screenshots
 FONT_TITLE = ImageFont.truetype(str(FONTS_DIR / "SourceSerif4-Bold.ttf"), int(48 * SCALE))
 FONT_DATE = ImageFont.truetype(str(FONTS_DIR / "Inter-SemiBold.ttf"), int(13 * SCALE))
 FONT_SUBTITLE = ImageFont.truetype(str(FONTS_DIR / "SourceSerif4-Regular.ttf"), int(20 * SCALE))
-FONT_EMOJI_TITLE = ImageFont.truetype("/System/Library/Fonts/Apple Color Emoji.ttc", int(48 * SCALE))
-FONT_EMOJI_SUBTITLE = ImageFont.truetype("/System/Library/Fonts/Apple Color Emoji.ttc", int(20 * SCALE))
+FONT_EMOJI = ImageFont.truetype(str(FONTS_DIR / "NotoColorEmoji.ttf"), 109)  # only valid size
 
 # Regex matching emoji characters (including variation selectors and ZWJ sequences)
 _EMOJI_RE = re.compile(
@@ -90,27 +89,29 @@ def draw_text_with_emoji(
     text: str,
     fill: str,
     font: ImageFont.FreeTypeFont,
-    emoji_font: ImageFont.FreeTypeFont,
 ) -> None:
     """Draw text, substituting color emoji from a fallback font where needed."""
     x, y = xy
+    # Target emoji height matches the text cap height
+    text_bbox = font.getbbox("A")
+    text_h = text_bbox[3] - text_bbox[1]
     segments = _EMOJI_RE.split(text)
     for seg in segments:
         if not seg:
             continue
         if _EMOJI_RE.fullmatch(seg):
-            # Render emoji onto a temporary RGBA image, then composite
-            bbox = emoji_font.getbbox(seg)
+            # Render emoji at native 109px, then scale to match text size
+            bbox = FONT_EMOJI.getbbox(seg)
             w, h = bbox[2] - bbox[0], bbox[3] - bbox[1]
             tmp = Image.new("RGBA", (w, h), (0, 0, 0, 0))
             tmp_draw = ImageDraw.Draw(tmp)
-            tmp_draw.text((-bbox[0], -bbox[1]), seg, font=emoji_font, embedded_color=True)
-            # Align emoji with text baseline, nudged down slightly
-            text_bbox = font.getbbox("A")
-            text_h = text_bbox[3] - text_bbox[1]
-            y_offset = (text_h - h) // 2 + int(h * 0.35)
+            tmp_draw.text((-bbox[0], -bbox[1]), seg, font=FONT_EMOJI, embedded_color=True)
+            target_h = int(text_h * 1.1)
+            target_w = int(w * target_h / h)
+            tmp = tmp.resize((target_w, target_h), Image.LANCZOS)
+            y_offset = (text_h - target_h) // 2 + int(target_h * 0.35)
             img.paste(tmp, (x, y + y_offset), tmp)
-            x += w
+            x += target_w
         else:
             draw.text((x, y), seg, fill=fill, font=font)
             bbox = font.getbbox(seg)
@@ -152,13 +153,13 @@ def generate_og_jpg(title: str, meta: str, description: str) -> bytes:
 
     # Title
     for line in title_lines:
-        draw_text_with_emoji(img, draw, (OG_CONTENT_LEFT, y), line, COLOR_TITLE, FONT_TITLE, FONT_EMOJI_TITLE)
+        draw_text_with_emoji(img, draw, (OG_CONTENT_LEFT, y), line, COLOR_TITLE, FONT_TITLE)
         y += line_height_title
     y += gap_title_desc
 
     # Description
     for line in desc_lines:
-        draw_text_with_emoji(img, draw, (OG_CONTENT_LEFT, y), line, COLOR_SUBTITLE, FONT_SUBTITLE, FONT_EMOJI_SUBTITLE)
+        draw_text_with_emoji(img, draw, (OG_CONTENT_LEFT, y), line, COLOR_SUBTITLE, FONT_SUBTITLE)
         y += line_height_subtitle
 
     buf = io.BytesIO()
