@@ -33,6 +33,25 @@ SCALE = OG_BASE.width / 1200  # 2x for retina screenshots
 FONT_TITLE = ImageFont.truetype(str(FONTS_DIR / "SourceSerif4-Bold.ttf"), int(48 * SCALE))
 FONT_DATE = ImageFont.truetype(str(FONTS_DIR / "Inter-SemiBold.ttf"), int(13 * SCALE))
 FONT_SUBTITLE = ImageFont.truetype(str(FONTS_DIR / "SourceSerif4-Regular.ttf"), int(20 * SCALE))
+FONT_EMOJI_TITLE = ImageFont.truetype("/System/Library/Fonts/Apple Color Emoji.ttc", int(48 * SCALE))
+FONT_EMOJI_SUBTITLE = ImageFont.truetype("/System/Library/Fonts/Apple Color Emoji.ttc", int(20 * SCALE))
+
+# Regex matching emoji characters (including variation selectors and ZWJ sequences)
+_EMOJI_RE = re.compile(
+    "(["
+    "\U0001f600-\U0001f64f"  # emoticons
+    "\U0001f300-\U0001f5ff"  # symbols & pictographs
+    "\U0001f680-\U0001f6ff"  # transport & map
+    "\U0001f1e0-\U0001f1ff"  # flags
+    "\U0001f900-\U0001f9ff"  # supplemental symbols
+    "\U0001fa00-\U0001fa6f"  # chess symbols
+    "\U0001fa70-\U0001faff"  # symbols extended-A
+    "\U00002702-\U000027b0"  # dingbats
+    "\U0000fe0f"             # variation selector
+    "\U0000200d"             # ZWJ
+    "\U00002600-\U000026ff"  # misc symbols
+    "]+)"
+)
 
 COLOR_TITLE = "#1a1a1a"
 COLOR_DATE = "#c85d3b"
@@ -64,9 +83,43 @@ def wrap_text(text: str, font: ImageFont.FreeTypeFont, max_width: int) -> list[s
     return lines or [""]
 
 
+def draw_text_with_emoji(
+    img: Image.Image,
+    draw: ImageDraw.Draw,
+    xy: tuple[int, int],
+    text: str,
+    fill: str,
+    font: ImageFont.FreeTypeFont,
+    emoji_font: ImageFont.FreeTypeFont,
+) -> None:
+    """Draw text, substituting color emoji from a fallback font where needed."""
+    x, y = xy
+    segments = _EMOJI_RE.split(text)
+    for seg in segments:
+        if not seg:
+            continue
+        if _EMOJI_RE.fullmatch(seg):
+            # Render emoji onto a temporary RGBA image, then composite
+            bbox = emoji_font.getbbox(seg)
+            w, h = bbox[2] - bbox[0], bbox[3] - bbox[1]
+            tmp = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+            tmp_draw = ImageDraw.Draw(tmp)
+            tmp_draw.text((-bbox[0], -bbox[1]), seg, font=emoji_font, embedded_color=True)
+            # Align emoji with text baseline, nudged down slightly
+            text_bbox = font.getbbox("A")
+            text_h = text_bbox[3] - text_bbox[1]
+            y_offset = (text_h - h) // 2 + int(h * 0.35)
+            img.paste(tmp, (x, y + y_offset), tmp)
+            x += w
+        else:
+            draw.text((x, y), seg, fill=fill, font=font)
+            bbox = font.getbbox(seg)
+            x += bbox[2] - bbox[0]
+
+
 def generate_og_jpg(title: str, meta: str, description: str) -> bytes:
     """Render title, date, and description onto the OG base image, return JPEG bytes."""
-    img = OG_BASE.copy()
+    img = OG_BASE.copy().convert("RGBA")
     draw = ImageDraw.Draw(img)
 
     # Vertically center the text block in the content area (top=56, bottom=68, total height=630)
@@ -99,17 +152,17 @@ def generate_og_jpg(title: str, meta: str, description: str) -> bytes:
 
     # Title
     for line in title_lines:
-        draw.text((OG_CONTENT_LEFT, y), line, fill=COLOR_TITLE, font=FONT_TITLE)
+        draw_text_with_emoji(img, draw, (OG_CONTENT_LEFT, y), line, COLOR_TITLE, FONT_TITLE, FONT_EMOJI_TITLE)
         y += line_height_title
     y += gap_title_desc
 
     # Description
     for line in desc_lines:
-        draw.text((OG_CONTENT_LEFT, y), line, fill=COLOR_SUBTITLE, font=FONT_SUBTITLE)
+        draw_text_with_emoji(img, draw, (OG_CONTENT_LEFT, y), line, COLOR_SUBTITLE, FONT_SUBTITLE, FONT_EMOJI_SUBTITLE)
         y += line_height_subtitle
 
     buf = io.BytesIO()
-    img.save(buf, format="JPEG", quality=90)
+    img.convert("RGB").save(buf, format="JPEG", quality=90)
     return buf.getvalue()
 
 
