@@ -116,7 +116,7 @@ def draw_text_with_emoji(
             target_h = int(text_h * 1.1)
             target_w = int(w * target_h / h)
             tmp = tmp.resize((target_w, target_h), Image.LANCZOS)
-            y_offset = (text_h - target_h) // 2 + int(target_h * 0.35)
+            y_offset = (text_h - target_h) // 2 + int(target_h * 0.55)
             img.paste(tmp, (x, y + y_offset), tmp)
             x += target_w
         else:
