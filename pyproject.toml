@@ -5,7 +5,7 @@ description = "My blog, powered by Air, the awesome new Python web framework"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "air>=0.45.0",
+    "air @ git+https://github.com/feldroy/air.git@fix/1067-1076-endpoint-refactor",
     "hypercorn>=0.17.3",
     "listo>=0.8.0",
     "mistletoe",
