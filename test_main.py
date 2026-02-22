@@ -343,12 +343,7 @@ class TestArticlePage:
         assert "2025" in response.text
         assert "Dec" in response.text
 
-    def test_nonexistent_article_errors(self, client):
-        """
-        Requesting a nonexistent article should return 404. Currently the app
-        raises AttributeError because air.Response does not exist (it should
-        be starlette.responses.Response or similar). This test documents the
-        existing behavior so the bug is visible.
-        """
-        with pytest.raises(AttributeError, match="Response"):
-            client.get("/articles/this-article-does-not-exist-at-all")
+    def test_nonexistent_article_returns_404(self, client):
+        """Requesting a nonexistent article should return 404."""
+        response = client.get("/articles/this-article-does-not-exist-at-all")
+        assert response.status_code == 404
