@@ -5,7 +5,7 @@ requires-python = ">=3.13"
 [[package]]
 name = "air"
 version = "0.45.0"
-source = { git = "https://github.com/feldroy/air.git?rev=fix%2F1067-1076-endpoint-refactor#2728a67b64e1898fa476db43c5a738ad268888c1" }
+source = { git = "https://github.com/feldroy/air.git#b1992d06112f733caba0b348024251379c300e77" }
 dependencies = [
     { name = "fastapi" },
     { name = "frozendict" },
@@ -88,7 +88,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
-    { name = "air", git = "https://github.com/feldroy/air.git?rev=fix%2F1067-1076-endpoint-refactor" },
+    { name = "air", git = "https://github.com/feldroy/air.git" },
     { name = "hypercorn", specifier = ">=0.17.3" },
     { name = "listo", specifier = ">=0.8.0" },
     { name = "mistletoe" },
