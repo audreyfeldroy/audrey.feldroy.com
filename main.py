@@ -281,6 +281,20 @@ def strip_markdown(text: str) -> str:
     return text
 
 
+def truncate_description(text: str, max_len: int = 155) -> str:
+    """Truncate text to max_len chars, breaking at sentence or word boundary."""
+    if len(text) <= max_len:
+        return text
+    # Try to break at a sentence boundary
+    for end in ". ! ?".split():
+        idx = text.rfind(end, 0, max_len)
+        if idx > 0:
+            return text[:idx + 1]
+    # Fall back to word boundary
+    truncated = text[:max_len].rsplit(" ", 1)[0]
+    return truncated + "..."
+
+
 def get_post_dict(path: Path) -> dict:
     """
     Extracts title, formatted date, and summary from a notebook or markdown path.
@@ -344,12 +358,15 @@ def article(request: air.Request, name: str) -> Any:
     else:
         raise air.HTTPException(status_code=404)
     
+    base_url = "https://audrey.feldroy.com"
     return jinja(request, "article.html", {
         "title": title,
         "meta": f"{date:%a, %b %-d, %Y}",
-        "description": summary,
+        "description": truncate_description(strip_markdown(summary)),
         "content": content,
         "pygments_css": STYLE_DEFINITION,
+        "canonical_url": f"{base_url}/articles/{name}",
+        "og_image_url": f"{base_url}/og/{name}.jpg",
     })
 
 @app.get("/og/{name}.jpg")
