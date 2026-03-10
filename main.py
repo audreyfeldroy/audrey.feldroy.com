@@ -137,7 +137,7 @@ def generate_og_jpg(title: str, meta: str, description: str) -> bytes:
     # Measure all text blocks to center vertically
     date_text = meta.upper()
     title_lines = wrap_text(title, FONT_TITLE, OG_TITLE_MAX_WIDTH)
-    desc_lines = wrap_text(description, FONT_SUBTITLE, OG_SUBTITLE_MAX_WIDTH)[:3]
+    desc_lines = wrap_text(description, FONT_SUBTITLE, OG_SUBTITLE_MAX_WIDTH)[:5]
 
     line_height_title = int(48 * SCALE * 1.15)
     line_height_subtitle = int(20 * SCALE * 1.55)
