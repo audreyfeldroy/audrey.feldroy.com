@@ -12,7 +12,7 @@ What no one talks about is how doing a release on a large open source project ba
 
 ## The Licensing Situation
 
-Back to what happened with binaryornot and chardet. I saw a really promising rewrite in 7.0.0 that had been implemented with AI assistance. I was eager to try it out. But the maintainer had changed the license without the author’s consent, and the author disputed it for valid reasons.
+Back to what happened with binaryornot and chardet. I saw a really promising rewrite in 7.0.0 that had been implemented with AI assistance. I was eager to try it out. But the maintainer had changed the license without the author’s consent, and the author disputed it. I saw valid arguments for both sides, didn't want to get involved, and even tried an alternative before I decided just removing it was the simplest path.
 
 ## Ultimate Considerations
 
@@ -44,7 +44,7 @@ Anyhow my next step with binaryornot is to improve the classifier to the point t
 
 ## Call for Expert Help
 
-If you’re an expert on building great classifiers, I’d love to pair program with you over screenshare. I’m flexible with working in notebooks, editing code directly, or using Claude Code or Amp or whatever tool. Maybe we can even test-drive [hamelnb](https://github.com/hamelsmu/hamelnb) or other fun new tools together.
+If you’re an expert on building great classifiers, I’d love to pair program with you over screenshare. I’m flexible with working in notebooks, editing code directly, or using agentic AI as long as we micromanage its generated output together. Maybe we can even test-drive [hamelnb](https://github.com/hamelsmu/hamelnb) or other fun new tools together.
 
 You’ll be credited for your work thoughtfully in my release notes and beyond.
 
