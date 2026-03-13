@@ -53,6 +53,13 @@
                             <img src="{{ featured.image }}" alt="{{ featured.title }}" loading="eager" />
                         </a>
                         {% endif %}
+                        {% if featured.tags %}
+                        <div class="post-tags">
+                            {% for t in featured.tags %}
+                            <a href="/tags/{{ t }}" class="tag-link">{{ t }}</a>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                         <a href="{{ featured.url }}" class="post-continue">Continue reading <span>&rarr;</span></a>
                     </article>
 
@@ -66,6 +73,13 @@
                         <a href="{{ post.url }}" class="post-image">
                             <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy" />
                         </a>
+                        {% endif %}
+                        {% if post.tags %}
+                        <div class="post-tags">
+                            {% for t in post.tags %}
+                            <a href="/tags/{{ t }}" class="tag-link">{{ t }}</a>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                         <a href="{{ post.url }}" class="post-continue">Continue reading <span>&rarr;</span></a>
                     </article>

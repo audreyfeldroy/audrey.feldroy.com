@@ -47,6 +47,13 @@
                 <section class="article-content">
                     {{ content|safe }}
                 </section>
+                {% if tags %}
+                <footer class="article-tags">
+                    {% for tag in tags %}
+                    <a href="/tags/{{ tag }}" class="tag-link">{{ tag }}</a>
+                    {% endfor %}
+                </footer>
+                {% endif %}
             </article>
         </main>
 
