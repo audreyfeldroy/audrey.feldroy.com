@@ -190,3 +190,5 @@ hannah_card.__xt__()
 ```
 
 Note: I've learned better patterns since I wrote this. Leaving this here for posterity.
+
+Tags: fasthtml, python

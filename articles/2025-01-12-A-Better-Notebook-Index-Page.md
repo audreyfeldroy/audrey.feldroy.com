@@ -558,3 +558,5 @@ I've made good progress improving my blog's index page!
 It's working well locally, and we'll see what happens when I deploy. I manually updated my blog app's `main.py` with these changes, though doing this made me realize I should probably move that code into notebooks and use `nbdev_export` instead of copying by hand.
 
 There's still room for improvement, but I'm happy with my progress!
+
+Tags: fasthtml, jupyter, css

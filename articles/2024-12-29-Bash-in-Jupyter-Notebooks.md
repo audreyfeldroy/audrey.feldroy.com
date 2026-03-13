@@ -94,3 +94,5 @@ fruits=("apple" "banana" "orange")
 echo "First fruit: ${fruits[0]}"
 echo "All fruits: ${fruits[@]}"
 ```
+
+Tags: bash, jupyter

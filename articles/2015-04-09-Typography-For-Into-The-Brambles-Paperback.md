@@ -14,3 +14,5 @@ A sample of a chapter. (For some reason the footers aren't showing. I'll have to
 
   
 I like it when books are pretty inside. It makes the reading experience more pleasurable. It's the difference between a book that's fun to read and one that feels like the author didn't care about the visual reading experience.
+
+Tags: typography, art

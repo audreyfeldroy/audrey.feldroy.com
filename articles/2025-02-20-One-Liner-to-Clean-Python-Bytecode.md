@@ -32,3 +32,5 @@ Total 93 files, 34 directories removed.
 `uvx` is an alias for `uv tool run`, part of the [uv Python package manager](https://github.com/astral-sh/uv). 
 
 It creates a single-use disposable virtualenv for whatever tool you install and run with it. Here the tool name matches the PyPI package name, but it does also support uvx `<package-name>:<command-name>`.
+
+Tags: python, bash

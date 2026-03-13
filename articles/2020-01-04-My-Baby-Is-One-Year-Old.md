@@ -7,7 +7,5 @@ I'm so proud of my daughter, Uma. She's so strong, smart, and lovely. Here she i
 | [Uma the astronaut looking up at the cosmos.](https://audreyfeldroy.github.io/arg-static/img/2019-01-04+Uma+Turns+One.jpg) |
 | Not sure if Uma is looking up at what I'm holding, or looking out into space as an astronaut. Photo by my amazing photographer-husband Daniel Roy Greenfeld. |
 
-  
-  
-  
+Tags: family, personal
   

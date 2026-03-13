@@ -96,8 +96,6 @@ body {background-color: light-dark(var(--lightshade), var(--darkshade))};</style
 
 ```
 
-
-
 ## Example
 
 Here I create a component with light-dark colors. The component respects light/dark mode preference. I need stuff to put into cards, so I'm grabbing my notebooks:
@@ -433,3 +431,5 @@ document.body.addEventListener('htmx:configRequest', (event) => {
 1. Set `color-scheme: light dark` in `:root` to respect the user's dark/light mode preference.
 2. Use the `light-dark()` function to set properties based on mode
 3. Refactor colors into CSS variables if needed
+
+Tags: fasthtml, css

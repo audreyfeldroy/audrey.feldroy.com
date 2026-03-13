@@ -49,4 +49,6 @@ This is quite a rabbit hole so I think I'm going to be okay with my note box loo
 
 ## Reflection
 
-If you need a quick note box or other component and are experimenting in weird ways with CSS so you can't bring in a UI framework easily, making quick little FastTags like this is a "good enough" solution. 
+If you need a quick note box or other component and are experimenting in weird ways with CSS so you can't bring in a UI framework easily, making quick little FastTags like this is a "good enough" solution.
+
+Tags: fasthtml, css

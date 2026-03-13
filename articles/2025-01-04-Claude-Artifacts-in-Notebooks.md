@@ -71,5 +71,4 @@ IFrame(src="https://audreyfeldroy.github.io/arg-static/artifacts-html/2025-01-04
 
 ></iframe>
 
-
-
+Tags: ai, jupyter, javascript

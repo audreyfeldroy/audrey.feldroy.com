@@ -286,3 +286,5 @@ To export this notebook as arg-blog-fasthtml's main.py:
 ```bash
 nb_export nbs/2025-01-25-This-Site-Is-Now-Powered-by-This-Notebook-Part-2.ipynb --lib_path .
 ```
+
+Tags: fasthtml, jupyter

@@ -21,3 +21,5 @@ I also experimented with a calligraphy lettering style, but I didn't use it in t
 
   
 The nice thing about mixing pen-and-ink with digital graphics is that it's easy to mix and match different kinds of lettering. In the end, the final piece was a composite SVG of many separate vector-traced pieces of lettering and illustration.
+
+Tags: art, typography

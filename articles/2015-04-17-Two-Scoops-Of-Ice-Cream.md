@@ -8,3 +8,5 @@ Another fictional book cover. This one is a parody of a real book that you may h
   
   
 Day 11 of 100 days of watercolor.
+
+Tags: art

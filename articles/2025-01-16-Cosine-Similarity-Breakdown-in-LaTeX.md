@@ -118,3 +118,5 @@ $$\text{cos}(\theta) = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\math
 Cosine similarity measures how similar two vectors are by finding the cosine of the angle between them. 
 
 The math is not as bad as it looks: we're just comparing the directions vectors point in, normalized by their lengths.
+
+Tags: machine-learning

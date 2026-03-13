@@ -43,3 +43,5 @@ serve()
 ```
 
 Then add the `.well-known/atproto-did` file, deploy, and verify.
+
+Tags: fasthtml

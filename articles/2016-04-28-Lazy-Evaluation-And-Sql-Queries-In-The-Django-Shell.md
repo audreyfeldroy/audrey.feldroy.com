@@ -115,3 +115,5 @@ Sure, the query could have been more optimal without the AND NOT melted part, bu
 Try this on one of your projects. Open the Django shell, then try out some queries and see how they are evaluated. In particular, look at queries from one of your slower views.  
   
 You can also do similar things with Django Debug Toolbar. However, in the shell you can dissect your Python code line by line, which can be very helpful.
+
+Tags: django, python

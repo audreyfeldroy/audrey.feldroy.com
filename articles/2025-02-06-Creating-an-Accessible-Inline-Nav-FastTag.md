@@ -268,3 +268,5 @@ show(nv)
 </nav>
 <script>if (window.htmx) htmx.process(document.body)</script>
 
+
+Tags: fasthtml, css

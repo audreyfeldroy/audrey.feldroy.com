@@ -198,3 +198,5 @@ To be continued...
 ## Credits
 
 Thanks to [Daniel Roy Greenfeld](https://daniel.feldroy.com) for reviewing.
+
+Tags: sqlite, python

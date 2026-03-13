@@ -29,4 +29,4 @@ PythonAsia 2026 is March 21-23 at De La Salle University in Manila. Daniel and I
 
 Get your [PythonAsia tickets](https://ti.to/pythonph/pythonasia-2026) before they sell out - and Air community members, check Discord for our community partner discount code.
 
-Tags: Air, Python, PythonAsia, PythonPH, DurianPy
+Tags: air, python, pythonasia, pythonph, durianpy

@@ -473,3 +473,5 @@ nbs
 
 
 Finally, I'm checking those remaining notebooks. It appears those are variations on the ones that exist. I can manually merge those.
+
+Tags: ai, jupyter, python

@@ -407,3 +407,5 @@ def show(c=None, style='monokai'):
 ```
 
 You can use this to show code blocks in Jupyter notebooks, allowing different Pygments syntax highlighting themes in the same notebook. All without CSS leaking between Pygments styles.
+
+Tags: css, jupyter, python

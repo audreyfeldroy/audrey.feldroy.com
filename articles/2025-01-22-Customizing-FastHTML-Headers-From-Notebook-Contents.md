@@ -947,3 +947,5 @@ I suppose we didn't actually customize `render_nb` but rather customized the par
 ```python
 from nb2fasthtml.core import *
 ```
+
+Tags: fasthtml, python

@@ -1115,3 +1115,5 @@ Embeddings can capture meaningful semantic relationships between sentences or ot
     * Semantically related sentences like "Why do we exist?" and "What's the purpose of existence?" have high similarity scores (0.86)
     * Unrelated pairs like existential questions versus cookie questions have much lower scores (0.34-0.38)
 * A heatmap visualization can really help to show these relationships clearly. 
+
+Tags: ai, python

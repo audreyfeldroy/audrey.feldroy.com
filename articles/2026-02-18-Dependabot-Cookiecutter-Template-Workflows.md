@@ -77,3 +77,5 @@ If it parses, Dependabot can already update it. No changes needed.
 ## The result
 
 Dependabot now opens PRs for both sets of workflows. When it bumps `actions/checkout` in your outer CI, it also bumps the version your users get when they generate a new project. No more drift between what you run and what you ship.
+
+Tags: cookiecutter, ci

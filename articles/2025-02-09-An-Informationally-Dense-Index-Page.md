@@ -187,3 +187,5 @@ HTMX(index)
 ```python
 # server.stop()
 ```
+
+Tags: fasthtml, css

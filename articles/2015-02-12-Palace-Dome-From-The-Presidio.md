@@ -14,5 +14,7 @@ Painting here was very different from painting by the Golden Gate Bridge. There 
   
 I had trouble getting this painting to come together at first. It improved when I started consciously tuning out my auditory surroundings.  
   
-I spent the most time on the architectural detail of the dome. When I paint architectural subjects, I get very absorbed into every little detail of each facade. I don't know how to paint them loosely with just a few brushstrokes and still capture their essence. I think part of it is that it becomes an excuse for me to study the details and figure out how they work as a composition. It's kind of fun to look at an intricate building and break it down into parts in my mind.  
+I spent the most time on the architectural detail of the dome. When I paint architectural subjects, I get very absorbed into every little detail of each facade. I don't know how to paint them loosely with just a few brushstrokes and still capture their essence. I think part of it is that it becomes an excuse for me to study the details and figure out how they work as a composition. It's kind of fun to look at an intricate building and break it down into parts in my mind.
+
+Tags: art
   

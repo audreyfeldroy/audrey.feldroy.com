@@ -273,3 +273,5 @@ print(f"New method: {t_new/n*1000:.2f}ms per iteration")
 ## Next Steps
 
 This is ready to back-integrate into this site. I hope to contribute the relevant parts of this back to MonsterUI as well, to improve Markdown rendering performance in sites that use it.
+
+Tags: python, fasthtml

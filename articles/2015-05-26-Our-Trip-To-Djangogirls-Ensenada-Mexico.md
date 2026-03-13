@@ -23,3 +23,5 @@ Note: for fun we made the cover image a little fancier after the talk, otherwise
 It was a fantastic experience getting to spend time with the web development community of Tijuana/Ensenada. So many of the Python Tijuana and Django Girls Tijuana organizers and members drove out to Ensenada and spent the night in hotels to help make this happen. We had fun coaching alongside them after our talk.  
 My co-author, co-presenter, co-everything husband PyDanny also blogged his account of it: [My First Django Girls Event](http://www.pydanny.com/my-first-djangogirls-event.html)  
 Finally, we had such a great time that we're now working on planning an upcoming Inland Empire DjangoGirls/RailsGirls event. All are invited to help: RSVP [here](http://www.meetup.com/iepyladies/events/222160303/) or [here](http://www.meetup.com/iepython/events/222819119/) for the May 30 planning session.
+
+Tags: django, python

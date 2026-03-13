@@ -59,3 +59,5 @@ pip install --upgrade binaryornot
 [@audreyfeldroy](https://audrey.feldroy.com/) (Audrey M. Roy Greenfeld) designed and built this release: the trained decision tree, encoding and binary format coverage matrices, Hypothesis-based training pipeline, fixture generation, documentation, and the complete modernization from Cookiecutter PyPackage.
 
 Thanks to [@pombredanne](https://github.com/pombredanne) (Philippe Ombredanne) for SQLite detection and binary stream improvements, [@moluwole](https://github.com/moluwole) for the CLI tool, [@MarshalX](https://github.com/MarshalX) (Ilya Siamionau) for better error logging, [@thebaptiste](https://github.com/thebaptiste) for pyproject.toml migration (#633), [@wesleybl](https://github.com/wesleybl) for reporting the chardet 7 crash (#634), [@alcuin2](https://github.com/alcuin2) for binary detection improvements (#48), [@olaoluwa-98](https://github.com/olaoluwa-98) for CI updates (#50), and [@cosmic-byte](https://github.com/cosmic-byte) for test fixes (#52).
+
+Tags: python, binaryornot, open-source

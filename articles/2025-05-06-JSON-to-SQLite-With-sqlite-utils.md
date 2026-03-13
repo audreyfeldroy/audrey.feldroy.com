@@ -29,3 +29,5 @@ uvx datasette langs.db
 ```
 
 Then go to http://127.0.0.1:8001/langs/langs and you should see all the entries in a nicely-browsable table.
+
+Tags: sqlite, python

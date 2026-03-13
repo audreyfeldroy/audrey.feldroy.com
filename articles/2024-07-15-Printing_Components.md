@@ -66,3 +66,5 @@ print(inspect.getsource(btn))
 ```
 
 ```
+
+Tags: fasthtml, python

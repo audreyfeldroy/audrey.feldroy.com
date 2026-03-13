@@ -271,3 +271,5 @@ for model in models:
 
     qwen2.5:3b: Iphone And Email Tips For Pdfs
 
+
+Tags: python

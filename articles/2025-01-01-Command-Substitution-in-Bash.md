@@ -49,3 +49,5 @@ git ls-files --others --exclude-standard | xargs -I {} mv {} ./_drafts/
 The untracked files list is piped to `xargs`, which lets us run a command for each line in the list. Then `mv` is run for each file in the list. 
 
 `-I {}` is needed to put the filename somewhere other than the end of the `mv` command. Here, `-I` enables string replacement, and `{}` is the placeholder string that gets replaced.
+
+Tags: bash

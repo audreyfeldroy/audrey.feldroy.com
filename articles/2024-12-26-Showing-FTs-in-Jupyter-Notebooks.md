@@ -263,3 +263,5 @@ To be continued...
 ```python
 
 ```
+
+Tags: fasthtml, jupyter

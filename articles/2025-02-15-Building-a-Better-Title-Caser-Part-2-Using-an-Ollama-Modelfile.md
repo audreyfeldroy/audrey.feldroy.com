@@ -90,3 +90,5 @@ The results are great. Of course this is just one test case.
 
 * Compare the different title case functions more, using other test cases. 
 * See if I can get great performance out of another more lightweight local model. 
+
+Tags: ai, python

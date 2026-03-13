@@ -206,3 +206,4 @@ print(inspect.signature(play))
 
     (game, player='Daddy', num_players=2)
 
+Tags: python

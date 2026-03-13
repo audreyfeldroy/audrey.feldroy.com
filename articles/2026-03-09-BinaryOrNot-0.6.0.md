@@ -44,3 +44,5 @@ is_binary("mystery_file.pyc", check_extensions=False)
 [@audreyfeldroy](https://github.com/audreyfeldroy) (Audrey M. Roy Greenfeld) designed and built this release: the extension detection system, file signature matching, decision tree retraining, type annotations, Python 3.10 compatibility, and sdist fixes.
 
 Thanks to [@smheidrich](https://github.com/smheidrich) for the type stubs proposal, [@AlJohri](https://github.com/AlJohri) for requesting pathlib.Path support, and [@wesleybl](https://github.com/wesleybl) for raising Python 3.10 compatibility.
+
+Tags: python, binaryornot, open-source

@@ -15,3 +15,5 @@ As sprint leads, we mentored new Air contributors all day. A lot of people say y
 ## Photos
 
 My [PyCon Davao 2025 Sprints Google Photos album](https://photos.app.goo.gl/pRF3pDeBE7WRFkuy8) includes both the Air sprint and the PyTorch sprint, the two sprints that took place.
+
+Tags: air, python

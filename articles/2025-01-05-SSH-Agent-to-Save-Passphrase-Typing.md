@@ -75,3 +75,5 @@ While slightly less secure than typing passphrases each time, it's far safer tha
 SSH agent forwarding (`ssh -A`) lets you use your local keys from servers you SSH into. That comes with its own risks, of course.
 
 To explore in the future: macOS has a built in agent that's different from `ssh-agent`, with keychain integration.
+
+Tags: bash, security

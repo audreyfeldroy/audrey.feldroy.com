@@ -353,3 +353,5 @@ Next steps:
 
 * I plan to understand `IPython.core.display` objects better. I'm not sure how to use fastcore to combine them into a big displayable object.
 * I wonder how Quarto renders a Jupyter notebook, and if I can explore that code similarly.
+
+Tags: jupyter, python

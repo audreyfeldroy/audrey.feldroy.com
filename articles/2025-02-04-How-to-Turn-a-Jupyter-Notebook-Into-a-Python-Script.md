@@ -113,3 +113,5 @@ nb_export("2025-02-04-Using-nb_export-to-Export-a-Python-Module-From-a-Notebook.
 
 
 It's amazing to call `nb_export` as a function in notebooks! I often use the nb_export command in my terminal, which is nice, but in-notebook use is even nicer.
+
+Tags: jupyter, python

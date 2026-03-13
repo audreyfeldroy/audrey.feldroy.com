@@ -19,3 +19,5 @@ Here I tried using the 3-inch 80 lb. cardstock mandala as a stencil with waterco
 Next time I'll use more concentrated watercolor paint and heavier backing paper so it doesn't wrinkle. Simple hot-press watercolor paper seems like the way to go.  
   
 I got the design for the mandala from a site called [Free SVG Designs](https://freesvgdesigns.com/) that is run by Erin, a graphic designer and papercrafter who generously shares the cut files that she makes. This particular design is called [Mandala Monogram 381](https://freesvgdesigns.com/mandala-monogram-381/). Let me know if you try this out or have any tips!
+
+Tags: art

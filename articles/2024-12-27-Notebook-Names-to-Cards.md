@@ -159,3 +159,5 @@ This adds:
 - Wider cards and more gap between them
 - Container max-width and padding
 - Pointer cursor to indicate clickable
+
+Tags: fasthtml, css, jupyter

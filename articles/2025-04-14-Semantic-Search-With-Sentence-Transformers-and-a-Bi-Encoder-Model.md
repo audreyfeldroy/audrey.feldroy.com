@@ -257,3 +257,5 @@ bienc_search_nbs("search")
 ## Reflection
 
 A bi-encoder is nice because it allows you to pregenerate embeddings and later use those for comparison. But I'm reading that it's not as accurate as a cross-encoder. In the next post we'll see if that's true.
+
+Tags: ai, python, machine-learning

@@ -303,3 +303,5 @@ show(Grid(*[Button(v,cls=v) for v in list(ButtonT)]))
 <button type="submit" class="uk-button uk-button-default">uk-button-default</button><button type="submit" class="uk-button uk-button-primary">uk-button-primary</button><button type="submit" class="uk-button uk-button-secondary">uk-button-secondary</button><button type="submit" class="uk-button uk-button-danger">uk-button-danger</button><button type="submit" class="uk-button uk-button-text">uk-button-text</button><button type="submit" class="uk-button uk-button-link">uk-button-link</button><button type="submit" class="uk-button uk-button-ghost">uk-button-ghost</button></div>
 
 
+
+Tags: fasthtml, monsterui, css

@@ -84,3 +84,5 @@ test_eq(cli.get('/locked', auth=("testuser","spycraft")).text, 'Hello, testuser'
 test_eq(cli.get('/locked', auth=("testuser2","spycraft2")).text, 'Hello, testuser2')
 test_eq(cli.get('/locked', auth=("testuser3","spycraft3")).text, 'Hello, testuser3')
 ```
+
+Tags: fasthtml, python, security

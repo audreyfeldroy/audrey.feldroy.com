@@ -16,3 +16,5 @@ This is a painting of that boatyard. It's a semi-abstract painting. The abstract
 There was a cafe overlooking the boatyard. We sat there for awhile, chatted, and had espressos. The views were beautiful, but the cafe was oddly empty. We were the only patrons when we walked in. Later, three men came in for beer and took a table on the far end of the cafe in a dark corner, not even overlooking the view. They must have been locals.  
   
 This painting was very much inspired by the video "[Abstract Fine Art Painting with Mixed Media - Part 3 - Robert Joyner](https://www.youtube.com/watch?v=shR55IkUxQQ)" from Strathmore Artist Papers' 2013 Online Workshop Series.
+
+Tags: art

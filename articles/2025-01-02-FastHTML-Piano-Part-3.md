@@ -2733,3 +2733,5 @@ Bonus nice-to-haves:
 * Songs
 
 We'll see though, no promises.
+
+Tags: fasthtml, javascript, css

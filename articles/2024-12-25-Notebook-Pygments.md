@@ -192,3 +192,5 @@ if 'server' in globals(): server.stop()
 ```python
 
 ```
+
+Tags: jupyter, python, css

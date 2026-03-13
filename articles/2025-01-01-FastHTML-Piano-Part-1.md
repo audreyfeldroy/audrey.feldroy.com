@@ -1746,3 +1746,5 @@ function keyNote(event) {
 addEventListener("keydown", keyNote);
 addEventListener("keyup", keyNote);
 ```
+
+Tags: fasthtml, javascript, css

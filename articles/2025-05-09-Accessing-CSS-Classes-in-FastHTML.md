@@ -77,3 +77,5 @@ css_classes
     ['container', 'mx-auto', 'p-4', 'bg-white', 'dark:bg-gray-800']
 
 
+
+Tags: fasthtml, css

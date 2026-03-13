@@ -67,3 +67,5 @@ This refactor highlights several principles for writing clean, maintainable test
 - **Remove Redundancy:** Eliminate default arguments and other boilerplate to keep code focused on what it does.
 
 Thanks to Martin Saizar's contribution, our test suite is not only cleaner but also easier to debug.
+
+Tags: python, testing

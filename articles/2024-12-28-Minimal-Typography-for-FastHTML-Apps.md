@@ -75,3 +75,5 @@ Run this cell to stop Uvicorn:
 ```python
 if 'server' in globals: server.stop()
 ```
+
+Tags: fasthtml, css, typography

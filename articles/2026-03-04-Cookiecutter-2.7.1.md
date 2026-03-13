@@ -28,3 +28,5 @@ uv tool upgrade cookiecutter
 [@audreyfeldroy](https://audrey.feldroy.com) (Audrey M. Roy Greenfeld) and [@pydanny](https://daniel.feldroy.com) (Daniel Roy Greenfeld) built this release, with help from Claude roleplaying as David Bowie.
 
 Thanks to [@bollwyvl](https://github.com/bollwyvl) (Nicholas Bollweg) for the version fix PR and the `importlib.metadata` suggestion, and [@tranzystorekk](https://github.com/tranzystorekk) for reporting the version mismatch.
+
+Tags: python, cookiecutter, open-source

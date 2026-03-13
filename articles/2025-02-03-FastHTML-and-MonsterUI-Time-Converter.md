@@ -237,3 +237,5 @@ server.stop()
 ```python
 
 ```
+
+Tags: fasthtml, monsterui, javascript

@@ -19,6 +19,7 @@ So I started drawing. I drew and drew without thinking. I was probably even asle
   
 It came out rather nice in the end. I realized afterward how much I was subconsciously inspired by my friend [Annanda's project](https://instagram.com/p/1OcuL9gp0V/?taken-by=4nnanda) to do 100 days of coloring in a flowery coloring book. That was a nice surprise.  
   
-I remember being less self-conscious like this, back when I was in my 20s and had my art studio in San Francisco and then Oakland. I made lots of rainbows and didn't care because they just made me happy.  
-  
+I remember being less self-conscious like this, back when I was in my 20s and had my art studio in San Francisco and then Oakland. I made lots of rainbows and didn't care because they just made me happy.
+
+Tags: art, personal
   

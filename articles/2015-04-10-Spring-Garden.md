@@ -7,4 +7,4 @@ I'm still a beginner when it comes to abstract painting, but I'd like to improve
 
 [![](https://audreyfeldroy.github.io/arg-static/img/005-spring-garden-X2.jpg)](https://audreyfeldroy.github.io/arg-static/img/005-spring-garden-X2.jpg)
 
-  
+Tags: art

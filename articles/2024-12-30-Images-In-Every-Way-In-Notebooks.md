@@ -145,3 +145,5 @@ show(i)
 ## Learn More
 
 If you're as interested in this as I am, read [StackOverflow: How to embed image or picture in jupyter notebook, either from a local machine or from a web resource?](https://stackoverflow.com/q/32370281/271697)
+
+Tags: jupyter, fasthtml

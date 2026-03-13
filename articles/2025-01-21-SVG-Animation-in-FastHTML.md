@@ -421,3 +421,5 @@ show(NotStr(svg4))
 
 
 I kind of like this one for representing "a sound is currently playing" for experimental audio apps.
+
+Tags: fasthtml, css

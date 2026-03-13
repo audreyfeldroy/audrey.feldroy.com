@@ -82,3 +82,5 @@ I don't do all this yet, but AI tells me `uvx` is great for:
 
 - In CI to keep build images small and avoid baking in lots of CLI tools.
 - In Justfiles and deploy scripts for reproducible commands without installing system-wide tools.
+
+Tags: python

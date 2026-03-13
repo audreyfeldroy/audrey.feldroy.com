@@ -95,9 +95,6 @@ path.absolute()
 
 
     Path('/Users/arg/fun/arg-blog-fasthtml/nbs/test.ipynb')
-
-
-
 Here we can now see we're somewhere fun! So, relax and enjoy the rest of this experience.
 
 ## Writing and Rereading `test.ipynb`
@@ -174,3 +171,5 @@ path.unlink()
 In pathlib, `unlink` deletes a file or symlink. We just deleted test.ipynb.
 
 Careful with programmatic deletion of files. Keep the code as simple as possible. Here it's super-simple so we're fine.
+
+Tags: jupyter, python

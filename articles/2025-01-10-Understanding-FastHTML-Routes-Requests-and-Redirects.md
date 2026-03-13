@@ -123,8 +123,6 @@ to_xml(heypage)
 ```
 
 
-
-
     '<title>HEYHEYHEYHEY</title>\n<main class="container">  <h1>HEYHEYHEYHEY</h1>\n</main>'
 
 
@@ -286,3 +284,5 @@ We've seen how FastHTML makes it easy to create routes and handle HTTP requests.
 - Setting up redirects and seeing how they work both with and without following them
 
 What I love here is how much FastHTML development feels so much like regular Python development. You can call handlers like normal functions to make sure they work as expected, and they still work great as full web endpoints.
+
+Tags: fasthtml, python

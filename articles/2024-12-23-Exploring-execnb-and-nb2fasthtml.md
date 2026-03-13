@@ -176,3 +176,5 @@ That&#x27;s two hundred thousand.</div>
 ```python
 
 ```
+
+Tags: jupyter, fasthtml, python

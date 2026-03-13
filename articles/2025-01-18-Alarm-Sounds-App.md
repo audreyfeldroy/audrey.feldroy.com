@@ -308,3 +308,5 @@ server.stop()
 * This is shaping up enough that I think I'll bring it back to the https://github.com/audreyfeldroy/alarmsounds/ repo.
 * It needs refactoring
 * Currently you have to refresh the page to stop sounds. It would be nice if when you click a button, it's pressed down until you turn it off.
+
+Tags: fasthtml, javascript, monsterui

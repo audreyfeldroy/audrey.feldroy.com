@@ -252,3 +252,5 @@ This seems the best! I like this ranking.
 After experimenting with a few cross-encoder models, I found that the TinyBERT model (`cross-encoder/ms-marco-TinyBERT-L2-v2`) gave the most intuitive results out of both the cross-encoder and bi-encoder models. 
 
 It seemed to understand the semantic relationship between "Web search" and my notebooks about search functionality better than the larger models.
+
+Tags: ai, python, machine-learning

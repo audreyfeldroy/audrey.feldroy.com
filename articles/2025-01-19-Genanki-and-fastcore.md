@@ -132,9 +132,6 @@ my_deck.notes
      Note(model=Model(model_id=1607392319, name='Simple  Model', fields=[{'name': 'Question'}, {'name': 'Answer'}], templates=[{'name': 'Card 1', 'qfmt': '{{Question}}', 'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}'}], css='', model_type=0), fields=['Magandang hapon', 'Good afternoon'], sort_field='Magandang hapon', tags=_TagList([]), guid='l!E%BkZ4ir'),
      Note(model=Model(model_id=1607392319, name='Simple  Model', fields=[{'name': 'Question'}, {'name': 'Answer'}], templates=[{'name': 'Card 1', 'qfmt': '{{Question}}', 'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}'}], css='', model_type=0), fields=['Magandang gabi', 'Good evening'], sort_field='Magandang gabi', tags=_TagList([]), guid='lB:)1uVms#'),
      Note(model=Model(model_id=1607392319, name='Simple  Model', fields=[{'name': 'Question'}, {'name': 'Answer'}], templates=[{'name': 'Card 1', 'qfmt': '{{Question}}', 'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}'}], css='', model_type=0), fields=['Paalam', 'Goodbye'], sort_field='Paalam', tags=_TagList([]), guid='n5_IDz@c|$')]
-
-
-
 ## Packaging the Deck for Anki
 
 This writes out an Anki package file that we can import:
@@ -164,3 +161,5 @@ In Anki Desktop:
 
 * Genanki: https://github.com/kerrickstaley/genanki
 * fastcore: https://fastcore.fast.ai/
+
+Tags: python, anki

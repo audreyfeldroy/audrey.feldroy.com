@@ -114,3 +114,5 @@ show(c2)
 ```python
 
 ```
+
+Tags: fasthtml, monsterui

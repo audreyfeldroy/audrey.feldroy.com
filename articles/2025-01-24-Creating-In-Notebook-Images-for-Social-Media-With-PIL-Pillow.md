@@ -66,3 +66,5 @@ I'll have to save an image file next time I try this.
 I found this old [Twitter: Upcoming changes to PNG image support](https://devcommunity.x.com/t/upcoming-changes-to-png-image-support/118695)
 
 > For images that are low resolution but require maintaining a high quality, the test for PNG images will add the following change: If the image is a PNG that is 900 pixels or smaller in the longest dimension (can fit into 900x900), that PNG will be left as-is.
+
+Tags: jupyter, python

@@ -13,3 +13,5 @@ Teaching such a sharp, enthusiastic group and seeing everyone grasp difficult co
 For more info, see [Intensive Django Training with the US Air Force](http://www.pydanny.com/intensive-django-training-us-air-force.html), Daniel's detailed blog post about the training experience.  
   
 Special thanks to [Capt. Jonathan D. Miller](https://twitter.com/jondelmil) for making this possible. It was an honor to work with you and your team.
+
+Tags: django, python

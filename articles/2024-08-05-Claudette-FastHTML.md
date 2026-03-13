@@ -269,3 +269,5 @@ chat("""Good job diving into fastcore.meta! I'm happy you're enjoying it, and I'
      {components}
      ```""")
 ```
+
+Tags: ai, fasthtml, python

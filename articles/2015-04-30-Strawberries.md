@@ -8,3 +8,5 @@ One of my favorite plates at home has a strawberry pattern printed on it. This i
   
   
 I used a mixture of regular watercolor and metallic watercolor pencil. For Day 14 of #100daysofwatercolor.
+
+Tags: art

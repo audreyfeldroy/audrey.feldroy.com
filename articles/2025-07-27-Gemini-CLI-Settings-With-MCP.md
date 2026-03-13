@@ -148,3 +148,5 @@ You can prompt things like this:
 ╭──────────────────────────────────────────────────────────────────────────────────────────────╮
 │  > Fill out the description of https://github.com/audreyfeldroy/audrey.feldroy.com/issues/8  │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Tags: ai

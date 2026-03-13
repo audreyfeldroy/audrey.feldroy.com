@@ -121,3 +121,5 @@ Screenshot at [07:40]:
 ![Two card components rendered vertically, showing an area for future layout improvements.](https://devrelifier-public.s3.amazonaws.com/public/screenshots/sha256/c2/c23d48f839c53770b1282db381da0c52eef8370ada06bae163452ef406a2e813.jpg)
 
 Our focus is on hashing out the core UI and establishing simple, straightforward defaults that empower developers to build things quickly. We believe AirDragon can be a valuable tool for anyone looking to create beautiful, component-driven user interfaces with Air. We're excited to see where it goes.
+
+Tags: air, python

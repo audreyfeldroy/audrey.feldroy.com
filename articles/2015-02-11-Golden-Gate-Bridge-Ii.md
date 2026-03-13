@@ -15,3 +15,5 @@ This is a very happy painting. I enjoyed working on this very much. It felt like
 The area was also full of excited tourists. Seeing an architectural work of beauty like the Golden Gate Bridge often inspires people to notice all the beauty in their surroundings. I often saw people take photos of the bridge and then start taking photos of the plants on the hill. Normally those plants would go unnoticed, but the bridge awakens something in visitors' minds.  
   
 Likewise, tourists noticed me painting and stopped to watch. I've had this happen a number of times, but not like this time. The bridge really does something to awaken the senses. Visitors were very curious and asked me a lot of questions.
+
+Tags: art

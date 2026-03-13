@@ -1309,3 +1309,5 @@ To export this notebook as arg-blog-fasthtml's main.py:
 nb_export 2025-01-23-This-Site-Is-Now-Powered-by-This-Notebook.ipynb
 mv main.py ..
 ```
+
+Tags: fasthtml, jupyter

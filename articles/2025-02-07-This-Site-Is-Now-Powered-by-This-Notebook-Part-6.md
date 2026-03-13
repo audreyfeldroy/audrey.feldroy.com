@@ -353,3 +353,5 @@ To export this notebook as [audrey.feldroy.com's main.py](https://github.com/aud
 from nbdev.export import nb_export
 nb_export("2025-02-07-This-Site-Is-Now-Powered-by-This-Notebook-Part-6.ipynb", lib_path="..")
 ```
+
+Tags: fasthtml, jupyter

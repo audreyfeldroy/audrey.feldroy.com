@@ -1,0 +1,149 @@
+filename,title,tags
+2026-03-13-Staticware-0.2.0.md,Staticware 0.2.0: The first cut,
+2026-03-10-Cookiecutter-Chardet-and-the-Cascade.md,"Cookiecutter, Chardet, and the Cascade","cookiecutter, binaryornot, open-source"
+2026-03-09-BinaryOrNot-0.6.0.md,BinaryOrNot 0.6.0: Three Layers of Detection,
+2026-03-07-BinaryOrNot-0.5.0.md,"BinaryOrNot 0.5.0: Zero Dependencies, 128 Bytes, One Trained Classifier",
+2026-03-04-Cookiecutter-2.7.1.md,Cookiecutter 2.7.1: The One Where It Knows Its Own Name,
+2026-03-03-Cookiecutter-2.7.0.md,"Cookiecutter 2.7.0: Python 3.14, a Security Trust Model, and Verified Releases","python, cookiecutter, open-source"
+2026-02-19-Kalinga-Means-Care-Air-Loves-PythonAsia-2026.md,Kalinga Means Care: Air ❤️ PythonAsia 2026,"air, python, pythonasia, pythonph, durianpy"
+2026-02-18-Dependabot-Cookiecutter-Template-Workflows.md,How to Make Dependabot Update Actions Inside a Cookiecutter Template,
+2026-02-17-Cookiecutter-PyPackage-v0.4.0.md,Cookiecutter PyPackage v0.4.0: Everything a Modern Python Package Needs,"python, cookiecutter, open-source"
+2026-02-11-Healing-and-Survival-Come-First.md,Healing and Survival Come First,"family, personal"
+2025-12-16-Adopting-Idiomatic-PyTest-Code-Review.md,Adopting Idiomatic PyTest: A Code Review,
+2025-11-26-AirDragon.md,Introducing AirDragon: A Component Library Born on an Airplane,
+2025-10-26-The-First-Air-Sprint.md,The First Air Sprint,
+2025-10-25-Python-Tricks-You-Cant-Live-Without.md,Python Tricks You Can't Live Without,
+2025-10-06-air-pioneering-ai-first-python-web-framework.md,Introducing Air: A Pioneering AI-First Python Web Framework,
+2025-10-02-run-any-python-tool-instantly-without-installation-uvx.md,"Run Any Python CLI Instantly — No Install, No Virtualenv (uvx)",
+2025-07-27-Gemini-CLI-Settings-With-MCP.md,Gemini CLI settings.json with MCP Config,
+2025-05-09-Accessing-CSS-Classes-in-FastHTML.md,Accessing CSS Classes in FastHTML,
+2025-05-06-JSON-to-SQLite-With-sqlite-utils.md,JSON to SQLite With sqlite-utils,
+2025-05-05-Clearing-a-Local-Port-Thats-in-Use.md,Clearing a Local Port That's in Use,
+2025-04-15-Semantic-Search-With-Sentence-Transformers-and-a-Cross-Encoder-Model.md,Semantic Search With Sentence Transformers and a Cross-Encoder Model,
+2025-04-14-Semantic-Search-With-Sentence-Transformers-and-a-Bi-Encoder-Model.md,Semantic Search With Sentence Transformers and a Bi-Encoder Model,
+2025-04-08-Get-a-Jupyter-Notebook-Filename-From-Itself.md,Get a Jupyter Notebook Filename From Itself,
+2025-03-20-Minimal-Screen-Recording-on-macOS-No-Third-Party-Apps-Required.md,Minimal Screen Recording on macOS: No Third-Party Apps Required,
+2025-03-14-Pi.md,Pi,
+2025-02-20-One-Liner-to-Clean-Python-Bytecode.md,One-Liner to Clean Python Bytecode,
+2025-02-15-Building-a-Better-Title-Caser-Part-2-Using-an-Ollama-Modelfile.md,"Building a Better Title-Caser, Part 2: Using an Ollama Modelfile",
+2025-02-14-Building-a-Better-Title-Caser-Part-1-Beyond-Python-str-title.md,"Building a Better Title-Caser, Part 1: Beyond Python str.title",
+2025-02-13-Excavating-a-Lost-CLI-Tool.md,Excavating a Lost CLI Tool,
+2025-02-12-My-Self-Analysis-of-How-to-Get-Back-to-Posting-Every-Day.md,My Self-Analysis of How to Get Back to Posting Every Day,
+2025-02-09-An-Informationally-Dense-Index-Page.md,An Informationally-Dense Index Page,
+2025-02-08-This-Notebook-Is-Also-a-Keylogger.md,This Notebook Is Also a Keylogger,
+2025-02-07-This-Site-Is-Now-Powered-by-This-Notebook-Part-6.md,"This Site Is Now Powered by This Notebook, Part 6",
+2025-02-06-Creating-an-Accessible-Inline-Nav-FastTag.md,Creating an Accessible Inline Nav FastTag,
+2025-02-05-Create-a-CLI-Tool-With-Fastcore-Script.md,Create a CLI Tool With fastcore.script,
+2025-02-04-How-to-Turn-a-Jupyter-Notebook-Into-a-Python-Script.md,How to Turn a Jupyter Notebook Into a Python Script,
+2025-02-03-FastHTML-and-MonsterUI-Time-Converter.md,FastHTML and MonsterUI Time Converter,
+2025-02-02-Text-Embeddings-and-Cosine-Similarity.md,Text Embeddings and Cosine Similarity,
+2025-02-01-Auto-Renaming-My-Untitled-ipynb-Files-With-Gemini.md,Auto-Renaming My Untitled.ipynb Files With Gemini 1.5 Flash,
+2025-01-31-Performance-Optimization-Moving-HTML-Class-Injection-from-lxml-to-Mistletoe.md,Performance Optimization: Moving HTML Class Injection from lxml to Mistletoe,
+2025-01-30-This-Site-Is-Now-Powered-by-This-Notebook-Part-5.md,"This Site Is Now Powered by This Notebook, Part 5",
+2025-01-29-This-Site-Is-Now-Powered-by-This-Notebook-Part-4.md,"This Site Is Now Powered by This Notebook, Part 4",
+2025-01-28-Functional-Programming-with-datetime-and-Omni-Timezone-Discord-Timestamps.md,"Functional Programming with datetime, and Omni-Timezone Discord Timestamps",
+2025-01-27-This-Site-Is-Now-Powered-by-This-Notebook-Part-3.md,"This Site Is Now Powered by This Notebook, Part 3",
+2025-01-26-Improving-Pygments-Code-Block-Display.md,Improving Pygments Code Block Display,
+2025-01-25-This-Site-Is-Now-Powered-by-This-Notebook-Part-2.md,"This Site Is Now Powered by This Notebook, Part 2",
+2025-01-24-Creating-In-Notebook-Images-for-Social-Media-With-PIL-Pillow.md,Creating In-Notebook Images for Social Media With PIL/Pillow,
+2025-01-23-Troubleshooting-MonsterUI-on-This-Site.md,Troubleshooting MonsterUI on This Site,
+2025-01-23-This-Site-Is-Now-Powered-by-This-Notebook.md,This Site Is Now Powered by This Notebook,
+2025-01-22-MonsterUI-Buttons-and-Links.md,MonsterUI Buttons and Links,
+2025-01-22-Customizing-FastHTML-Headers-From-Notebook-Contents.md,Customizing FastHTML Headers From Notebook Contents,
+2025-01-21-SVG-Animation-in-FastHTML.md,SVG Animations in FastHTML,"fasthtml, css"
+2025-01-20-Dark-and-Light-Mode-in-FastHTML.md,Dark and Light Mode in FastHTML,
+2025-01-19-Genanki-and-fastcore.md,Genanki and fastcore,
+2025-01-18-Alarm-Sounds-App.md,Alarm Sounds App,"fasthtml, javascript, monsterui"
+2025-01-17-Alarm-Clock-Sounds.md,Alarm Clock Sounds,
+2025-01-16-Cosine-Similarity-Breakdown-in-LaTeX.md,Cosine Similarity Breakdown in LaTeX,
+2025-01-14-Constructing-SQLite-Tables-for-Notebooks-and-Search.md,Constructing SQLite Tables for Notebooks and Search,
+2025-01-13-SQLite-FTS5-Tokenizers-unicode61-and-ascii.md,SQLite FTS5 Tokenizers: `unicode61` and `ascii`,"sqlite, python"
+2025-01-12-A-Better-Notebook-Index-Page.md,A Better Notebook Index Page,
+2025-01-11-NBClassic-Keyboard-Shortcuts-in-Command-and-Dual-Mode.md,NBClassic Keyboard Shortcuts: Command and Dual-Mode,
+2025-01-10-Understanding-FastHTML-Routes-Requests-and-Redirects.md,"Understanding FastHTML Routes, Requests, and Redirects",
+2025-01-09-Reading-and-Writing-Jupyter-Notebooks-With-Python.md,Reading and Writing Jupyter Notebooks With Python,
+2025-01-08-HTML-Title-Tag-in-FastHTML.md,HTML Title Tag in FastHTML,
+2025-01-07-Verifying-Bluesky-Domain-in-FastHTML.md,Verifying a Bluesky Domain Handle on a FastHTML Site,
+2025-01-06-Understanding-FastHTML-Headers.md,Understanding FastHTML Headers,"fasthtml, python"
+2025-01-05-SSH-Agent-to-Save-Passphrase-Typing.md,Using SSH Agent to Save Passphrase Typing,"bash, security"
+2025-01-04-Claude-Artifacts-in-Notebooks.md,Showing Claude Artifacts in Jupyter Notebooks,"ai, jupyter, javascript"
+2025-01-03-Using-zip.md,Using zip,python
+2025-01-02-FastHTML-Piano-Part-3.md,"FastHTML Piano, Part 3","fasthtml, javascript, css"
+2025-01-02-FastHTML-Piano-Part-2.md,"FastHTML Piano, Part 2","fasthtml, javascript, css"
+2025-01-01-FastHTML-Piano-Part-1.md,"FastHTML Piano, Part 1","fasthtml, javascript, css"
+2025-01-01-Command-Substitution-in-Bash.md,Command Substitution in Bash,bash
+2024-12-31-Note-Box-FastTag.md,Note Box FastTag,"fasthtml, css"
+2024-12-30-Images-In-Every-Way-In-Notebooks.md,"Images in Jupyter Notebooks, in Every Way","jupyter, fasthtml"
+2024-12-29-Bash-in-Jupyter-Notebooks.md,Bash in Jupyter Notebooks,"bash, jupyter"
+2024-12-28-Minimal-Typography-for-FastHTML-Apps.md,Minimal Typography for FastHTML Apps,"fasthtml, css, typography"
+2024-12-27-Notebook-Names-to-Cards.md,Transforming Notebook Names to Cards,"fasthtml, css, jupyter"
+2024-12-27-CSS-Scope-Leakage-Pygments.md,How I Fixed CSS Scope Leakage in Pygments Syntax Highlighting,"css, jupyter, python"
+2024-12-26-Showing-FTs-in-Jupyter-Notebooks.md,Showing Components in Notebooks,"fasthtml, jupyter"
+2024-12-25-Notebook-Pygments.md,Converting Jupyter Notebook Cells to Pygments Syntax-Highlighted HTML,"jupyter, python, css"
+2024-12-24-Trying-execnb.md,What Can `execnb` do?,"jupyter, python"
+2024-12-24-Deck-the-Halls.md,Deck the Halls,python
+2024-12-23-Exploring-execnb-and-nb2fasthtml.md,execnb's read_nb and nb2fasthtml's render_nb,"jupyter, fasthtml, python"
+2024-12-23-Daddys_Snowman_Card.md,Daddy's Snowman Card,"family, python"
+2024-08-05-Claudette-FastHTML.md,Using Claudette with FastHTML,
+2024-08-04-Claudette.md,Claudette,"ai, python"
+2024-07-29-FH-by-Example.md,FastHTML by Example,"fasthtml, python"
+2024-07-29-Delegates-Decorator.md,Delegates Decorator,python
+2024-07-29-Auth-in-FastHTML.md,Auth in FastHTML,"fasthtml, python, security"
+2024-07-16_Xtend_Pico.md,Understanding FastHTML xtend,
+2024-07-15-Printing_Components.md,Printing FastHTML Components,"fasthtml, python"
+2024-07-14_SemanticUI_Cards.md,SemanticUI FastHTML Cards,"fasthtml, python"
+2023-12-19-Squishy-World.md,Squishy World,art
+2023-12-18-Kotlin-Basics-Cheatsheet-For-Developers.md,Kotlin Basics Cheatsheet for Developers,kotlin
+2023-12-15-Hello-World-And-Composable-Previews-In-Android-Studio.md,Hello World and Composable Previews in Android Studio,"kotlin, android"
+2023-07-29-Blogging-With-nbdev.md,Setting Up a Blog With nbdev,"jupyter, python"
+2023-06-16-Exploratory-Data-Analysis-Product-Recommendations.md,Exploratory Data Analysis: Product Recommendations,"python, machine-learning"
+2020-06-21-Hacking-3d-Printer-Infill-Patterns.md,Hacking 3D Printer Infill Patterns,art
+2020-01-31-Ride-A-Bike-Today.md,Ride a Bike Today,"art, personal"
+2020-01-10-Butterflies.md,Butterflies,art
+2020-01-06-Real-World-Django-Book-Cover.md,Real World Django Book Cover,"art, django"
+2020-01-05-Impossible-Hero-Books-Logo.md,Impossible Hero Books Logo,art
+2020-01-04-Veggies-For-The-Modern-Baby-Book-Cover.md,Veggies for the Modern Baby Book Cover,"art, family"
+2020-01-04-My-Baby-Is-One-Year-Old.md,My Baby Is One Year Old!,"family, personal"
+2020-01-03-Yummy-Yummy-In-Your-Tummy.md,Yummy Yummy in Your Tummy,"art, family"
+2020-01-02-Roy-Greenfeld-Company-Logo.md,Roy Greenfeld Company Logo,art
+2019-11-20-Rediscovery.md,Rediscovery,"art, personal"
+2019-11-09-Timelapse-Video-Of-Baby-Uma-Crawling.md,Timelapse Video of Baby Uma Crawling,family
+2019-09-18-Watercolor-And-Stenciled-Paper-Mandalas.md,Watercolor and Stenciled Paper Mandalas,art
+2019-09-18-Voronoi-Mandalas.md,Voronoi Mandalas,"art, python"
+2016-04-28-Lazy-Evaluation-And-Sql-Queries-In-The-Django-Shell.md,Lazy Evaluation and SQL Queries in the Django Shell,"django, python"
+2015-11-09-Solving-Unicodedecodeerrors-Due-To-Opening-Binary-Files.md,Solving UnicodeDecodeErrors Due to Opening Binary Files,"python, binaryornot"
+2015-11-03-Intensive-Django-Training-With-The-91st-Cyberspace-Operations-Squadron.md,Intensive Django Training With the 91st Cyberspace Operations Squadron,"django, python"
+2015-05-26-Our-Trip-To-Djangogirls-Ensenada-Mexico.md,"Our Trip to DjangoGirls Ensenada, Mexico","django, python"
+2015-05-12-Gleaming-Mountain.md,Gleaming Mountain,art
+2015-05-11-Circle-Flowers.md,Circle Flowers,art
+2015-05-10-House-Over-Waterfall.md,House Over Waterfall,art
+2015-05-09-Land-Of-Five-Suns.md,Land of Five Suns,art
+2015-05-08-River-And-Mountains.md,River and Mountains,art
+2015-05-07-Flowers-And-A-Blue-Potato.md,Flowers and a Blue Potato,art
+2015-05-06-Willow-Tree.md,Willow Tree,art
+2015-05-06-Cloud-Garden.md,Cloud Garden,art
+2015-05-05-Hand-Lettering-For-Two-Scoops-18.md,Hand Lettering for Two Scoops 1.8,"art, typography"
+2015-05-04-Early-Watercolor-Of-The-Two-Scoops-18-Cover.md,Early Watercolor of the Two Scoops 1.8 Cover,"art, django"
+2015-05-03-Cover-Art-For-Two-Scoops-Of-Django-18.md,Cover Art for Two Scoops of Django 1.8,"art, django"
+2015-04-30-Strawberries.md,Strawberries,art
+2015-04-29-Metallic-Flower-Doodles.md,Metallic Flower Doodles,art
+2015-04-19-Exploding-Flower.md,Exploding Flower,art
+2015-04-18-Giant-Flying-Dog.md,Giant Flying Dog,art
+2015-04-17-Two-Scoops-Of-Ice-Cream.md,Two Scoops of Ice Cream,art
+2015-04-16-The-Garden-Of-Feelings.md,The Garden of Feelings,art
+2015-04-14-Flying-Dog-Sketches.md,Flying Dog Sketches,art
+2015-04-13-Endless-Food.md,Endless Food,art
+2015-04-12-Simple-Garden.md,Simple Garden,"art, personal"
+2015-04-10-The-Greatest-Cheese-In-The-World.md,The Greatest Cheese in the World,art
+2015-04-10-Spring-Garden.md,Spring Garden,art
+2015-04-09-Typography-For-Into-The-Brambles-Paperback.md,Typography for Into the Brambles Paperback,"typography, art"
+2015-04-08-Ice-Cream-Cake-With-Starfish.md,Ice Cream Cake With Starfish,art
+2015-04-07-Waves-From-My-Dreams.md,Waves From My Dreams,art
+2015-04-06-Moon-Over-The-Waves.md,Moon Over the Waves,art
+2015-04-04-Cover-Design-For-Into-The-Brambles.md,Cover Design for Into the Brambles,"art, typography"
+2015-02-12-Palace-Dome-From-The-Presidio.md,"Palace Dome, From the Presidio",art
+2015-02-11-Golden-Gate-Bridge-Ii.md,Golden Gate Bridge II,art
+2015-02-09-Golden-Gate-Bridge-I.md,Golden Gate Bridge I,art
+2015-02-06-The-Boatyard.md,The Boatyard,art
+2015-02-03-Ceramic-Bird.md,Ceramic Bird,"art, personal, family"
+2015-02-02-Welcome.md,Welcome!,"art, personal"

@@ -185,3 +185,5 @@ def fast_app(*args, pico=False, **kwargs):
 ```python
 app.bodykw
 ```
+
+Tags: fasthtml, python

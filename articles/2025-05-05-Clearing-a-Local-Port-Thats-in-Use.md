@@ -36,3 +36,5 @@ Now when you run lsof again, the process is gone:
 ```python
 % lsof -i :8000
 ```
+
+Tags: bash, macos

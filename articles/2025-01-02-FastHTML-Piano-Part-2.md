@@ -1451,3 +1451,5 @@ A<sub style="font-size:10px;pointer-events:none;">4</sub>  </div>
 
 
 The tone plays, but `mk_stoposc` doesn't actually work here. To be continued...
+
+Tags: fasthtml, javascript, css

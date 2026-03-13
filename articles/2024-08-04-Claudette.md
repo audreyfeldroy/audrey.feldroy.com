@@ -349,3 +349,5 @@ display.Image(filename=fn, width=200)
 ```python
 
 ```
+
+Tags: ai, python

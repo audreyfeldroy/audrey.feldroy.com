@@ -38,3 +38,5 @@ nbname
     '2025-04-08-Get-a-Jupyter-Notebook-Filename-From-Itself.ipynb'
 
 
+
+Tags: jupyter, python

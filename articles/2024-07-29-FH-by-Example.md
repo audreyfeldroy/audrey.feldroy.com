@@ -35,3 +35,5 @@ Form(Input(type="text", name="data"),
                      Button("Submit"),
                      action="/", method="post")
 ```
+
+Tags: fasthtml, python

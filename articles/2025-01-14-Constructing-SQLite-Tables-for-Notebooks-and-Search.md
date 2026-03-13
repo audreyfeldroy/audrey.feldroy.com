@@ -292,3 +292,5 @@ connection.execute("DROP TABLE IF EXISTS search")
 ## What Next?
 
 To be continued...
+
+Tags: sqlite, python, jupyter

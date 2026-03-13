@@ -27,3 +27,5 @@ uv add staticware
 [@audreyfeldroy](https://github.com/audreyfeldroy) (Audrey M. Roy Greenfeld) designed and built staticware: the hashing engine, ASGI serving, HTML rewriting middleware, path traversal protection, 304 support, root_path handling, and the full test suite.
 
 [@pydanny](https://github.com/pydanny) (Daniel Roy Greenfeld) reviewed and merged the middleware return value fix (PR [#2](https://github.com/feldroy/staticware/pull/2)).
+
+Tags: python, open-source

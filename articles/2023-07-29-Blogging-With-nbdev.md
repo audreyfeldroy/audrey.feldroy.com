@@ -31,3 +31,5 @@ I don't actually want to release a package named `til` or `tilly` to PyPI, or at
 This isn't actually my blog, but more my playground for learning. I'm keeping nbdev in order to practice creating notebooks that are exportable as Python packages.
 
 My main blog is at [audrey.feldroy.com](https://audrey.feldroy.com/), but I'll continue playing in notebooks here.
+
+Tags: jupyter, python

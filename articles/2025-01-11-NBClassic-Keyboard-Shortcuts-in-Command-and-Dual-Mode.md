@@ -104,3 +104,5 @@ Here I print the time in a test cell. That way I can see if the cell is actually
 ```
 
 Here's a cell with long output, to test `Shift` `o`.
+
+Tags: jupyter

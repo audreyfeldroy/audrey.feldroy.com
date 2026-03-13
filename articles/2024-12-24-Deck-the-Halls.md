@@ -69,3 +69,5 @@ for i in range(0,3): print("".join(s[i:i+3]))
 ```python
 L(zip(s[0:5], s[1:5])) + 'la'
 ```
+
+Tags: python

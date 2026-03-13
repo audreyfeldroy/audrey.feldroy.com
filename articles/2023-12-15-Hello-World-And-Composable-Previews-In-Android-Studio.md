@@ -15,3 +15,5 @@ In under an hour I had a basic greeting card app built with a name customization
 On the right side of Android Studio, the design preview allowed me to see my composable GreetingPreview() rendered in realtime. GreetingPreview() is the function at the bottom which is annotated with @Preview and @Composable. That function is called a composable. Composables are the basic building blocks of UI in Jetpack Compose. A composable preview can be viewed in an Android Studio design pane without having to run the whole heavyweight emulator.
 
 I'm happy with how simple yet powerful modern Android development has become. Compose in particular feels like the best way forward, leveraging Kotlin's strengths for declarative and reactive UIs. It has definitely rekindled my interest in building Android apps going forward.
+
+Tags: kotlin, android
