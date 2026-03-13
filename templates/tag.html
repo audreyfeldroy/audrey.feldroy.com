@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Posts tagged "{{ tag }}" — audrey.feldroy.com</title>
+    <meta name="description" content="All posts tagged {{ tag }} by Audrey M. Roy Greenfeld" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="site-name"><a href="/">audrey.feldroy.com</a></div>
+            <div class="header-right">
+                <label class="theme-toggle" for="theme-checkbox">
+                    <input type="checkbox" id="theme-checkbox" class="visually-hidden" />
+                    <span class="visually-hidden">Toggle dark mode</span>
+                    <div class="toggle-track"></div>
+                    <div class="toggle-icons">
+                        <svg class="icon-sun" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+                        <svg class="icon-moon" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <div class="site-layout">
+            <main class="feed">
+                <div class="tag-page-header">
+                    <h1 class="tag-page-title">{{ tag }}</h1>
+                    <div class="tag-page-count">{{ posts|length }} post{{ "s" if posts|length != 1 }}</div>
+                    {% if tag == "python" %}
+                    <div class="tag-page-count" style="margin-top: 6px">
+                        <a href="/feeds/python.atom.xml" class="tag-link" style="font-size: 0.75rem">Atom feed</a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% for post in posts %}
+                <article class="post">
+                    <span class="post-date">{{ post.meta }}</span>
+                    <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                    <p class="post-tease">{{ post.tease }}</p>
+                    {% if post.tags %}
+                    <div class="post-tags">
+                        {% for t in post.tags %}
+                        <a href="/tags/{{ t }}" class="tag-link">{{ t }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </main>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-heading">All tags</div>
+                    <div class="all-tags">
+                        {% for t in all_tags %}
+                        <a href="/tags/{{ t.name }}" class="tag-link{% if t.name == tag %}" style="border-color: var(--accent); color: var(--accent){% endif %}">{{ t.name }} <span class="tag-count">{{ t.count }}</span></a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="page-container">
+            <p>Thanks for visiting my playground &middot; &copy; 2024&ndash;2026 <a href="https://audrey.feldroy.com/">audrey.feldroy.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const checkbox = document.getElementById('theme-checkbox');
+        const html = document.documentElement;
+        checkbox.addEventListener('change', function() {
+            if (this.checked) { html.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+            else { html.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); }
+        });
+        const saved = localStorage.getItem('theme');
+        if (saved) { html.setAttribute('data-theme', saved); if (saved === 'dark') checkbox.checked = true; }
+        else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); checkbox.checked = true; }
+    </script>
+</body>
+</html>
