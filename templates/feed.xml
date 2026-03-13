@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <id>{{ base_url }}/</id>
+  <title>{{ tag | capitalize }} posts by Audrey M. Roy Greenfeld</title>
+  <updated>{{ feed_updated }}</updated>
+  <author>
+    <name>Audrey M. Roy Greenfeld</name>
+    <email>audrey@feldroy.com</email>
+    <uri>{{ base_url }}</uri>
+  </author>
+  <link href="{{ base_url }}" rel="alternate"/>
+  <link href="{{ base_url }}/feeds/{{ tag }}.atom.xml" rel="self"/>
+  <rights>All rights reserved {{ year }}, Audrey M. Roy Greenfeld</rights>
+{% for entry in entries %}
+  <entry>
+    <id>{{ entry.url }}</id>
+    <title>{{ entry.title | e }}</title>
+    <updated>{{ entry.date_str }}</updated>
+    <author>
+      <name>Audrey M. Roy Greenfeld</name>
+      <email>audrey@feldroy.com</email>
+    </author>
+    <content type="html">{{ entry.content_html | e }}</content>
+    <link href="{{ entry.url }}"/>
+    <summary>{{ entry.summary | e }}</summary>
+{% for t in entry.tags %}
+    <category term="{{ t }}"/>
+{% endfor %}
+    <published>{{ entry.date_str }}</published>
+  </entry>
+{% endfor %}
+</feed>
