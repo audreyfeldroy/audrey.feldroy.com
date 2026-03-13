@@ -295,6 +295,24 @@ def truncate_description(text: str, max_len: int = 155) -> str:
     return truncated + "..."
 
 
+def get_tags(path: Path) -> list[str]:
+    """Extracts lowercase tags from the 'Tags: ...' line at the end of a markdown file."""
+    try:
+        text = path.read_text(encoding="utf-8")
+    except Exception:
+        return []
+    for line in reversed(text.splitlines()):
+        line = line.strip()
+        if line.lower().startswith("tags:"):
+            raw = line[len("tags:"):].strip()
+            if not raw:
+                return []
+            return [t.strip().lower() for t in raw.split(",") if t.strip()]
+        if line:
+            break
+    return []
+
+
 def get_post_dict(path: Path) -> dict:
     """
     Extracts title, formatted date, and summary from a notebook or markdown path.
@@ -315,7 +333,8 @@ def get_post_dict(path: Path) -> dict:
         title = "Untitled"
         summary = ""
         image = ""
-    return {"title": title, "date": date, "meta": formatted_date, "tease": strip_markdown(summary), "image": image, "url": f"/articles/{path.stem}"}
+    tags = get_tags(path)
+    return {"title": title, "date": date, "meta": formatted_date, "tease": strip_markdown(summary), "image": image, "url": f"/articles/{path.stem}", "tags": tags}
 
 
 
@@ -335,6 +354,41 @@ def index(request: air.Request) -> Any:
         "posts": posts
     })
 
+def get_all_tags() -> list[dict]:
+    """Returns all tags with counts, sorted by count descending."""
+    from collections import Counter
+    counts = Counter()
+    for path in get_article_paths():
+        for tag in get_tags(path):
+            counts[tag] += 1
+    return sorted(
+        [{"name": name, "count": count} for name, count in counts.items()],
+        key=lambda t: (-t["count"], t["name"]),
+    )
+
+
+@app.get("/tags/{tag}")
+def tag_page(request: air.Request, tag: str) -> Any:
+    """Shows all posts with a given tag."""
+    posts = [get_post_dict(p) for p in get_article_paths() if tag.lower() in get_tags(p)]
+    return jinja(request, "tag.html", {
+        "tag": tag,
+        "posts": posts,
+        "all_tags": get_all_tags(),
+    })
+
+
+@app.get("/tags")
+def tags_page(request: air.Request) -> Any:
+    """Shows all tags."""
+    all_tags = get_all_tags()
+    total_posts = len([p for p in get_article_paths() if get_tags(p)])
+    return jinja(request, "tags.html", {
+        "all_tags": all_tags,
+        "total_posts": total_posts,
+    })
+
+
 @app.get("/articles/{name}")
 def article(request: air.Request, name: str) -> Any:
     """
@@ -342,28 +396,29 @@ def article(request: air.Request, name: str) -> Any:
     """
     md_path = ARTICLES_DIR / f"{name}.md"
     if md_path.exists():
-        path = md_path
         date = get_date_from_filename(name)
         with open(md_path, "r", encoding="utf-8") as f:
             text = f.read()
-        # Render full content minus first line (title)
-        content = markdown("\n".join(text.splitlines()[1:]), CustomHTMLRenderer)
-        # Extract the first line as the title and strip leading '#' (markdown heading)
         lines = text.splitlines()
         raw_title = lines[0] if lines else "Untitled"
-        # Remove leading hashes and surrounding whitespace, then trim
         title = re.sub(r"^\s*#+\s*", "", raw_title).strip()
-        # Summary/description: first non-empty line after title
         summary = next((l for l in lines[1:] if l.strip()), "")
+        tags = get_tags(md_path)
+        # Render content minus title line and Tags line
+        body_lines = lines[1:]
+        if body_lines and body_lines[-1].strip().lower().startswith("tags:"):
+            body_lines = body_lines[:-1]
+        content = markdown("\n".join(body_lines), CustomHTMLRenderer)
     else:
         raise air.HTTPException(status_code=404)
-    
+
     base_url = "https://audrey.feldroy.com"
     return jinja(request, "article.html", {
         "title": title,
         "meta": f"{date:%a, %b %-d, %Y}",
         "description": truncate_description(strip_markdown(summary)),
         "content": content,
+        "tags": tags,
         "pygments_css": STYLE_DEFINITION,
         "canonical_url": f"{base_url}/articles/{name}",
         "og_image_url": f"{base_url}/og/{name}.jpg",
@@ -405,3 +460,51 @@ def notebook_compat(name: str) -> Any:
         air.P("This post has moved to ", air.A(new_url, href=new_url)),
         page_footer(),
     )
+
+
+BASE_URL = "https://audrey.feldroy.com"
+
+
+def get_feed_entries(tag: str) -> list[dict]:
+    """Build a list of feed entry dicts for articles matching a tag."""
+    entries = []
+    for path in get_article_paths():
+        if tag.lower() not in get_tags(path):
+            continue
+        post = get_post_dict(path)
+        date_str = post["date"].strftime("%Y-%m-%dT%H:%M:%S+00:00")
+        article_url = f"{BASE_URL}/articles/{path.stem}"
+
+        # Render article body as HTML, stripping title and Tags lines
+        text = path.read_text(encoding="utf-8")
+        body_lines = text.splitlines()[1:]
+        if body_lines and body_lines[-1].strip().lower().startswith("tags:"):
+            body_lines = body_lines[:-1]
+        content_html = markdown("\n".join(body_lines), CustomHTMLRenderer)
+
+        entries.append({
+            "url": article_url,
+            "title": post["title"],
+            "summary": post["tease"],
+            "content_html": content_html,
+            "date_str": date_str,
+            "tags": get_tags(path),
+        })
+        if len(entries) >= 15:
+            break
+    return entries
+
+
+@app.get("/feeds/{tag}.atom.xml")
+def tag_feed(request: air.Request, tag: str) -> Any:
+    """Returns an Atom feed of articles matching the given tag."""
+    entries = get_feed_entries(tag)
+    feed_updated = entries[0]["date_str"] if entries else datetime.now().strftime("%Y-%m-%dT%H:%M:%S+00:00")
+    xml = jinja(request, "feed.xml", {
+        "base_url": BASE_URL,
+        "tag": tag,
+        "feed_updated": feed_updated,
+        "year": datetime.now().year,
+        "entries": entries,
+    }, as_string=True)
+    return Response(content=xml.encode("utf-8"), media_type="application/atom+xml; charset=utf-8")

@@ -6,6 +6,8 @@ from main import (
     strip_markdown,
     extract_first_image,
     get_post_dict,
+    get_tags,
+    get_all_tags,
     app,
 )
 from pathlib import Path
@@ -347,3 +349,155 @@ class TestArticlePage:
         """Requesting a nonexistent article should return 404."""
         response = client.get("/articles/this-article-does-not-exist-at-all")
         assert response.status_code == 404
+
+
+# ---------------------------------------------------------------------------
+# Unit tests: get_tags
+# ---------------------------------------------------------------------------
+
+class TestGetTags:
+    """get_tags should extract tags from the last line of a markdown file."""
+
+    def test_extracts_tags(self, tmp_path):
+        md = tmp_path / "post.md"
+        md.write_text("# Title\n\nBody.\n\nTags: python, cookiecutter, open-source\n")
+        assert get_tags(md) == ["python", "cookiecutter", "open-source"]
+
+    def test_case_insensitive_match(self, tmp_path):
+        md = tmp_path / "post.md"
+        md.write_text("# Title\n\nBody.\n\nTags: Air, Python, PythonAsia\n")
+        assert get_tags(md) == ["air", "python", "pythonasia"]
+
+    def test_no_tags_line(self, tmp_path):
+        md = tmp_path / "post.md"
+        md.write_text("# Title\n\nJust body, no tags.\n")
+        assert get_tags(md) == []
+
+    def test_empty_tags(self, tmp_path):
+        md = tmp_path / "post.md"
+        md.write_text("# Title\n\nTags:\n")
+        assert get_tags(md) == []
+
+
+# ---------------------------------------------------------------------------
+# Tag feed integration tests (GET /feeds/{tag}.atom.xml)
+# ---------------------------------------------------------------------------
+
+class TestTagFeed:
+    """Integration tests for the Atom tag feed."""
+
+    def test_python_feed_returns_200(self, client):
+        response = client.get("/feeds/python.atom.xml")
+        assert response.status_code == 200
+
+    def test_python_feed_content_type(self, client):
+        response = client.get("/feeds/python.atom.xml")
+        assert "application/atom+xml" in response.headers["content-type"]
+
+    def test_python_feed_is_valid_atom(self, client):
+        response = client.get("/feeds/python.atom.xml")
+        text = response.text
+        assert '<?xml version' in text
+        assert '<feed xmlns="http://www.w3.org/2005/Atom"' in text
+        assert '</feed>' in text
+
+    def test_python_feed_has_metadata(self, client):
+        response = client.get("/feeds/python.atom.xml")
+        text = response.text
+        assert "<title>Python posts by Audrey M. Roy Greenfeld</title>" in text
+        assert "<name>Audrey M. Roy Greenfeld</name>" in text
+        assert "https://audrey.feldroy.com/</id>" in text
+
+    def test_python_feed_contains_only_python_posts(self, client):
+        response = client.get("/feeds/python.atom.xml")
+        text = response.text
+        assert "<entry>" in text
+        assert '<category term="python"' in text
+
+    def test_nonexistent_tag_returns_empty_feed(self, client):
+        response = client.get("/feeds/nonexistent-tag-xyz.atom.xml")
+        assert response.status_code == 200
+        assert "<entry>" not in response.text
+
+    def test_feed_entries_have_required_atom_fields(self, client):
+        response = client.get("/feeds/python.atom.xml")
+        text = response.text
+        if "<entry>" in text:
+            assert "<title>" in text
+            assert "<id>" in text
+            assert "<updated>" in text
+            assert "<link" in text
+
+
+# ---------------------------------------------------------------------------
+# Tag page integration tests (GET /tags/{tag})
+# ---------------------------------------------------------------------------
+
+class TestTagPage:
+    """Integration tests for tag index pages."""
+
+    def test_tag_page_returns_200(self, client):
+        response = client.get("/tags/python")
+        assert response.status_code == 200
+
+    def test_tag_page_shows_tag_name(self, client):
+        response = client.get("/tags/python")
+        assert "python" in response.text
+
+    def test_tag_page_lists_posts(self, client):
+        response = client.get("/tags/python")
+        assert '<article class="post' in response.text
+
+    def test_tag_page_shows_sidebar_with_all_tags(self, client):
+        response = client.get("/tags/python")
+        assert "All tags" in response.text
+
+    def test_empty_tag_has_no_posts(self, client):
+        response = client.get("/tags/nonexistent-xyz")
+        assert response.status_code == 200
+        assert '<article class="post' not in response.text
+
+
+# ---------------------------------------------------------------------------
+# All-tags page integration tests (GET /tags)
+# ---------------------------------------------------------------------------
+
+class TestAllTagsPage:
+    """Integration tests for the all-tags page."""
+
+    def test_tags_page_returns_200(self, client):
+        response = client.get("/tags")
+        assert response.status_code == 200
+
+    def test_tags_page_shows_title(self, client):
+        response = client.get("/tags")
+        assert "Tags" in response.text
+
+    def test_tags_page_lists_tags(self, client):
+        response = client.get("/tags")
+        assert "tag-link" in response.text
+
+
+# ---------------------------------------------------------------------------
+# Article page shows tags
+# ---------------------------------------------------------------------------
+
+class TestArticlePageTags:
+    """Article pages should show tag links for tagged articles."""
+
+    def test_tagged_article_shows_tags(self, client):
+        response = client.get("/articles/2026-02-17-Cookiecutter-PyPackage-v0.4.0")
+        assert "article-tags" in response.text
+        assert "/tags/python" in response.text
+
+    def test_get_post_dict_includes_tags(self, tmp_path):
+        md = tmp_path / "2025-06-15-Tagged-Post.md"
+        md.write_text("# Tagged Post\n\nBody.\n\nTags: python, testing\n")
+        result = get_post_dict(md)
+        assert result["tags"] == ["python", "testing"]
+
+    def test_get_post_dict_empty_tags(self, tmp_path):
+        md = tmp_path / "2025-06-15-Untagged.md"
+        md.write_text("# Untagged Post\n\nNo tags here.\n")
+        result = get_post_dict(md)
+        assert result["tags"] == []
